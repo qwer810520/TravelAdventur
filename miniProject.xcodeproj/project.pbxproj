@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
 		396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396C01741E89461300BF57F6 /* PhotoDataModel.swift */; };
+		3980920E1E8BEEEF00DAD198 /* ShowPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3980920D1E8BEEEF00DAD198 /* ShowPhotoViewController.swift */; };
 		39A17F851E864534002910E9 /* activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A17F841E864534002910E9 /* activity.swift */; };
 		39A180681E87562B002910E9 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A180671E87562B002910E9 /* Album.swift */; };
 		39A1806A1E876535002910E9 /* AlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A180691E876535002910E9 /* AlbumTableViewController.swift */; };
@@ -27,6 +28,7 @@
 		361112AB1DD1F483A23E5993 /* Pods_miniProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_miniProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
+		3980920D1E8BEEEF00DAD198 /* ShowPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewController.swift; sourceTree = "<group>"; };
 		39A17F841E864534002910E9 /* activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = activity.swift; sourceTree = "<group>"; };
 		39A180671E87562B002910E9 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		39A180691E876535002910E9 /* AlbumTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				39A180691E876535002910E9 /* AlbumTableViewController.swift */,
 				39A1806B1E8788A8002910E9 /* AlbumTableViewCell.swift */,
 				39A1806D1E87DEC2002910E9 /* MapViewController.swift */,
+				3980920D1E8BEEEF00DAD198 /* ShowPhotoViewController.swift */,
 				39B915F91E84127C0093E1AF /* Main.storyboard */,
 				39A17F841E864534002910E9 /* activity.swift */,
 				39B916091E8422010093E1AF /* user.storyboard */,
@@ -246,6 +249,7 @@
 			files = (
 				39A1806C1E8788A8002910E9 /* AlbumTableViewCell.swift in Sources */,
 				39A1806E1E87DEC2002910E9 /* MapViewController.swift in Sources */,
+				3980920E1E8BEEEF00DAD198 /* ShowPhotoViewController.swift in Sources */,
 				39A17F851E864534002910E9 /* activity.swift in Sources */,
 				39A1806A1E876535002910E9 /* AlbumTableViewController.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
