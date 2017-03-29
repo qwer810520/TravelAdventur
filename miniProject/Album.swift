@@ -12,9 +12,9 @@ class Album {
     var time: String
     var day: String
     var titleImage: String
-    var photos: [PhotoDataModel]
+    var photos:Array<PhotoDataModel>
     
-    init(travelName:String, time:String, day:String, titleImage:String, photos:[PhotoDataModel]) {
+    init(travelName:String, time:String, day:String, titleImage:String, photos:Array<PhotoDataModel>) {
         self.travelName = travelName
         self.time = time
         self.day = day

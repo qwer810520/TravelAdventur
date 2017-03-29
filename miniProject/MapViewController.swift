@@ -13,10 +13,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    var photoDataModel:[PhotoDataModel]!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        for x in 0...photoDataModel.count - 1 {
+                addPointAnnotation(latitude: photoDataModel[x].latitude, longitude: photoDataModel[x].longitude, day: photoDataModel[x].picturesDay)
+        }
+        
         
     }
     
@@ -27,28 +32,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     
-    func locationMapMark(coordinateN: Float, coordinateE:Float) {
-        let geoCoder = CHAnnotation()
-        geoCoder.g
-        geoCoder.geocodeAddressString(key) { (placemarks: [CLPlacemark]?, error: Error?) in
-            if error != nil {
-                print(error)
-                return
-            } else {
-                if let mark = placemarks {
-                    let mark = placemarks?[0]
-                    
-                    let annotation = MKPointAnnotation()
-                    annotation.title = key
-                    
-                    if let location = mark?.location {
-                        annotation.coordinate = location.coordinate
-                        self.mapView.addAnnotation(annotation)
-                        
-                        
-                    }
-                }
-            }
-        }
+    func addPointAnnotation(latitude: CLLocationDegrees, longitude:CLLocationDegrees ,day:String) {
+        let annotation = MKPointAnnotation()
+        
+        annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        annotation.title = "day \(day)"
+        annotation.subtitle = "緯度： \(latitude), 經度: \(longitude)"
+        
+        mapView.addAnnotation(annotation)
+        
     }
 }
