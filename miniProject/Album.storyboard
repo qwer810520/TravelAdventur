@@ -170,7 +170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBS-cu-bKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3458" y="106"/>
+            <point key="canvasLocation" x="2950" y="182"/>
         </scene>
         <!--Show Photo View Controller-->
         <scene sceneID="uku-Hd-veA">
@@ -225,12 +225,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="photoImage" destination="EKz-uo-SEE" id="vfg-8x-Kz4"/>
+                        <outlet property="addCollectionView" destination="9zX-W7-3Fl" id="raT-Nr-EQt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vpw-Kw-tst" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4504.8000000000002" y="157.87106446776613"/>
+            <point key="canvasLocation" x="3591" y="182"/>
         </scene>
     </scenes>
     <resources>

@@ -17,14 +17,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        mapView.delegate = self
         for x in 0...photoDataModel.count - 1 {
-                addPointAnnotation(latitude: photoDataModel[x].latitude, longitude: photoDataModel[x].longitude, day: photoDataModel[x].picturesDay)
-            
-            mapView.delegate = self
+            addPointAnnotation(coordinate: photoDataModel[x].coordinate, day: photoDataModel[x].picturesDay)
         }
-        
-        
+ 
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,12 +30,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
 //    大頭針插入地圖方法
-    func addPointAnnotation(latitude: CLLocationDegrees, longitude:CLLocationDegrees ,day:String) {
+    func addPointAnnotation(coordinate:CLLocationCoordinate2D ,day:String) {
         let annotation = MKPointAnnotation()
         
-        annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        annotation.coordinate = coordinate
         annotation.title = "day \(day)"
-        annotation.subtitle = "緯度： \(latitude), 經度: \(longitude)"
+        annotation.subtitle = "座標： \(coordinate)"
         
         self.mapView.showAnnotations([annotation], animated: true)
         self.mapView.selectAnnotation(annotation, animated: true)
@@ -61,8 +58,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             pinView?.animatesDrop = true
             
-            pinView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
-            
+            let testButton = UIButton.init(type: .infoDark) as UIButton
+            pinView?.rightCalloutAccessoryView = testButton
         } else {
             pinView?.annotation = annotation
         }
@@ -71,8 +68,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return pinView
         
     }
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        navigationController?.push(PhotoCollectionViewController, animated: true)
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // annotation
+        
+        if control == view.rightCalloutAccessoryView {
+        performSegue(withIdentifier: "showPhoto", sender: view)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let annotationView = sender as! MKAnnotationView
+        print()
+        
+
+        for photoDetail in photoDataModel {
+            if photoDetail.coordinate.latitude == annotationView.annotation?.coordinate.latitude && photoDetail.coordinate.longitude == annotationView.annotation?.coordinate.longitude {
+                if let segue = segue.destination as? ShowPhotoViewController {
+                    segue.photoArray = photoDetail.photoName
+                }
+            }
+        }
+        
     }
 
     }

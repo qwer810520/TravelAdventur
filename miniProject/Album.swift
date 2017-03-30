@@ -21,5 +21,4 @@ class Album {
         self.titleImage = titleImage
         self.photos = photos
     }
-    
 }
