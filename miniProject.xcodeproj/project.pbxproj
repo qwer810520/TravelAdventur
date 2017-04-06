@@ -21,6 +21,7 @@
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
 		39B916081E841C650093E1AF /* Album.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B916071E841C650093E1AF /* Album.storyboard */; };
 		39B9160A1E8422010093E1AF /* user.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B916091E8422010093E1AF /* user.storyboard */; };
+		39ED9E3F1E9658B9002880DE /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */; };
 		50267EE80A0857429DE51776 /* Pods_miniProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 361112AB1DD1F483A23E5993 /* Pods_miniProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		39B916011E84127C0093E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39B916071E841C650093E1AF /* Album.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Album.storyboard; sourceTree = "<group>"; };
 		39B916091E8422010093E1AF /* user.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = user.storyboard; sourceTree = "<group>"; };
+		39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionViewCell.swift; path = ../ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		94F70BCB8EA9207F1D38BE18 /* Pods-miniProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-miniProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-miniProject/Pods-miniProject.release.xcconfig"; sourceTree = "<group>"; };
 		9D7055D84320DDEF201613D4 /* Pods-miniProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-miniProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-miniProject/Pods-miniProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +91,7 @@
 				39A1806B1E8788A8002910E9 /* AlbumTableViewCell.swift */,
 				39A1806D1E87DEC2002910E9 /* MapViewController.swift */,
 				3980920D1E8BEEEF00DAD198 /* ShowPhotoViewController.swift */,
+				39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */,
 				39B915F91E84127C0093E1AF /* Main.storyboard */,
 				39A17F841E864534002910E9 /* activity.swift */,
 				39B916091E8422010093E1AF /* user.storyboard */,
@@ -253,6 +256,7 @@
 				39A17F851E864534002910E9 /* activity.swift in Sources */,
 				39A1806A1E876535002910E9 /* AlbumTableViewController.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
+				39ED9E3F1E9658B9002880DE /* ImageCollectionViewCell.swift in Sources */,
 				39A180681E87562B002910E9 /* Album.swift in Sources */,
 				396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */,
 			);
