@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="G2C-Bb-c2T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Axr-4w-LmI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,60 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="fH3-Pa-0Dz">
+            <objects>
+                <viewController id="Axr-4w-LmI" customClass="LoginViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="30t-Bb-YUR"/>
+                        <viewControllerLayoutGuide type="bottom" id="d1Q-wm-bow"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8zR-Sp-deC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="pt1-7f-NF2">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nmk-LC-J3X">
+                                <rect key="frame" x="157" y="557" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="lud-lI-pBe"/>
+                                    <constraint firstAttribute="width" constant="60" id="z0W-Bh-EVJ"/>
+                                </constraints>
+                                <state key="normal" image="FBlogo"/>
+                                <connections>
+                                    <action selector="login:" destination="Axr-4w-LmI" eventType="touchUpInside" id="bqy-JP-S3u"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OrLine" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-UZ-GmB">
+                                <rect key="frame" x="37.5" y="509" width="300" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="kC9-Tm-WIy"/>
+                                    <constraint firstAttribute="width" constant="300" id="r1g-Wp-stm"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Nmk-LC-J3X" firstAttribute="top" secondItem="aZQ-UZ-GmB" secondAttribute="bottom" constant="30" id="75z-hh-kZ0"/>
+                            <constraint firstItem="Nmk-LC-J3X" firstAttribute="centerX" secondItem="8zR-Sp-deC" secondAttribute="centerX" id="CBe-8T-n1X"/>
+                            <constraint firstAttribute="trailing" secondItem="pt1-7f-NF2" secondAttribute="trailing" id="IMP-0H-cR7"/>
+                            <constraint firstItem="aZQ-UZ-GmB" firstAttribute="centerX" secondItem="8zR-Sp-deC" secondAttribute="centerX" id="Mbu-ka-FZf"/>
+                            <constraint firstItem="pt1-7f-NF2" firstAttribute="top" secondItem="8zR-Sp-deC" secondAttribute="top" id="eP5-P0-AuY"/>
+                            <constraint firstItem="d1Q-wm-bow" firstAttribute="top" secondItem="pt1-7f-NF2" secondAttribute="bottom" id="lbI-87-Jwm"/>
+                            <constraint firstItem="d1Q-wm-bow" firstAttribute="top" secondItem="Nmk-LC-J3X" secondAttribute="bottom" constant="50" id="qre-L1-vZV"/>
+                            <constraint firstItem="pt1-7f-NF2" firstAttribute="leading" secondItem="8zR-Sp-deC" secondAttribute="leading" id="v29-9a-VGx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="G2C-Bb-c2T" kind="show" identifier="AlbumTableViewController" id="XxO-Ri-zMu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w5V-Lq-gtm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-644" y="475.41229385307349"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Fuy-PI-afX">
             <objects>
@@ -49,6 +103,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="FBlogo" width="1000" height="1000"/>
+        <image name="OrLine" width="432" height="22"/>
+        <image name="backgroundPhoto" width="562" height="1000"/>
         <image name="user" width="25" height="25"/>
     </resources>
 </document>

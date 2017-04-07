@@ -12,7 +12,7 @@
         <!--photo-->
         <scene sceneID="ZrF-GW-F5A">
             <objects>
-                <navigationController restorationIdentifier="AlbumTableViewController" storyboardIdentifier="AlbumTableViewController" automaticallyAdjustsScrollViewInsets="NO" id="jfG-dN-Rde" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jfG-dN-Rde" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="photo" image="photoalbum" id="SnB-d1-EUM"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIH-yj-52j">
@@ -31,7 +31,7 @@
         <!--Album Table View Controller-->
         <scene sceneID="6Tg-6C-43N">
             <objects>
-                <tableViewController id="KUD-8x-U9m" customClass="AlbumTableViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AlbumTableViewController" id="KUD-8x-U9m" customClass="AlbumTableViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" sectionHeaderHeight="28" sectionFooterHeight="28" id="JlF-ZK-nAP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
