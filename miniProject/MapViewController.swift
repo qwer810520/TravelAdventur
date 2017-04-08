@@ -102,7 +102,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // annotation
         
         if control == view.rightCalloutAccessoryView {
-        performSegue(withIdentifier: "showPhoto", sender: view)
+        performSegue(withIdentifier: "photoDetail", sender: view)
         }
     }
     
