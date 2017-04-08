@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
                     return
                 }
                 
-                self.performSegue(withIdentifier: "AlbumTableViewController", sender: nil)
+                self.performSegue(withIdentifier: "inside", sender: nil)
             })
         }
         

@@ -13,11 +13,18 @@ class AlbumTableViewController: UITableViewController {
     var album = AlbumSeed().album
     
    
+    @IBAction func addAlbum(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "Album", bundle: nil)
+        let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddViewController")
+        navigationController?.pushViewController(pushViewController, animated: true)
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
 
     }
 
@@ -39,10 +46,12 @@ class AlbumTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let segue = segue.destination as! MapViewController
-        if let indexPath = self.tableView.indexPathForSelectedRow {
-            segue.photoDataModel = album[indexPath.row].photos
-            
+        if segue.identifier == "showDetail" {
+            let segue = segue.destination as! MapViewController
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                segue.photoDataModel = album[indexPath.row].photos
+                
+            }
         }
-    }
+      }
    }

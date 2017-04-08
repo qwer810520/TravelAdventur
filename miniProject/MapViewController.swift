@@ -15,6 +15,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     var photoDataModel:[PhotoDataModel]!
     
+
+    @IBAction func addNewLocation(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "Album", bundle: nil)
+        let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddLocationViewController")
+        present(pushViewController, animated: true, completion: nil)
+        
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -32,7 +42,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 //    大頭針插入地圖方法
     func addPointAnnotation(coordinate:CLLocationCoordinate2D ,day:String) {
         let annotation = MKPointAnnotation()
-        
         annotation.coordinate = coordinate
         annotation.title = "day \(day)"
         annotation.subtitle = "座標： \(coordinate)"
@@ -55,20 +64,40 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinID)
             
             pinView?.canShowCallout = true
-            
             pinView?.animatesDrop = true
-            
             let testButton = UIButton.init(type: .infoDark) as UIButton
             pinView?.rightCalloutAccessoryView = testButton
         } else {
             pinView?.annotation = annotation
         }
         
+        if annotation.title! == "day 1" {
+            pinView?.pinTintColor = UIColor.red
+        } else if annotation.title! == "day 2" {
+            pinView?.pinTintColor = UIColor.orange
+        } else if annotation.title! == "day 3" {
+            pinView?.pinTintColor = UIColor.yellow
+        } else if annotation.title! == "day 4" {
+            pinView?.pinTintColor = UIColor.green
+        } else if annotation.title! == "day 5" {
+            pinView?.pinTintColor = UIColor.blue
+        } else if annotation.title! == "day 6" {
+            pinView?.pinTintColor = UIColor.purple
+        } else if annotation.title! == "day 7" {
+            pinView?.pinTintColor = UIColor.gray
+        } else if annotation.title! == "day 8" {
+            pinView?.pinTintColor = UIColor.white
+        } else if annotation.title! == "day 9" {
+            pinView?.pinTintColor = UIColor.black
+        } else if annotation.title! == "day 10" {
+            pinView?.pinTintColor = UIColor.brown
+        }
         
-        return pinView
+    return pinView
         
     }
     
+//    點了Button會呼叫的button
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         // annotation
         
@@ -78,18 +107,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let annotationView = sender as! MKAnnotationView
-        print()
-        
-
-        for photoDetail in photoDataModel {
-            if photoDetail.coordinate.latitude == annotationView.annotation?.coordinate.latitude && photoDetail.coordinate.longitude == annotationView.annotation?.coordinate.longitude {
-                if let segue = segue.destination as? ShowPhotoViewController {
-                    segue.photoArray = photoDetail.photoName
+        if segue.identifier == "photoDetail" {
+            let annotationView = sender as! MKAnnotationView
+            for photoDetail in photoDataModel {
+                if photoDetail.coordinate.latitude == annotationView.annotation?.coordinate.latitude && photoDetail.coordinate.longitude == annotationView.annotation?.coordinate.longitude {
+                    if let segue = segue.destination as? ShowPhotoViewController {
+                        segue.photoArray = photoDetail.photoName
+                    }
                 }
             }
         }
-        
     }
-
     }
