@@ -33,6 +33,7 @@
 		361112AB1DD1F483A23E5993 /* Pods_miniProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_miniProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		393041281E9886480070CC98 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		3930412C1E9902B00070CC98 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
+		3930412E1E99D65F0070CC98 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = miniProject/MyPlayground.playground; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
 		3980920D1E8BEEEF00DAD198 /* ShowPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +106,7 @@
 		39B915E91E84127C0093E1AF = {
 			isa = PBXGroup;
 			children = (
+				3930412E1E99D65F0070CC98 /* MyPlayground.playground */,
 				39B915F41E84127C0093E1AF /* miniProject */,
 				39B915F31E84127C0093E1AF /* Products */,
 				DDC2B9B906CCAB37AEE979CA /* Pods */,

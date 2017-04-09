@@ -280,7 +280,7 @@
             </objects>
             <point key="canvasLocation" x="3142" y="-681"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Location-->
         <scene sceneID="QCR-dZ-YGa">
             <objects>
                 <viewController id="qzQ-jJ-ulk" customClass="MapViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -316,7 +316,7 @@
                             <constraint firstItem="GED-n9-Ewr" firstAttribute="leading" secondItem="Zg9-i2-Cao" secondAttribute="leading" id="wKh-iJ-c7r"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Zn4-EE-0Xx">
+                    <navigationItem key="navigationItem" title="Location" id="Zn4-EE-0Xx">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rm8-at-Ytf">
                             <connections>
                                 <action selector="addNewLocation:" destination="qzQ-jJ-ulk" id="y2E-r8-8hB"/>
@@ -413,7 +413,7 @@
             </objects>
             <point key="canvasLocation" x="4084" y="-247.82608695652175"/>
         </scene>
-        <!--Show Photo View Controller-->
+        <!--Image-->
         <scene sceneID="uku-Hd-veA">
             <objects>
                 <viewController id="76r-9D-Dar" customClass="ShowPhotoViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -471,6 +471,9 @@
                             <constraint firstAttribute="trailing" secondItem="9zX-W7-3Fl" secondAttribute="trailing" id="sxQ-3y-Mql"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Image" id="Bo7-KK-Rhm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ubg-kY-JoD"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="addCollectionView" destination="9zX-W7-3Fl" id="raT-Nr-EQt"/>
                     </connections>

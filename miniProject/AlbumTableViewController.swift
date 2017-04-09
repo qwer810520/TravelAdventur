@@ -17,15 +17,12 @@ class AlbumTableViewController: UITableViewController {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
         let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddViewController")
         navigationController?.pushViewController(pushViewController, animated: true)
-        
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
-
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
