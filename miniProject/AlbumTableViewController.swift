@@ -21,6 +21,8 @@ class AlbumTableViewController: UITableViewController {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
         let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddViewController")
         navigationController?.pushViewController(pushViewController, animated: true)
+        
+        
     }
     
     override func viewDidLoad() {
@@ -31,10 +33,10 @@ class AlbumTableViewController: UITableViewController {
         observeAlbum()
     }
     
-    
     func observeAlbum() {
         albumRef.observe(.childAdded) { (snapshot: FIRDataSnapshot) in
             if let dict = snapshot.value as? [String: AnyObject] {
+                let key = snapshot.key
                 let name = dict["travelName"] as? String
                 let time = dict["time"] as? String
                 let day = dict["day"] as? String
@@ -43,7 +45,7 @@ class AlbumTableViewController: UITableViewController {
                 do {
                     let data = try Data(contentsOf: url!)
                     let picture = UIImage(data: data)
-                    self.album.append(Album(travelName: name!, time: time!, day: day!, titleImage: picture!, photos: [PhotoDataModel]()))
+                    self.album.append(Album(key: key, travelName: name!, time: time!, day: day!, titleImage: picture!, photos: [PhotoDataModel]()))
                 } catch {
                     
                 }
@@ -79,6 +81,9 @@ class AlbumTableViewController: UITableViewController {
         
         pushViewController.photoDataModel = album[indexPath.row].photos
         pushViewController.day = album[indexPath.row].day
+        pushViewController.key = album[indexPath.row].key
+        print(album[indexPath.row].key)
         navigationController?.pushViewController(pushViewController, animated: true)
+        
     }
 }

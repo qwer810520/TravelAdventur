@@ -8,11 +8,17 @@
 
 import UIKit
 
-class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate {
     
     
     @IBOutlet weak var addCollectionView: UICollectionView!
     
+    @IBAction func addPhotos(_ sender: UIBarButtonItem) {
+        UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum)
+        let imagePickerController = UIImagePickerController()
+        
+        
+    }
  
     
     var photoArray:Array<String> = []

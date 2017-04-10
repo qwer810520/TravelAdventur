@@ -9,13 +9,15 @@
 import Foundation
 import UIKit
 class Album {
+    var key:String
     var travelName: String
     var time: String
     var day: String
     var titleImage: UIImage
     var photos:Array<PhotoDataModel>
     
-    init(travelName:String, time:String, day:String, titleImage:UIImage, photos:Array<PhotoDataModel>) {
+    init(key:String, travelName:String, time:String, day:String, titleImage:UIImage, photos:Array<PhotoDataModel>) {
+        self.key = key
         self.travelName = travelName
         self.time = time
         self.day = day

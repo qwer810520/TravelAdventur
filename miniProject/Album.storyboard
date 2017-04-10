@@ -320,13 +320,13 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rm8-at-Ytf">
                             <connections>
                                 <action selector="addNewLocation:" destination="qzQ-jJ-ulk" id="y2E-r8-8hB"/>
-                                <segue destination="Wpn-5u-pMH" kind="show" id="cL3-jE-YgK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Mtd-st-FjA" id="oML-bi-hXr"/>
                         <segue destination="76r-9D-Dar" kind="show" identifier="photoDetail" id="aLi-s7-XOJ"/>
+                        <segue destination="Wpn-5u-pMH" kind="show" id="AXd-FV-ti6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBS-cu-bKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -345,13 +345,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapBackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="WrJ-4L-Ffk">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-cu-GS9">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
-                            </imageView>
+                            </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zfp-08-x66">
                                 <rect key="frame" x="46" y="94" width="283" height="250"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入地點名稱或是地址" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fm1-fP-CpS">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入完整的景點名稱 ex.陽明山國家公園" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fm1-fP-CpS">
                                         <rect key="frame" x="0.0" y="65" width="283" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="qHJ-bD-ttN"/>
@@ -366,7 +366,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="至此地點旅遊天數 ex: 1" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jlo-hw-zEr">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="至此地點旅遊天數 ex: 第一天來就填1" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jlo-hw-zEr">
                                         <rect key="frame" x="0.0" y="115" width="283" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="W4d-FJ-Qxq"/>
@@ -393,12 +393,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="WrJ-4L-Ffk" firstAttribute="leading" secondItem="DcR-MK-6Xc" secondAttribute="leading" id="Evc-K9-Zri"/>
-                            <constraint firstAttribute="trailing" secondItem="WrJ-4L-Ffk" secondAttribute="trailing" id="LiI-h6-9WS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zfp-08-x66" secondAttribute="trailing" constant="30" id="Qs4-Kp-C6Q"/>
+                            <constraint firstItem="fXb-cu-GS9" firstAttribute="top" secondItem="HuY-H3-xpb" secondAttribute="bottom" constant="-20" id="c8Y-1d-q48"/>
                             <constraint firstItem="zfp-08-x66" firstAttribute="leading" secondItem="DcR-MK-6Xc" secondAttribute="leadingMargin" constant="30" id="gln-56-7Bw"/>
-                            <constraint firstItem="WrJ-4L-Ffk" firstAttribute="top" secondItem="HuY-H3-xpb" secondAttribute="bottom" constant="-20" id="kH4-Dw-Nqh"/>
-                            <constraint firstItem="aHg-pP-Pza" firstAttribute="top" secondItem="WrJ-4L-Ffk" secondAttribute="bottom" id="s8V-zD-CPo"/>
+                            <constraint firstAttribute="trailing" secondItem="fXb-cu-GS9" secondAttribute="trailing" id="hen-la-qXR"/>
+                            <constraint firstItem="fXb-cu-GS9" firstAttribute="leading" secondItem="DcR-MK-6Xc" secondAttribute="leading" id="i0D-Ku-cbw"/>
+                            <constraint firstItem="aHg-pP-Pza" firstAttribute="top" secondItem="fXb-cu-GS9" secondAttribute="bottom" id="nzh-tX-XLK"/>
                             <constraint firstItem="zfp-08-x66" firstAttribute="top" secondItem="HuY-H3-xpb" secondAttribute="bottom" constant="30" id="szs-zl-dqU"/>
                         </constraints>
                     </view>
@@ -410,16 +410,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="backgroundImage" destination="WrJ-4L-Ffk" id="C1B-oI-YdA"/>
                         <outlet property="dayTextField" destination="Jlo-hw-zEr" id="ZIm-gh-iZm"/>
                         <outlet property="locationTextField" destination="fm1-fP-CpS" id="6g3-1X-kI4"/>
+                        <outlet property="mapView" destination="fXb-cu-GS9" id="rCb-EK-71N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="03x-MQ-cWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4084" y="-247.82608695652175"/>
         </scene>
-        <!--Image-->
+        <!--photos-->
         <scene sceneID="uku-Hd-veA">
             <objects>
                 <viewController id="76r-9D-Dar" customClass="ShowPhotoViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -477,8 +477,12 @@
                             <constraint firstAttribute="trailing" secondItem="9zX-W7-3Fl" secondAttribute="trailing" id="sxQ-3y-Mql"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Image" id="Bo7-KK-Rhm">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ubg-kY-JoD"/>
+                    <navigationItem key="navigationItem" title="photos" id="Bo7-KK-Rhm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ubg-kY-JoD">
+                            <connections>
+                                <action selector="addPhotos:" destination="76r-9D-Dar" id="OjL-bz-dBB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addCollectionView" destination="9zX-W7-3Fl" id="raT-Nr-EQt"/>
@@ -490,7 +494,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="MapBackgroundImage" width="374" height="618"/>
         <image name="photoalbum" width="36" height="36"/>
         <image name="photoalbum-1" width="64" height="64"/>
     </resources>

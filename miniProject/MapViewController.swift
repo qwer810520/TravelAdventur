@@ -17,14 +17,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     var photoDataModel:[PhotoDataModel]!
     var day:String = ""
+    var key:String?
     var mapRef = FIRDatabase.database().reference().child("Album").child("photos")
     
     
 
     @IBAction func addNewLocation(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
-        let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddLocationViewController")
-        present(pushViewController, animated: true, completion: nil)
+        let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
+        print(key)
+        pushViewController.key = key!
+        navigationController?.pushViewController(pushViewController, animated: true)
         
     }
     
@@ -34,12 +37,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.AddLocation(Not:)), name: Notification.Name("AddLocation"), object: nil)
+        
         if photoDataModel.count != 0 {
         for x in 0...photoDataModel.count - 1 {
             addPointAnnotation(coordinate: photoDataModel[x].coordinate, day: photoDataModel[x].picturesDay)
             }
         }
- 
+    }
+    
+    func AddLocation(Not:Notification) {
+        if let coordinate = Not.userInfo?["location"] as? CLLocationCoordinate2D {
+            if let day = Not.userInfo?["day"] as? String {
+                let data = PhotoDataModel(photoName: [], picturesDay: day, coordinate: coordinate)
+                photoDataModel.append(data)
+                addPointAnnotation(coordinate: coordinate, day: day)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

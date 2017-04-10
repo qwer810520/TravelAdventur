@@ -7,33 +7,35 @@
 //
 
 import UIKit
-import FirebaseDatabase
 import MapKit
+import FirebaseDatabase
+
 
 class AddLocationViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate{
-
-    @IBOutlet weak var backgroundImage: UIImageView!
     
-     var mapRef = FIRDatabase.database().reference().child("Album").child("photos")
+    
+    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var dayTextField: UITextField!
+    var key:String?
     
    
-    
-    @IBOutlet weak var locationTextField: UITextField!
-    
-    @IBOutlet weak var dayTextField: UITextField!
     
     @IBAction func saveItem(_ sender: UIBarButtonItem) {
         checkInputTextAndUpdata(location: locationTextField.text!, day: dayTextField.text!)
         navigationController?.popViewController(animated: true)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ViewDidLoad")
         let blurEffect = UIBlurEffect(style:.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.frame
         blurEffectView.center = view.center
-        self.backgroundImage.addSubview(blurEffectView)
+        self.mapView.addSubview(blurEffectView)
         
         locationTextField.delegate = self
         dayTextField.delegate = self
@@ -63,37 +65,45 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
                 present(alert, animated: true, completion: nil)
             } else {
                 print("資料都沒問題")
-                locationToCorrdinate(location: location)
+                locationToCoordinate(text: location, day: day)
+                
                 
             }
         }
     }
     
-    func locationToCorrdinate(location:String) {
-         let locationType = CLGeocoder()
-//        let request = MKLocalSearchRequest()
-//        request.
-        locationType.geocodeAddressString(location) { (placemarks, error) in
+    func locationToCoordinate(text: String , day:String) {
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = text
+        request.region = mapView.region
+        
+        let localSearch = MKLocalSearch(request: request)
+        localSearch.start { (result, error) in
             if error != nil {
                 return
             }
-            if placemarks != nil && (placemarks?.count)! > 0 {
-                    let placemark = placemarks?[0] as! CLPlacemark
-                    print(location)
-                    print(placemark.location?.coordinate.latitude)
-                    print(placemark.location?.coordinate.longitude)
+            for test in (result?.mapItems)! {
+                if test.placemark.name?.characters.count == text.characters.count {
+                    self.updataToDatabase(latitude: test.placemark.coordinate.latitude, longitude: test.placemark.coordinate.longitude, day: day)
+                    
+                    
+                }
             }
-            
         }
-        
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
+    func updataToDatabase(latitude:Double, longitude:Double, day:String) {
+        let mapRef = FIRDatabase.database().reference().child("Album").child(key!).child("photos")
+        let newLocation = mapRef.childByAutoId()
+        
+        print(latitude)
+        print(longitude)
+        
+        let photoDetail = ["day":day, "latitude":latitude, "longitude":longitude] as [String : Any]
+        newLocation.setValue([photoDetail])
+        
+        NotificationCenter.default.post(name: Notification.Name("AddLocation"), object: nil, userInfo: ["location":CLLocationCoordinate2D(latitude: latitude, longitude: longitude), "day": day])
+        
+       
+    }
 }
