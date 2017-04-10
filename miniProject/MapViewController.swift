@@ -16,7 +16,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     var photoDataModel:[PhotoDataModel]!
+    var day:String = ""
     var mapRef = FIRDatabase.database().reference().child("Album").child("photos")
+    
     
 
     @IBAction func addNewLocation(_ sender: UIBarButtonItem) {

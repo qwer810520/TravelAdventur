@@ -27,7 +27,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cfr-sk-nZ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1337" y="-170"/>
+            <point key="canvasLocation" x="1343" y="-216"/>
         </scene>
         <!--Travel Adventur-->
         <scene sceneID="6Tg-6C-43N">
@@ -373,7 +373,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -403,10 +403,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fk2-Qf-EW5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="3Mn-Zl-b7C"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="3Mn-Zl-b7C">
+                            <connections>
+                                <action selector="saveItem:" destination="Wpn-5u-pMH" id="CZC-6s-Va9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="backgroundImage" destination="WrJ-4L-Ffk" id="C1B-oI-YdA"/>
+                        <outlet property="dayTextField" destination="Jlo-hw-zEr" id="ZIm-gh-iZm"/>
+                        <outlet property="locationTextField" destination="fm1-fP-CpS" id="6g3-1X-kI4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="03x-MQ-cWK" userLabel="First Responder" sceneMemberID="firstResponder"/>

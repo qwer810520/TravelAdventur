@@ -78,19 +78,7 @@ class AlbumTableViewController: UITableViewController {
         let pushViewController = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
         
         pushViewController.photoDataModel = album[indexPath.row].photos
+        pushViewController.day = album[indexPath.row].day
         navigationController?.pushViewController(pushViewController, animated: true)
     }
-    
-    
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail" {
-//            print("test")
-////            let segue = segue.destination as! MapViewController
-////            if let indexPath = self.tableView.indexPathForSelectedRow {
-////                segue.photoDataModel = album[indexPath.row].photos
-////                
-////            }
-//        }
-//    }
 }
