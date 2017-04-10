@@ -14,7 +14,6 @@ import FirebaseDatabase
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     var albumRef = FIRDatabase.database().reference().child("Album")
-    var phohosRef = FIRDatabase.database().reference().child("photos")
     var imageView = UIImage()
     
     @IBOutlet weak var backgroundImage: UIImageView!

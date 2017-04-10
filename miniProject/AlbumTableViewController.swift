@@ -73,21 +73,24 @@ class AlbumTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("開始轉場")
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
-        let pushViewController = storyboard.instantiateViewController(withIdentifier: "MapViewController")
+        let pushViewController = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+        
+        pushViewController.photoDataModel = album[indexPath.row].photos
         navigationController?.pushViewController(pushViewController, animated: true)
     }
     
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            print("test")
-            let segue = segue.destination as! MapViewController
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                segue.photoDataModel = album[indexPath.row].photos
-                
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showDetail" {
+//            print("test")
+////            let segue = segue.destination as! MapViewController
+////            if let indexPath = self.tableView.indexPathForSelectedRow {
+////                segue.photoDataModel = album[indexPath.row].photos
+////                
+////            }
+//        }
+//    }
 }

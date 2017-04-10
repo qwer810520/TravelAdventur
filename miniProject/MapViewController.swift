@@ -8,12 +8,15 @@
 
 import UIKit
 import MapKit
+import FirebaseDatabase
+import FirebaseStorage
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
     var photoDataModel:[PhotoDataModel]!
+    var mapRef = FIRDatabase.database().reference().child("Album").child("photos")
     
 
     @IBAction func addNewLocation(_ sender: UIBarButtonItem) {
@@ -28,8 +31,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        
+        if photoDataModel.count != 0 {
         for x in 0...photoDataModel.count - 1 {
             addPointAnnotation(coordinate: photoDataModel[x].coordinate, day: photoDataModel[x].picturesDay)
+            }
         }
  
     }
