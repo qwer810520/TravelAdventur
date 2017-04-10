@@ -89,7 +89,6 @@
                                     <outlet property="albumMessage" destination="WUq-0K-cke" id="uDZ-Fy-GTv"/>
                                     <outlet property="albumTitle" destination="jdx-dt-Hfe" id="dgi-gw-Hqd"/>
                                     <outlet property="albumTitleImage" destination="hIN-Ck-WUo" id="dkz-Bb-dl8"/>
-                                    <segue destination="qzQ-jJ-ulk" kind="show" identifier="showDetail" id="w41-DE-miL"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -107,6 +106,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="gIq-jJ-N3J" kind="show" id="3Yn-zk-q7f"/>
+                        <segue destination="qzQ-jJ-ulk" kind="show" identifier="showDetail" id="4Zy-5S-sTr"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aRg-fG-o7k" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -283,7 +283,7 @@
         <!--Location-->
         <scene sceneID="QCR-dZ-YGa">
             <objects>
-                <viewController id="qzQ-jJ-ulk" customClass="MapViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" id="qzQ-jJ-ulk" customClass="MapViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iKr-Du-0zl"/>
                         <viewControllerLayoutGuide type="bottom" id="2LE-5U-3sp"/>

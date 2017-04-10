@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import UIKit
 class Album {
     var travelName: String
     var time: String
     var day: String
-    var titleImage: String
+    var titleImage: UIImage
     var photos:Array<PhotoDataModel>
     
-    init(travelName:String, time:String, day:String, titleImage:String, photos:Array<PhotoDataModel>) {
+    init(travelName:String, time:String, day:String, titleImage:UIImage, photos:Array<PhotoDataModel>) {
         self.travelName = travelName
         self.time = time
         self.day = day
@@ -22,3 +23,4 @@ class Album {
         self.photos = photos
     }
 }
+

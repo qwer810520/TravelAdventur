@@ -7,24 +7,54 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseStorage
+import FirebaseDatabase
 
 class AlbumTableViewController: UITableViewController {
     
-    var album = AlbumSeed().album
+    var album:[Album] = []
+    var albumRef = FIRDatabase.database().reference().child("Album")
     
-   
+    
     @IBAction func addAlbum(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
         let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddViewController")
         navigationController?.pushViewController(pushViewController, animated: true)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        observeAlbum()
     }
-
+    
+    
+    func observeAlbum() {
+        albumRef.observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+            if let dict = snapshot.value as? [String: AnyObject] {
+                let name = dict["travelName"] as? String
+                let time = dict["time"] as? String
+                let day = dict["day"] as? String
+                let imageURL = dict["image"] as? String
+                let url  = URL(string: imageURL!)
+                do {
+                    let data = try Data(contentsOf: url!)
+                    let picture = UIImage(data: data)
+                    self.album.append(Album(travelName: name!, time: time!, day: day!, titleImage: picture!, photos: [PhotoDataModel]()))
+                } catch {
+                    
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -37,18 +67,27 @@ class AlbumTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AlbumTableViewCell
         cell.albumTitle.text = album[indexPath.row].travelName
         cell.albumMessage.text = "\(album[indexPath.row].time) | \(album[indexPath.row].day) day"
-        cell.albumTitleImage.image = UIImage(named: album[indexPath.row].titleImage)
+        cell.albumTitleImage.image = album[indexPath.row].titleImage
         
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Album", bundle: nil)
+        let pushViewController = storyboard.instantiateViewController(withIdentifier: "MapViewController")
+        navigationController?.pushViewController(pushViewController, animated: true)
+    }
+    
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
+            print("test")
             let segue = segue.destination as! MapViewController
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 segue.photoDataModel = album[indexPath.row].photos
                 
             }
         }
-      }
-   }
+    }
+}
