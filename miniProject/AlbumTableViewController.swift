@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
@@ -15,8 +16,7 @@ class AlbumTableViewController: UITableViewController {
     
     var album:[Album] = []
     var albumRef = FIRDatabase.database().reference().child("Album")
-    
-    
+
     @IBAction func addAlbum(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
         let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddViewController")
@@ -35,6 +35,7 @@ class AlbumTableViewController: UITableViewController {
     
     func observeAlbum() {
         albumRef.observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+            var test = Album(key: "", travelName: "", time: "", day: "", titleImage: UIImage(), photos: [PhotoDataModel]())
             if let dict = snapshot.value as? [String: AnyObject] {
                 let key = snapshot.key
                 let name = dict["travelName"] as? String
@@ -42,19 +43,36 @@ class AlbumTableViewController: UITableViewController {
                 let day = dict["day"] as? String
                 let imageURL = dict["image"] as? String
                 let url  = URL(string: imageURL!)
+                let photosData = self.albumRef.child(key).child("photos")
                 do {
                     let data = try Data(contentsOf: url!)
                     let picture = UIImage(data: data)
-                    self.album.append(Album(key: key, travelName: name!, time: time!, day: day!, titleImage: picture!, photos: [PhotoDataModel]()))
+                     test = Album(key: key, travelName: name!, time: time!, day: day!, titleImage: picture!, photos: [PhotoDataModel]())
                 } catch {
                     
                 }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                photosData.observe(.childAdded, with: { (snapshot:FIRDataSnapshot) in
+                    print("近來做事情摟")
+                    var photoDetail = PhotoDataModel(photoID: "", photoName: ["", ""], picturesDay: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
+                    if let photoDict = snapshot.value as? [String: AnyObject] {
+                        let key = snapshot.key
+                        let photosName = photoDict["photosName"] as? Array<String>
+                        let day = photoDict["day"] as? String
+                        let latitude = photoDict["latitude"] as? Double
+                        let longitude = photoDict["longitude"] as? Double
+                        
+                        photoDetail = PhotoDataModel(photoID: key, photoName: photosName!, picturesDay: day!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
+                        test.photos.append(photoDetail)
+                    }
+                })
+
             }
+        self.album.append(test)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
         }
+        }
+
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

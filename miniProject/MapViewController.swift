@@ -49,7 +49,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func AddLocation(Not:Notification) {
         if let coordinate = Not.userInfo?["location"] as? CLLocationCoordinate2D {
             if let day = Not.userInfo?["day"] as? String {
-                let data = PhotoDataModel(photoName: [], picturesDay: day, coordinate: coordinate)
+                let data = PhotoDataModel(photoID: "", photoName: ["", ""], picturesDay: day, coordinate: coordinate)
                 photoDataModel.append(data)
                 addPointAnnotation(coordinate: coordinate, day: day)
             }

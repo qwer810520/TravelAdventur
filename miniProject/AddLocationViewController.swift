@@ -99,10 +99,10 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
         print(latitude)
         print(longitude)
         
-        let photoDetail = ["day":day, "latitude":latitude, "longitude":longitude] as [String : Any]
-        newLocation.setValue([photoDetail])
+        let photoDetail = ["photosName": ["", ""],"day":day, "latitude":latitude, "longitude":longitude] as [String : Any]
+        newLocation.setValue(photoDetail)
         
-        NotificationCenter.default.post(name: Notification.Name("AddLocation"), object: nil, userInfo: ["location":CLLocationCoordinate2D(latitude: latitude, longitude: longitude), "day": day])
+        NotificationCenter.default.post(name: Notification.Name("AddLocation"), object: nil, userInfo: ["photosName": ["" , ""], "location":CLLocationCoordinate2D(latitude: latitude, longitude: longitude), "day": day])
         
        
     }
