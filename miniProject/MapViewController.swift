@@ -65,7 +65,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func addPointAnnotation(coordinate:CLLocationCoordinate2D ,day:String) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-        annotation.title = "day \(day)"
+        annotation.title = "Day \(day)"
         annotation.subtitle = "座標： \(coordinate)"
         
         self.mapView.showAnnotations([annotation], animated: true)

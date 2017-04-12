@@ -11,6 +11,7 @@ import MapKit
 import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
+import SVProgressHUD
 
 class AlbumTableViewController: UITableViewController {
     
@@ -30,10 +31,15 @@ class AlbumTableViewController: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         observeAlbum()
     }
     
     func observeAlbum() {
+        SVProgressHUD.show(withStatus: "讀取中")
         albumRef.observe(.childAdded) { (snapshot: FIRDataSnapshot) in
             var test = Album(key: "", travelName: "", time: "", day: "", titleImage: UIImage(), photos: [PhotoDataModel]())
             if let dict = snapshot.value as? [String: AnyObject] {
@@ -70,6 +76,8 @@ class AlbumTableViewController: UITableViewController {
         self.album.append(test)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                SVProgressHUD.showSuccess(withStatus: "完成")
+                SVProgressHUD.dismiss(withDelay: 1.5)
         }
         }
 
