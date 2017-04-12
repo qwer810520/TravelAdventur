@@ -66,10 +66,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = "Day \(day)"
-        annotation.subtitle = "座標： \(coordinate)"
         
         self.mapView.showAnnotations([annotation], animated: true)
         self.mapView.selectAnnotation(annotation, animated: true)
+        mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 30000, 30000)
         
         
         mapView.addAnnotation(annotation)
@@ -93,25 +93,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             pinView?.annotation = annotation
         }
         
-        if annotation.title! == "day 1" {
+        if annotation.title! == "Day 1" {
             pinView?.pinTintColor = UIColor.red
-        } else if annotation.title! == "day 2" {
+        } else if annotation.title! == "Day 2" {
             pinView?.pinTintColor = UIColor.orange
-        } else if annotation.title! == "day 3" {
+        } else if annotation.title! == "Day 3" {
             pinView?.pinTintColor = UIColor.yellow
-        } else if annotation.title! == "day 4" {
+        } else if annotation.title! == "Day 4" {
             pinView?.pinTintColor = UIColor.green
-        } else if annotation.title! == "day 5" {
+        } else if annotation.title! == "Day 5" {
             pinView?.pinTintColor = UIColor.blue
-        } else if annotation.title! == "day 6" {
+        } else if annotation.title! == "Day 6" {
             pinView?.pinTintColor = UIColor.purple
-        } else if annotation.title! == "day 7" {
+        } else if annotation.title! == "Day 7" {
             pinView?.pinTintColor = UIColor.gray
-        } else if annotation.title! == "day 8" {
+        } else if annotation.title! == "Day 8" {
             pinView?.pinTintColor = UIColor.white
-        } else if annotation.title! == "day 9" {
+        } else if annotation.title! == "Day 9" {
             pinView?.pinTintColor = UIColor.black
-        } else if annotation.title! == "day 10" {
+        } else if annotation.title! == "Day 10" {
             pinView?.pinTintColor = UIColor.brown
         }
         

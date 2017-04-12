@@ -16,13 +16,10 @@ class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICol
     var testPhotoArray:Array<UIImage> = []
     
     @IBAction func addPhotos(_ sender: UIBarButtonItem) {
-        UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum)
-        let imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        let storyboard = UIStoryboard(name: "Album", bundle: nil)
+        let MobileAlbumCollectionViewController = storyboard.instantiateViewController(withIdentifier: "MobileAlbumCollectionViewController")
         
-        present(imagePicker, animated: true, completion: nil)
+        navigationController?.pushViewController(MobileAlbumCollectionViewController, animated: true)
     }
  
     
@@ -58,11 +55,4 @@ class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICol
         return cell
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let picture = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            testPhotoArray.append(picture)
-        }
-        dismiss(animated: true, completion: nil)
-        
-    }
 }

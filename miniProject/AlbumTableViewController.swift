@@ -35,11 +35,12 @@ class AlbumTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        SVProgressHUD.show(withStatus: "讀取中")
         observeAlbum()
     }
     
     func observeAlbum() {
-        SVProgressHUD.show(withStatus: "讀取中")
+        album.removeAll()
         albumRef.observe(.childAdded) { (snapshot: FIRDataSnapshot) in
             var test = Album(key: "", travelName: "", time: "", day: "", titleImage: UIImage(), photos: [PhotoDataModel]())
             if let dict = snapshot.value as? [String: AnyObject] {
