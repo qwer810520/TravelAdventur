@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jfG-dN-Rde">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -500,18 +500,18 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addCollectionView" destination="9zX-W7-3Fl" id="raT-Nr-EQt"/>
-                        <segue destination="Rgm-nZ-1QT" kind="show" id="zGy-rT-ZHh"/>
+                        <segue destination="Rgm-nZ-1QT" kind="show" id="3yw-HD-5cY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vpw-Kw-tst" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4084" y="547"/>
         </scene>
-        <!--Mobile Album Collection View Controller-->
+        <!--AddPhotos-->
         <scene sceneID="pHS-LD-p55">
             <objects>
                 <collectionViewController storyboardIdentifier="MobileAlbumCollectionViewController" id="Rgm-nZ-1QT" customClass="MobileAlbumCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="D5e-3S-IeI">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="D5e-3S-IeI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -524,14 +524,6 @@
                         <view key="backgroundView" contentMode="scaleToFill" id="i08-47-tvz">
                             <rect key="frame" x="0.0" y="-64" width="375" height="667"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2b9-oc-Sgx">
-                                    <rect key="frame" x="268" y="539" width="60" height="60"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="60"/>
-                                    <state key="normal" title="+"/>
-                                </button>
-                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <cells>
@@ -563,6 +555,13 @@
                             <outlet property="delegate" destination="Rgm-nZ-1QT" id="foM-25-OE8"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="AddPhotos" id="MsH-yg-hMj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="X7C-pJ-kW2">
+                            <connections>
+                                <action selector="addImageButton:" destination="Rgm-nZ-1QT" id="sfk-E6-lWj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tF-Hc-xQY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

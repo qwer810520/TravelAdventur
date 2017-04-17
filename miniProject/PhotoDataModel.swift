@@ -24,6 +24,16 @@ class PhotoDataModel {
     }
 }
 
+class modelPhotosData {
+    var image:UIImage
+    var bool:Bool
+    
+    init(image:UIImage, bool:Bool) {
+        self.image = image
+        self.bool = bool
+    }
+}
+
 
 
 struct AlbumSeed {

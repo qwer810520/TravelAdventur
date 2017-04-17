@@ -13,7 +13,8 @@ class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICol
     
     
     @IBOutlet weak var addCollectionView: UICollectionView!
-    var testPhotoArray:Array<UIImage> = []
+    
+    
     
     @IBAction func addPhotos(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
@@ -24,34 +25,54 @@ class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICol
  
     
     var photoArray:Array<String> = []
+    var imageArray:Array<UIImage> = []
+    var key:String?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addCollectionView.delegate = self
         addCollectionView.dataSource = self
-        
-        
-
-        // Do any additional setup after loading the view.
+        for x in photoArray {
+            if x != "" {
+            let image = UIImage(named: x)
+            imageArray.append(image!)
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+         NotificationCenter.default.addObserver(self, selector: #selector(ShowPhotoViewController.addPhoto(Not:)), name: Notification.Name("selectPhotos"), object: nil)
+    }
+    
+    func addPhoto(Not:Notification) {
+        if let photos = Not.userInfo?["photos"] as? [modelPhotosData] {
+            for i in photos {
+                imageArray.append(i.image)
+            }
+            print(imageArray.count)
+        }
+       addCollectionView.reloadData()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoArray.count
+        return imageArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ImageCollectionViewCell
-        cell.inputImage.image = UIImage(named: photoArray[indexPath.row])
+        if imageArray.count != 0 {
+        cell.inputImage.image = imageArray[indexPath.row]
+            
+        }
+        
         return cell
     }
     

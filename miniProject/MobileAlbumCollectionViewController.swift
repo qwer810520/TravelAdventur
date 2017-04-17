@@ -8,14 +8,35 @@
 
 import UIKit
 import Photos
+import FirebaseStorage
+import FirebaseDatabase
 
 class MobileAlbumCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var mobileImageArray = [UIImage]()
+    var modelImageArray = [modelPhotosData]()
+    var imageArrayCount = 0
+    var selectImageArray = [modelPhotosData]()
+    
 
+    @IBAction func addImageButton(_ sender: UIBarButtonItem) {
+        
+        navigationController?.popViewController(animated: true)
+        NotificationCenter.default.post(name: Notification.Name("selectPhotos"), object: nil, userInfo: ["photos": selectImageArray])
+    }
+    
+    func updataToFirebase() {
+        
+    }
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       grabPhotos()
+    collectionView?.allowsMultipleSelection = true
+        
     }
     
     
@@ -33,7 +54,9 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
             
                 for i in 0..<fetchResult.count {
                     imageManager.requestImage(for: fetchResult.object(at: i), targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, error) in
-                      self.mobileImageArray.append(image!)
+                        let photoData = modelPhotosData(image: image!, bool: false)
+                      self.modelImageArray.append(photoData)
+                        self.imageArrayCount += 1
                     })
                 }
             } else {
@@ -44,17 +67,40 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mobileImageArray.count
+        return modelImageArray.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MobilePhotosCollectionViewCell
         
-        cell.inputImage.image = mobileImageArray[indexPath.row]
-        
+        cell.inputImage.image = modelImageArray[indexPath.row].image
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath)
+        if  modelImageArray[indexPath.row].bool == false {
+            print("標記成橘色")
+            cell?.layer.borderWidth = 4.0
+            cell?.layer.borderColor = UIColor(red: 216.0/255.0, green: 74.0/255.0, blue: 32.0/255.0, alpha: 1.0).cgColor
+            modelImageArray[indexPath.row].bool = true
+            selectImageArray.append(modelImageArray[indexPath.row])
+            print(selectImageArray.count)
+        } else {
+            print("取消標記")
+            cell?.layer.borderWidth = 4.0
+            cell?.layer.borderColor = UIColor.clear.cgColor
+            modelImageArray[indexPath.row].bool = false
+            for i in 0...selectImageArray.count - 1 {
+                if selectImageArray[i].image == modelImageArray[indexPath.row].image  {
+                    selectImageArray.remove(at: i)
+                    break
+                }
+            }
+        }
+        collectionView.deselectItem(at: indexPath, animated: false)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
