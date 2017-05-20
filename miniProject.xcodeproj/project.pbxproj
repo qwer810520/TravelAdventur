@@ -198,7 +198,7 @@
 				TargetAttributes = {
 					39B915F11E84127C0093E1AF = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = WCFPRNZ278;
+						DevelopmentTeam = 2W4XUH8LUQ;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
@@ -432,7 +432,7 @@
 			baseConfigurationReference = 9D7055D84320DDEF201613D4 /* Pods-miniProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WCFPRNZ278;
+				DEVELOPMENT_TEAM = 2W4XUH8LUQ;
 				INFOPLIST_FILE = miniProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.min.miniProject;
@@ -446,7 +446,7 @@
 			baseConfigurationReference = 94F70BCB8EA9207F1D38BE18 /* Pods-miniProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WCFPRNZ278;
+				DEVELOPMENT_TEAM = 2W4XUH8LUQ;
 				INFOPLIST_FILE = miniProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.min.miniProject;

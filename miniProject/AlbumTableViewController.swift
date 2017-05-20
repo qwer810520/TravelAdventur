@@ -16,7 +16,7 @@ import SVProgressHUD
 class AlbumTableViewController: UITableViewController {
     
     var album:[Album] = []
-    var albumRef = FIRDatabase.database().reference().child("Album")
+    var albumRef = Database.database().reference().child("Album")
 
     @IBAction func addAlbum(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
@@ -44,7 +44,7 @@ class AlbumTableViewController: UITableViewController {
         SVProgressHUD.show(withStatus: "讀取中...")
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
             self.album.removeAll()
-            self.albumRef.observe(.childAdded) { (snapshot: FIRDataSnapshot) in
+            self.albumRef.observe(.childAdded) { (snapshot: DataSnapshot) in
                 var test = Album(key: "", travelName: "", time: "", day: "", titleImage: UIImage(), photos: [PhotoDataModel]())
                 if let dict = snapshot.value as? [String: AnyObject] {
                     let key = snapshot.key
@@ -61,7 +61,7 @@ class AlbumTableViewController: UITableViewController {
                     } catch {
                         
                     }
-                    photosData.observe(.childAdded, with: { (snapshot:FIRDataSnapshot) in
+                    photosData.observe(.childAdded, with: { (snapshot:DataSnapshot) in
                         print("近來做事情摟")
                         var photoDetail = PhotoDataModel(photoID: "", photoName: ["", ""], picturesDay: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
                         if let photoDict = snapshot.value as? [String: AnyObject] {

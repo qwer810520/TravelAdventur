@@ -13,7 +13,7 @@ import FirebaseDatabase
 
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    var albumRef = FIRDatabase.database().reference().child("Album")
+    var albumRef = Database.database().reference().child("Album")
     var imageView = UIImage()
     
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -122,10 +122,10 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
     
     func saveTextField(name:String, year:String, month:String, day:String, date:String, image:UIImage) {
-        let imageFilePath = "\(FIRAuth.auth()?.currentUser?.uid)/\(NSDate.timeIntervalSinceReferenceDate)"
+        let imageFilePath = "\(Auth.auth().currentUser?.uid)/\(NSDate.timeIntervalSinceReferenceDate)"
         let data = UIImageJPEGRepresentation(image, 0.01)
-        let metaData = FIRStorageMetadata()
-        FIRStorage.storage().reference().child(imageFilePath).put(data!, metadata: metaData) { (metadata, error) in
+        let metaData = StorageMetadata()
+        Storage.storage().reference().child(imageFilePath).putData(data!, metadata: metaData) { (metadata, error) in
             if error != nil {
                 return
             } else {

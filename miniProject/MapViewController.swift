@@ -18,7 +18,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var photoDataModel:[PhotoDataModel]!
     var day:String = ""
     var key:String?
-    var mapRef = FIRDatabase.database().reference().child("Album").child("photos")
+    var mapRef = Database.database().reference().child("Album").child("photos")
     
     
 
