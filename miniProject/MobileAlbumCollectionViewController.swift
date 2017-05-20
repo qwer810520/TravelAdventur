@@ -8,25 +8,48 @@
 
 import UIKit
 import Photos
+import Firebase
 import FirebaseStorage
 import FirebaseDatabase
+import SVProgressHUD
 
 class MobileAlbumCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var modelImageArray = [modelPhotosData]()
     var imageArrayCount = 0
     var selectImageArray = [modelPhotosData]()
+    var photoKey:String?
+    var key:String?
     
 
     @IBAction func addImageButton(_ sender: UIBarButtonItem) {
+        if selectImageArray.count != 0 {
+            for i in 0...selectImageArray.count - 1 {
+//                updataToFirebase(image: selectImageArray[i].image)
+            }
+            NotificationCenter.default.post(name: Notification.Name("selectPhotos"), object: nil, userInfo: ["photos": selectImageArray])
+        }
+        
         
         navigationController?.popViewController(animated: true)
-        NotificationCenter.default.post(name: Notification.Name("selectPhotos"), object: nil, userInfo: ["photos": selectImageArray])
     }
     
-    func updataToFirebase() {
-        
-    }
+//    func updataToFirebase(image: UIImage) {
+//        let imageFilePath = "\(FIRAuth.auth()!.currentUser!.uid)/\(NSDate.timeIntervalSinceReferenceDate)"
+//        let metadata = FIRStorageMetadata()
+//        let data = UIImageJPEGRepresentation(image, 0.01)
+//        
+//        FIRStorage.storage().reference().child(imageFilePath).put(data!, metadata: metadata) { (metadata, error) in
+//            if error != nil {
+//                return
+//            } else {
+//                let fileURL = metadata?.downloadURL()?.absoluteString
+//                let saveFilePath = FIRDatabase.database().reference().child("Album").child(self.key!).child("photos").child(self.photoKey!)
+//                
+//                saveFilePath.updateChildValues(["photosName": fileURL])
+//            }
+//        }
+//    }
     
     
     
@@ -60,7 +83,6 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
                     })
                 }
             } else {
-                print("你拿到相片了")
                 self.collectionView?.reloadData()
             }
         }

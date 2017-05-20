@@ -69,7 +69,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         self.mapView.showAnnotations([annotation], animated: true)
         self.mapView.selectAnnotation(annotation, animated: true)
-        mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 30000, 30000)
+        mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 15000, 15000)
         
         
         mapView.addAnnotation(annotation)
@@ -135,6 +135,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 if photoDetail.coordinate.latitude == annotationView.annotation?.coordinate.latitude && photoDetail.coordinate.longitude == annotationView.annotation?.coordinate.longitude {
                     if let segue = segue.destination as? ShowPhotoViewController {
                         segue.photoArray = photoDetail.photoName
+                        segue.photosKey = photoDetail.photoID
                     }
                 }
             }

@@ -18,15 +18,17 @@ class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @IBAction func addPhotos(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
-        let MobileAlbumCollectionViewController = storyboard.instantiateViewController(withIdentifier: "MobileAlbumCollectionViewController")
-        
-        navigationController?.pushViewController(MobileAlbumCollectionViewController, animated: true)
+        let mobileAlbumCollectionViewController = storyboard.instantiateViewController(withIdentifier: "MobileAlbumCollectionViewController") as? MobileAlbumCollectionViewController
+        mobileAlbumCollectionViewController?.key = key
+        mobileAlbumCollectionViewController?.photoKey = photosKey
+        navigationController?.pushViewController(mobileAlbumCollectionViewController!, animated: true)
     }
  
     
     var photoArray:Array<String> = []
     var imageArray:Array<UIImage> = []
     var key:String?
+    var photosKey:String?
     
 
     override func viewDidLoad() {
@@ -47,6 +49,12 @@ class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICol
          NotificationCenter.default.addObserver(self, selector: #selector(ShowPhotoViewController.addPhoto(Not:)), name: Notification.Name("selectPhotos"), object: nil)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.post(name: Notification.Name("photosArray"), object: nil, userInfo: ["photosName": imageArray])
+    }
+
+    
     func addPhoto(Not:Notification) {
         if let photos = Not.userInfo?["photos"] as? [modelPhotosData] {
             for i in photos {
@@ -56,7 +64,7 @@ class ShowPhotoViewController: UIViewController, UICollectionViewDelegate, UICol
         }
        addCollectionView.reloadData()
     }
-
+   
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

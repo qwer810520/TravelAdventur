@@ -62,7 +62,7 @@ class AlbumTableViewController: UITableViewController {
                         
                     }
                     photosData.observe(.childAdded, with: { (snapshot:FIRDataSnapshot) in
-                        print("近來做事情摟")
+//                        print("近來做事情摟")
                         var photoDetail = PhotoDataModel(photoID: "", photoName: ["", ""], picturesDay: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
                         if let photoDict = snapshot.value as? [String: AnyObject] {
                             let key = snapshot.key

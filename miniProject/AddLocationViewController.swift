@@ -19,6 +19,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var dayTextField: UITextField!
     var key:String?
+    var photoKey = ""
     
    
     
@@ -95,7 +96,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     func updataToDatabase(latitude:Double, longitude:Double, day:String) {
         let mapRef = FIRDatabase.database().reference().child("Album").child(key!).child("photos")
         let newLocation = mapRef.childByAutoId()
-        
+//        photoKey = String(describing: newLocation)
         print(latitude)
         print(longitude)
         

@@ -36,6 +36,7 @@
 		393041281E9886480070CC98 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		3930412C1E9902B00070CC98 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		3930412E1E99D65F0070CC98 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = miniProject/MyPlayground.playground; sourceTree = "<group>"; };
+		395038721EAD94A200323EDB /* miniProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = miniProject.entitlements; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
 		3980920D1E8BEEEF00DAD198 /* ShowPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		39B915F41E84127C0093E1AF /* miniProject */ = {
 			isa = PBXGroup;
 			children = (
+				395038721EAD94A200323EDB /* miniProject.entitlements */,
 				39B915F51E84127C0093E1AF /* AppDelegate.swift */,
 				39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */,
 				39B915F91E84127C0093E1AF /* Main.storyboard */,
@@ -198,10 +200,13 @@
 				TargetAttributes = {
 					39B915F11E84127C0093E1AF = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = WCFPRNZ278;
+						DevelopmentTeam = 8H7X36TF25;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -432,7 +437,8 @@
 			baseConfigurationReference = 9D7055D84320DDEF201613D4 /* Pods-miniProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WCFPRNZ278;
+				CODE_SIGN_ENTITLEMENTS = miniProject/miniProject.entitlements;
+				DEVELOPMENT_TEAM = 8H7X36TF25;
 				INFOPLIST_FILE = miniProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.min.miniProject;
@@ -446,7 +452,8 @@
 			baseConfigurationReference = 94F70BCB8EA9207F1D38BE18 /* Pods-miniProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WCFPRNZ278;
+				CODE_SIGN_ENTITLEMENTS = miniProject/miniProject.entitlements;
+				DEVELOPMENT_TEAM = 8H7X36TF25;
 				INFOPLIST_FILE = miniProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.min.miniProject;

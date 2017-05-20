@@ -15,5 +15,7 @@ target 'miniProject' do
     pod 'Firebase/Storage'
     pod 'SVProgressHUD'
     pod 'PreviewTransition'
+    pod 'GoogleMaps'
+    pod 'GooglePlaces'
 
 end
