@@ -93,7 +93,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     }
     
     func updataToDatabase(latitude:Double, longitude:Double, day:String) {
-        let mapRef = FIRDatabase.database().reference().child("Album").child(key!).child("photos")
+        let mapRef = Database.database().reference().child("Album").child(key!).child("photos")
         let newLocation = mapRef.childByAutoId()
         
         print(latitude)
