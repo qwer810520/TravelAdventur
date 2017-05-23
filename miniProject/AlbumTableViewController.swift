@@ -40,28 +40,78 @@ class AlbumTableViewController: UITableViewController {
         observeAlbum()
     }
     
+//    func observeAlbum() {
+//        SVProgressHUD.show(withStatus: "讀取中...")
+//        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
+//            self.album.removeAll()
+//            self.albumRef.observe(.value) { (snapshot: DataSnapshot) in
+//                var test = Album(key: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: UIImage(), photos: [PhotoDataModel]())
+//                if let dictTmp = snapshot.value as? [String: AnyObject] {
+//                    let dict = Array(dictTmp.values)[0] as! Dictionary<String, AnyObject>
+//                    //                    let key = snapshot.value
+//                    let key = Array(dictTmp.keys)[0]
+//                    let name = dict["travelName"] as? String
+//                    let startDate = dict["startDate"] as? Double
+//                    let endDate = dict["endDate"] as? Double
+//                    let imageURL = dict["image"] as? String
+//                    let url  = URL(string: imageURL!)
+//                    let photosData = self.albumRef.child(key).child("photos")
+//                    do {
+//                        let data = try Data(contentsOf: url!)
+//                        let picture = UIImage(data: data)
+//                        test = Album(key: key, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: picture!, photos: [PhotoDataModel]())
+//                    } catch {
+//                        
+//                    }
+//                    photosData.observe(.value, with: { (snapshot:DataSnapshot) in
+//                        print("近來做事情摟")
+//                        var photoDetail = PhotoDataModel(photoID: "", photoName: ["", ""], picturesDay: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
+//                        if let photoDict = snapshot.value as? [String: AnyObject] {
+//                            let key = snapshot.key
+//                            let photosName = photoDict["photosName"] as? Array<String>
+//                            let day = photoDict["day"] as? String
+//                            let latitude = photoDict["latitude"] as? Double
+//                            let longitude = photoDict["longitude"] as? Double
+//                            
+//                            photoDetail = PhotoDataModel(photoID: key, photoName: photosName!, picturesDay: day!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
+//                            test.photos.append(photoDetail)
+//                        }
+//                    })
+//                    
+//                }
+//                self.album.append(test)
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                    SVProgressHUD.showSuccess(withStatus: "完成")
+//                    SVProgressHUD.dismiss(withDelay: 1.5)
+//                }
+//            }
+//        }
+//    }
+    
+    
     func observeAlbum() {
         SVProgressHUD.show(withStatus: "讀取中...")
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
             self.album.removeAll()
-            self.albumRef.observe(.childAdded) { (snapshot: DataSnapshot) in
-                var test = Album(key: "", travelName: "", time: "", day: "", titleImage: UIImage(), photos: [PhotoDataModel]())
+            self.albumRef.observe(.value) { (snapshot: DataSnapshot) in
+                var test = Album(key: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: UIImage(), photos: [PhotoDataModel]())
                 if let dict = snapshot.value as? [String: AnyObject] {
                     let key = snapshot.key
                     let name = dict["travelName"] as? String
-                    let time = dict["time"] as? String
-                    let day = dict["day"] as? String
+                    let startDate = dict["startDate"] as? Double
+                    let endDate = dict["endDate"] as? Double
                     let imageURL = dict["image"] as? String
                     let url  = URL(string: imageURL!)
                     let photosData = self.albumRef.child(key).child("photos")
                     do {
                         let data = try Data(contentsOf: url!)
                         let picture = UIImage(data: data)
-                        test = Album(key: key, travelName: name!, time: time!, day: day!, titleImage: picture!, photos: [PhotoDataModel]())
+                        test = Album(key: key, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: picture!, photos: [PhotoDataModel]())
                     } catch {
                         
                     }
-                    photosData.observe(.childAdded, with: { (snapshot:DataSnapshot) in
+                    photosData.observe(.value, with: { (snapshot:DataSnapshot) in
                         print("近來做事情摟")
                         var photoDetail = PhotoDataModel(photoID: "", photoName: ["", ""], picturesDay: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
                         if let photoDict = snapshot.value as? [String: AnyObject] {
@@ -78,15 +128,13 @@ class AlbumTableViewController: UITableViewController {
                     
                 }
                 self.album.append(test)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    SVProgressHUD.showSuccess(withStatus: "完成")
-                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        SVProgressHUD.showSuccess(withStatus: "完成")
+                        SVProgressHUD.dismiss(withDelay: 1.5)
                 }
             }
         }
-        
-
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -99,10 +147,22 @@ class AlbumTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AlbumTableViewCell
-        cell.albumTitle.text = album[indexPath.row].travelName
-        cell.albumMessage.text = "\(album[indexPath.row].time) | \(album[indexPath.row].day) day"
-        cell.albumTitleImage.image = album[indexPath.row].titleImage
-        
+        print(album.count)
+//        if album.count == 0 {
+//            cell.backView.isHidden = true
+//            cell.albumTitle.isHidden = true
+//            cell.albumMessage.isHidden = true
+//            cell.albumTitleImage.isHidden = true
+//        } else {
+//            cell.backView.isHidden = false
+//            cell.albumTitle.isHidden = false
+//            cell.albumMessage.isHidden = false
+//            cell.albumTitleImage.isHidden = false
+//            cell.albumTitle.text = album[indexPath.row].travelName
+//            cell.albumMessage.text = "\(album[indexPath.row].startDate) ~ \(album[indexPath.row].endDate)"
+//            cell.albumTitleImage.image = album[indexPath.row].titleImage
+//            
+//        }
         return cell
     }
     
@@ -112,7 +172,7 @@ class AlbumTableViewController: UITableViewController {
         let pushViewController = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
         
         pushViewController.photoDataModel = album[indexPath.row].photos
-        pushViewController.day = album[indexPath.row].day
+        pushViewController.day = album[indexPath.row].endDate
         pushViewController.key = album[indexPath.row].key
         print(album[indexPath.row].key)
         navigationController?.pushViewController(pushViewController, animated: true)

@@ -16,7 +16,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     var photoDataModel:[PhotoDataModel]!
-    var day:String = ""
+    var day:Double?
     var key:String?
     var mapRef = Database.database().reference().child("Album").child("photos")
     

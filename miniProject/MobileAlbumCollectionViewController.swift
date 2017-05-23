@@ -24,13 +24,6 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
         NotificationCenter.default.post(name: Notification.Name("selectPhotos"), object: nil, userInfo: ["photos": selectImageArray])
     }
     
-    func updataToFirebase() {
-        
-    }
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
