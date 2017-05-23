@@ -11,12 +11,14 @@ import MapKit
 
 class PhotoDataModel {
     //    var name:String
+    var albumID:String
     var photoID:String
     var photoName: Array<String>
     var picturesDay: String
     var coordinate:CLLocationCoordinate2D
     
-    init(photoID:String, photoName: Array<String>, picturesDay:String, coordinate:CLLocationCoordinate2D) {
+    init(albumID:String, photoID:String, photoName: Array<String>, picturesDay:String, coordinate:CLLocationCoordinate2D) {
+        self.albumID = albumID
         self.photoID = photoID
         self.photoName = photoName
         self.picturesDay = picturesDay

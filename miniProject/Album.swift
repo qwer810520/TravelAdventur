@@ -27,24 +27,13 @@ class Album {
 }
 
 class Library {
-    static func dateToString(date: Date) -> String {
-        return String(describing: date)
-    }
     
-    static func stringToDate(dateString: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "Chinese") as Locale
-        
-        
-        return dateFormatter.date(from: dateString)!
-    }
-    
-    static func dateToShowString(date:Date) -> String {
+    static func dateToShowString(date:TimeInterval) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.dateFormat = "yyyy年MM月dd日"
         
-        return dateFormatter.string(from:date)
+        return dateFormatter.string(from: Date(timeIntervalSince1970: date))
     }
 }
 

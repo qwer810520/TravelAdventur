@@ -9,9 +9,9 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
+import FirebaseDatabase
 
 class LoginViewController: UIViewController {
-
     
     @IBAction func login(_ sender: UIButton) {
         let fbLoginManager = FBSDKLoginManager()
@@ -35,9 +35,11 @@ class LoginViewController: UIViewController {
                     alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                     self.present(alertController, animated: true, completion: nil)
                     return
+                } else {
+                    self.performSegue(withIdentifier: "inside", sender: nil)
                 }
                 
-                self.performSegue(withIdentifier: "inside", sender: nil)
+                
             })
         }
         

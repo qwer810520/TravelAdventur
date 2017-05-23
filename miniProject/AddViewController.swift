@@ -12,7 +12,7 @@ import FirebaseStorage
 import FirebaseDatabase
 
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
-    
+    let UserRef = Database.database().reference().child("User")
     var albumRef = Database.database().reference().child("Album")
     var imageView = UIImage()
     
@@ -132,6 +132,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 let newAlbum = self.albumRef.childByAutoId()
                 let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL!] as [String : Any]
                 newAlbum.setValue(albumData)
+            self.UserRef.child((Auth.auth().currentUser?.uid)!).setValue(["participateAlbum":newAlbum])
             }
         }
     }
