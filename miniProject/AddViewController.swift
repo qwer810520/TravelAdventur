@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
+import SVProgressHUD
 
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     var UserRef = Database.database().reference().child("User")
@@ -33,6 +34,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     
     @IBAction func startDateBegin(_ sender: UITextField) {
         inputDatePickerSet(textField: sender)
+    
     }
     
     @IBAction func endDateBegin(_ sender: UITextField) {
@@ -50,8 +52,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     @IBAction func saveItem(_ sender: UIBarButtonItem) {
         
         checkInputValue(name: nameTextField.text!, startDate: startDate!, endDate: endDate!, image: imageView)
-        
-        navigationController?.popViewController(animated: true)
+        SVProgressHUD.show(withStatus: "新增中...")
     }
     
     var startDateDataPicker = UIDatePicker()
@@ -72,6 +73,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         startDateTextField.delegate = self
         endDateTextField.delegate = self
     }
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == nameTextField {
@@ -104,23 +106,29 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
     
     func checkInputValue(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage?) {
+        
         if name == "" || startDateTextField.text == "" || endDateTextField.text == "" {
             let alert = UIAlertController(title: "錯誤", message: "輸入框請勿空白", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else {
-           if image == nil {
-            let alert = UIAlertController(title: "錯誤", message: "請設定封面相片", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-            present(alert, animated: true, completion: nil)
-        } else {
-            print("所有值都沒問題")
-            saveTextField(name: name, startDate: startDate, endDate: endDate, image: image!)
+            if image == nil {
+                let alert = UIAlertController(title: "錯誤", message: "請設定封面相片", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+                present(alert, animated: true, completion: nil)
+            } else {
+                saveTextField(name: name, startDate: startDate, endDate: endDate, image: image!, completion: {
+                    SVProgressHUD.dismiss()
+                    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    
+                })
             }
         }
     }
     
-   func saveTextField(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage) {
+    func saveTextField(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion:@escaping () -> ()) {
         let imageFilePath = "\(Auth.auth().currentUser?.uid)/\(NSDate.timeIntervalSinceReferenceDate)"
         let data = UIImageJPEGRepresentation(image, 0.01)
         let metaData = StorageMetadata()
@@ -132,8 +140,14 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 let newAlbum = self.albumRef.childByAutoId().key
                 let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL!] as [String : Any]
                 self.albumRef.child(newAlbum).setValue(albumData)
-                let userAlbumID = ["participateAlbum":[newAlbum]]
-               self.UserRef.child((Auth.auth().currentUser?.uid)!).updateChildValues(userAlbumID)
+                if UserDefaults.standard.bool(forKey: "firstAddAlbum") == true {
+                    self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([newAlbum: newAlbum])
+                    UserDefaults.standard.set(false, forKey: "firstAddAlbum")
+                    completion()
+                } else {
+            self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").updateChildValues([newAlbum: newAlbum])
+                    completion()
+                }
             }
         }
     }

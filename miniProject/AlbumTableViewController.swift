@@ -18,12 +18,12 @@ class AlbumTableViewController: UITableViewController {
     var album:[Album] = []
     var albumRef = Database.database().reference().child("Album")
     var UserRef = Database.database().reference().child("User")
+    var loadData = false
 
     @IBAction func addAlbum(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
         let pushViewController = storyboard.instantiateViewController(withIdentifier: "AddViewController")
         navigationController?.pushViewController(pushViewController, animated: true)
-        
         
     }
     
@@ -40,35 +40,54 @@ class AlbumTableViewController: UITableViewController {
             
             UserDefaults.standard.set(true, forKey: "firstLogin")
         }
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+      
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-            checkUser(userId: (Auth.auth().currentUser?.uid)!)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
+            SVProgressHUD.show(withStatus: "讀取中...")
+            self.checkUser(userId: (Auth.auth().currentUser?.uid)!)
+        }
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        albumRef.removeAllObservers()
+        UserRef.removeAllObservers()
+    }
+    
     func checkUser(userId: String) {
-        SVProgressHUD.show(withStatus: "讀取中...")
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
             self.UserRef.observe(.value, with: { (snapshot) in
                 if let userDict = snapshot.value as? [String: AnyObject] {
-                    print(userDict)
+                   self.album.removeAll()
                     for i in 0..<userDict.count {
+                        print(Array(userDict.keys)[i])
                         if Array(userDict.keys)[i] == userId {
                             print(Array(userDict.keys)[i])
+                            print(userId)
                             if let getTheAlbumId = Array(userDict.values)[i] as? [String: AnyObject] {
-                                print(getTheAlbumId)
-                                if let albumID = getTheAlbumId["participateAlbum"] as? Array<String> {
-                                    for x in albumID {
-                                    self.observeAlbum(albumId: x)
+                                if let albumID = getTheAlbumId["participateAlbum"] as? [String:String] {
+                                    self.loadData = true
+                                    for x in 0..<albumID.count {
+                                    self.observeAlbum(albumId: Array(albumID.keys)[x])
+                                    }
                                     }
                                 }
                             }
+                        }
+                    if self.loadData == false {
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                            SVProgressHUD.showSuccess(withStatus: "完成")
+                            SVProgressHUD.dismiss(withDelay: 1.5)
                         }
                     }
                 }
@@ -83,9 +102,9 @@ class AlbumTableViewController: UITableViewController {
             self.albumRef.observe(.value, with: { (snapshot) in
                 if let dict = snapshot.value as? [String:AnyObject] {
                     for i in 0..<dict.count {
+                        if Array(dict.keys)[i] == albumId {
                         if let getDetail = Array(dict.values)[i] as? [String:AnyObject] {
-                            print(getDetail)
-                            let albumKey = Array(getDetail.keys)[i]
+                            let albumKey = Array(dict.keys)[i]
                             let name = getDetail["travelName"] as? String
                             let startDate = getDetail["startDate"] as? Double
                             let endDate = getDetail["endDate"] as? Double
@@ -128,7 +147,8 @@ class AlbumTableViewController: UITableViewController {
                         }
                     }
                 }
-            })
+            }
+        })
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
