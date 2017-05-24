@@ -12,7 +12,7 @@ import FirebaseStorage
 import FirebaseDatabase
 
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
-    let UserRef = Database.database().reference().child("User")
+    var UserRef = Database.database().reference().child("User")
     var albumRef = Database.database().reference().child("Album")
     var imageView = UIImage()
     
@@ -116,7 +116,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         } else {
             print("所有值都沒問題")
             saveTextField(name: name, startDate: startDate, endDate: endDate, image: image!)
-                    }
+            }
         }
     }
     
@@ -129,10 +129,11 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 return
             } else {
                 let fileURL = metadata?.downloadURLs![0].absoluteString
-                let newAlbum = self.albumRef.childByAutoId()
+                let newAlbum = self.albumRef.childByAutoId().key
                 let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL!] as [String : Any]
-                newAlbum.setValue(albumData)
-            self.UserRef.child((Auth.auth().currentUser?.uid)!).setValue(["participateAlbum":newAlbum])
+                self.albumRef.child(newAlbum).setValue(albumData)
+                let userAlbumID = ["participateAlbum":[newAlbum]]
+               self.UserRef.child((Auth.auth().currentUser?.uid)!).updateChildValues(userAlbumID)
             }
         }
     }

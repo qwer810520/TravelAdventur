@@ -17,6 +17,7 @@ class AlbumTableViewController: UITableViewController {
     
     var album:[Album] = []
     var albumRef = Database.database().reference().child("Album")
+    var UserRef = Database.database().reference().child("User")
 
     @IBAction func addAlbum(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Album", bundle: nil)
@@ -32,73 +33,40 @@ class AlbumTableViewController: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        
+        if UserDefaults.standard.bool(forKey: "firstLogin") == false {
+            let newUser = UserRef.child((Auth.auth().currentUser?.uid)!)
+            let userId = ["userId": Auth.auth().currentUser?.uid]
+            newUser.setValue(userId)
+            
+            UserDefaults.standard.set(true, forKey: "firstLogin")
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+            checkUser(userId: (Auth.auth().currentUser?.uid)!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        observeAlbum()
+        
     }
     
-    func observeAlbum() {
+    func checkUser(userId: String) {
         SVProgressHUD.show(withStatus: "讀取中...")
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
-            self.album.removeAll()
-            var loadAlbumModel = Album(key: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: UIImage(), photos: [PhotoDataModel]())
-            var loadPhotoModel = PhotoDataModel(albumID: String(), photoID: String(), photoName: [String](), picturesDay: String(), coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(), longitude: CLLocationDegrees()))
-            print(self.albumRef)
-            self.albumRef.observe(.value, with: { (snapshot) in
-                if let dict = snapshot.value as? [String:AnyObject] {
-                    print(dict)
-                    if dict.count == 0 {
-                        DispatchQueue.main.async {
-                            SVProgressHUD.showSuccess(withStatus: "完成")
-                            SVProgressHUD.dismiss(withDelay: 1.5)
-                        }
-                    } else {
-                        for i in 0..<dict.count {
-                            if let getDetail = Array(dict.values)[i] as? [String:AnyObject] {
-                                print(getDetail)
-                                let albumKey = Array(getDetail.keys)[i]
-                                let name = getDetail["travelName"] as? String
-                                let startDate = getDetail["startDate"] as? Double
-                                let endDate = getDetail["endDate"] as? Double
-                                let titleImage = getDetail["image"] as? String
-                                let titleImageURL = URL(string: titleImage!)
-                                do {
-                                    let data = try Data(contentsOf: titleImageURL!)
-                                    let picture = UIImage(data: data)
-                                    loadAlbumModel = Album(key: albumKey, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: picture!, photos: [PhotoDataModel]())
-                                } catch {
-                                    
-                                }
-                                let photoDate = self.albumRef.child(albumKey).child("photos")
-                                photoDate.observe(.value, with: { (snapshot) in
-                                    if let photodict = snapshot.value as? [String: AnyObject] {
-                                        for i in 0..<photodict.count {
-                                            if let getPhotoDetail = Array(photodict.values)[i] as? [String: AnyObject] {
-                                                let key = Array(getPhotoDetail.keys)[i]
-                                                let photoName = getPhotoDetail["photoName"] as? Array<String>
-                                                let day = getPhotoDetail["day"] as? String
-                                                let latitude = getPhotoDetail["latitude"] as? Double
-                                                let longitude = getPhotoDetail["longitude"] as? Double
-                                                loadPhotoModel = PhotoDataModel(albumID: albumKey, photoID: key, photoName: photoName!, picturesDay: day!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
-                                                
-                                                for i in self.album {
-                                                    if loadPhotoModel.albumID == i.key {
-                                                        i.photos.append(loadPhotoModel)
-                                                    }
-                                                }
-                                            }
-                                        }
+            self.UserRef.observe(.value, with: { (snapshot) in
+                if let userDict = snapshot.value as? [String: AnyObject] {
+                    print(userDict)
+                    for i in 0..<userDict.count {
+                        if Array(userDict.keys)[i] == userId {
+                            print(Array(userDict.keys)[i])
+                            if let getTheAlbumId = Array(userDict.values)[i] as? [String: AnyObject] {
+                                print(getTheAlbumId)
+                                if let albumID = getTheAlbumId["participateAlbum"] as? Array<String> {
+                                    for x in albumID {
+                                    self.observeAlbum(albumId: x)
                                     }
-                                })
-                                self.album.append(loadAlbumModel)
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                    SVProgressHUD.showSuccess(withStatus: "完成")
-                                    SVProgressHUD.dismiss(withDelay: 1.5)
-                                    
                                 }
                             }
                         }
@@ -106,6 +74,61 @@ class AlbumTableViewController: UITableViewController {
                 }
             })
         }
+    }
+    
+    func observeAlbum(albumId:String) {
+            self.album.removeAll()
+            var loadAlbumModel = Album(key: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: UIImage(), photos: [PhotoDataModel]())
+            var loadPhotoModel = PhotoDataModel(albumID: String(), photoID: String(), photoName: [String](), picturesDay: String(), coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(), longitude: CLLocationDegrees()))
+            self.albumRef.observe(.value, with: { (snapshot) in
+                if let dict = snapshot.value as? [String:AnyObject] {
+                    for i in 0..<dict.count {
+                        if let getDetail = Array(dict.values)[i] as? [String:AnyObject] {
+                            print(getDetail)
+                            let albumKey = Array(getDetail.keys)[i]
+                            let name = getDetail["travelName"] as? String
+                            let startDate = getDetail["startDate"] as? Double
+                            let endDate = getDetail["endDate"] as? Double
+                            let titleImage = getDetail["image"] as? String
+                            let titleImageURL = URL(string: titleImage!)
+                            do {
+                                let data = try Data(contentsOf: titleImageURL!)
+                                let picture = UIImage(data: data)
+                                loadAlbumModel = Album(key: albumKey, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: picture!, photos: [PhotoDataModel]())
+                            } catch {
+                                
+                            }
+                            let photoDate = self.albumRef.child(albumKey).child("photos")
+                            photoDate.observe(.value, with: { (snapshot) in
+                                if let photodict = snapshot.value as? [String: AnyObject] {
+                                    for i in 0..<photodict.count {
+                                        if let getPhotoDetail = Array(photodict.values)[i] as? [String: AnyObject] {
+                                            let key = Array(getPhotoDetail.keys)[i]
+                                            let photoName = getPhotoDetail["photoName"] as? Array<String>
+                                            let day = getPhotoDetail["day"] as? String
+                                            let latitude = getPhotoDetail["latitude"] as? Double
+                                            let longitude = getPhotoDetail["longitude"] as? Double
+                                            loadPhotoModel = PhotoDataModel(albumID: albumKey, photoID: key, photoName: photoName!, picturesDay: day!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
+                                            
+                                            for i in self.album {
+                                                if loadPhotoModel.albumID == i.key {
+                                                    i.photos.append(loadPhotoModel)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+                            self.album.append(loadAlbumModel)
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                                SVProgressHUD.showSuccess(withStatus: "完成")
+                                SVProgressHUD.dismiss(withDelay: 1.5)
+                            }
+                        }
+                    }
+                }
+            })
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -130,7 +153,7 @@ class AlbumTableViewController: UITableViewController {
             cell.albumMessage.isHidden = false
             cell.albumTitleImage.isHidden = false
             cell.albumTitle.text = album[indexPath.row].travelName
-            cell.albumMessage.text = "\(Library.dateToShowString(date: album[indexPath.row].startDate)) ~ \(Library.dateToShowString(date: album[indexPath.row].endDate))"
+            cell.albumMessage.text = "\(Library.dateToShowString(date: album[indexPath.row].startDate)) ~ \(Library.endDateToShowString(date: album[indexPath.row].endDate))"
             cell.albumTitleImage.image = album[indexPath.row].titleImage
             
         }

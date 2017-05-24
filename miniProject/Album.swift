@@ -35,6 +35,14 @@ class Library {
         
         return dateFormatter.string(from: Date(timeIntervalSince1970: date))
     }
+    
+    static func endDateToShowString(date:TimeInterval) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = "dd日"
+        
+        return dateFormatter.string(from: Date(timeIntervalSince1970: date))
+    }
 }
 
 extension AddViewController {
