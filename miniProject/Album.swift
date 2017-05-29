@@ -26,24 +26,6 @@ class Album {
     }
 }
 
-class Library {
-    
-    static func dateToShowString(date:TimeInterval) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = "yyyy年MM月dd日"
-        
-        return dateFormatter.string(from: Date(timeIntervalSince1970: date))
-    }
-    
-    static func endDateToShowString(date:TimeInterval) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = "dd日"
-        
-        return dateFormatter.string(from: Date(timeIntervalSince1970: date))
-    }
-}
 
 extension AddViewController {
     func setToolBar(textField: UITextField) {

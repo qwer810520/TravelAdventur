@@ -17,5 +17,6 @@ target 'miniProject' do
     pod 'PreviewTransition'
     pod 'GoogleMaps'
     pod 'GooglePlaces'
+    pod 'GoogleSignIn'
 
 end

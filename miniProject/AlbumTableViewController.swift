@@ -50,10 +50,15 @@ class AlbumTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
-            SVProgressHUD.show(withStatus: "讀取中...")
-            self.checkUser(userId: (Auth.auth().currentUser?.uid)!)
+        if Library.isInternetOk() == true {
+            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
+                SVProgressHUD.show(withStatus: "讀取中...")
+                self.checkUser(userId: (Auth.auth().currentUser?.uid)!)
+            }
+        } else {
+            present(Library.AlertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, button2switch: false, checkButton2: "", checkButton2Type: .default), animated: true, completion: nil)
         }
+        
         
     }
     

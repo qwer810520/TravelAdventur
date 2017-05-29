@@ -129,7 +129,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
     
     func saveTextField(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion:@escaping () -> ()) {
-        let imageFilePath = "\(Auth.auth().currentUser?.uid)/\(NSDate.timeIntervalSinceReferenceDate)"
+        let imageFilePath = "\((Auth.auth().currentUser?.uid)!)/\(NSDate.timeIntervalSinceReferenceDate)"
         let data = UIImageJPEGRepresentation(image, 0.01)
         let metaData = StorageMetadata()
         Storage.storage().reference().child(imageFilePath).putData(data!, metadata: metaData) { (metadata, error) in

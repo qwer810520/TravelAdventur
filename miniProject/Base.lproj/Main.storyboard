@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Axr-4w-LmI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Axr-4w-LmI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -24,35 +26,56 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="pt1-7f-NF2">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nmk-LC-J3X">
-                                <rect key="frame" x="157" y="557" width="60" height="60"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="TNh-Od-Jbm">
+                                <rect key="frame" x="77.5" y="563.5" width="220" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nmk-LC-J3X">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="PMH-u3-inf"/>
+                                            <constraint firstAttribute="width" constant="60" id="mSj-xz-lIk"/>
+                                            <constraint firstAttribute="width" secondItem="Nmk-LC-J3X" secondAttribute="height" multiplier="1:1" id="vQw-SN-ch7"/>
+                                        </constraints>
+                                        <state key="normal" image="facebook"/>
+                                        <connections>
+                                            <action selector="login:" destination="Axr-4w-LmI" eventType="touchUpInside" id="bqy-JP-S3u"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aY3-4v-Hsk">
+                                        <rect key="frame" x="160" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="aY3-4v-Hsk" secondAttribute="height" multiplier="1:1" id="o2y-ZT-W43"/>
+                                            <constraint firstAttribute="width" constant="60" id="pSn-wr-sfE"/>
+                                        </constraints>
+                                        <state key="normal" image="google"/>
+                                        <connections>
+                                            <action selector="googleLognInButton:" destination="Axr-4w-LmI" eventType="touchUpInside" id="pHd-ja-9cx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="lud-lI-pBe"/>
-                                    <constraint firstAttribute="width" constant="60" id="z0W-Bh-EVJ"/>
+                                    <constraint firstAttribute="height" constant="60" id="3Md-2s-Ogj"/>
+                                    <constraint firstAttribute="width" constant="220" id="aWi-EU-8cM"/>
                                 </constraints>
-                                <state key="normal" image="FBlogo"/>
-                                <connections>
-                                    <action selector="login:" destination="Axr-4w-LmI" eventType="touchUpInside" id="bqy-JP-S3u"/>
-                                </connections>
-                            </button>
+                            </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OrLine" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-UZ-GmB">
-                                <rect key="frame" x="37.5" y="509" width="300" height="18"/>
+                                <rect key="frame" x="37" y="521.5" width="300" height="15"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="kC9-Tm-WIy"/>
+                                    <constraint firstAttribute="height" constant="15" id="kC9-Tm-WIy"/>
                                     <constraint firstAttribute="width" constant="300" id="r1g-Wp-stm"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Nmk-LC-J3X" firstAttribute="top" secondItem="aZQ-UZ-GmB" secondAttribute="bottom" constant="30" id="75z-hh-kZ0"/>
-                            <constraint firstItem="Nmk-LC-J3X" firstAttribute="centerX" secondItem="8zR-Sp-deC" secondAttribute="centerX" id="CBe-8T-n1X"/>
+                            <constraint firstItem="TNh-Od-Jbm" firstAttribute="top" secondItem="aZQ-UZ-GmB" secondAttribute="bottom" multiplier="1.05" id="CwU-Jf-6U4"/>
                             <constraint firstAttribute="trailing" secondItem="pt1-7f-NF2" secondAttribute="trailing" id="IMP-0H-cR7"/>
                             <constraint firstItem="aZQ-UZ-GmB" firstAttribute="centerX" secondItem="8zR-Sp-deC" secondAttribute="centerX" id="Mbu-ka-FZf"/>
                             <constraint firstItem="pt1-7f-NF2" firstAttribute="top" secondItem="8zR-Sp-deC" secondAttribute="top" id="eP5-P0-AuY"/>
                             <constraint firstItem="d1Q-wm-bow" firstAttribute="top" secondItem="pt1-7f-NF2" secondAttribute="bottom" id="lbI-87-Jwm"/>
-                            <constraint firstItem="d1Q-wm-bow" firstAttribute="top" secondItem="Nmk-LC-J3X" secondAttribute="bottom" constant="50" id="qre-L1-vZV"/>
                             <constraint firstItem="pt1-7f-NF2" firstAttribute="leading" secondItem="8zR-Sp-deC" secondAttribute="leading" id="v29-9a-VGx"/>
+                            <constraint firstItem="d1Q-wm-bow" firstAttribute="top" secondItem="TNh-Od-Jbm" secondAttribute="bottom" multiplier="1.07" id="xzT-Qd-DTl"/>
+                            <constraint firstItem="TNh-Od-Jbm" firstAttribute="centerX" secondItem="8zR-Sp-deC" secondAttribute="centerX" id="ykZ-Nd-KoU"/>
                         </constraints>
                     </view>
                     <connections>
@@ -103,9 +126,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="FBlogo" width="1000" height="1000"/>
         <image name="OrLine" width="432" height="22"/>
         <image name="backgroundPhoto" width="562" height="1000"/>
+        <image name="facebook" width="256" height="256"/>
+        <image name="google" width="256" height="256"/>
         <image name="user" width="25" height="25"/>
     </resources>
 </document>
