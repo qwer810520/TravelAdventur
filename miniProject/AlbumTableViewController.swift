@@ -66,6 +66,7 @@ class AlbumTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         albumRef.removeAllObservers()
         UserRef.removeAllObservers()
+        
     }
     
     func checkUser(userId: String) {
