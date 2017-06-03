@@ -13,8 +13,7 @@ import FirebaseDatabase
 import SVProgressHUD
 
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
-    var UserRef = Database.database().reference().child("User")
-    var albumRef = Database.database().reference().child("Album")
+    
     var imageView = UIImage()
     
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -39,11 +38,9 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     
     @IBAction func endDateBegin(_ sender: UITextField) {
         if startDateTextField.text == "" {
-            let alert = UIAlertController(title: "錯誤", message: "請先輸入開始日期", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert) in
+            present(Library.alertSet(title: "錯誤", message: "請先輸入開始日期", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
                 self.startDateTextField.becomeFirstResponder()
-            }))
-            present(alert, animated: true, completion: nil)
+            }), animated: true, completion: nil)
         } else {
             inputDatePickerSet(textField: sender)
         }
@@ -84,9 +81,6 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             return false
         } else if textField == endDateTextField {
             endDateTextField.resignFirstResponder()
-            let alert = UIAlertController(title: "提醒", message: "請按下下面圖片來設定封面照片", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-            present(alert, animated: true, completion: nil)
             return false
         }
         return true
@@ -96,7 +90,6 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         if textField.tag == 1 {
             startDateDataPicker.datePickerMode = .date
             startDateDataPicker.locale = NSLocale(localeIdentifier: "Chinese") as Locale
-            
             setToolBar(textField: textField)
         } else if textField.tag == 2 {
             endDateDatePicker.datePickerMode = .date
@@ -108,46 +101,18 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     func checkInputValue(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage?) {
         
         if name == "" || startDateTextField.text == "" || endDateTextField.text == "" {
-            let alert = UIAlertController(title: "錯誤", message: "輸入框請勿空白", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+            present(Library.alertSet(title: "錯誤", message: "輸入框請勿空白", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
         } else {
             if image == nil {
-                let alert = UIAlertController(title: "錯誤", message: "請設定封面相片", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-                present(alert, animated: true, completion: nil)
+                present(Library.alertSet(title: "錯誤", message: "請設定封面相片", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
             } else {
-                saveTextField(name: name, startDate: startDate, endDate: endDate, image: image!, completion: {
+                
+                FirebaseServer.firebase().saveAlbumDataToFirebase(name: name, startDate: startDate, endDate: endDate, image: image!, completion: { 
                     SVProgressHUD.dismiss()
                     Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
                         self.navigationController?.popViewController(animated: true)
                     })
-                    
                 })
-            }
-        }
-    }
-    
-    func saveTextField(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion:@escaping () -> ()) {
-        let imageFilePath = "\((Auth.auth().currentUser?.uid)!)/\(NSDate.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(image, 0.01)
-        let metaData = StorageMetadata()
-        Storage.storage().reference().child(imageFilePath).putData(data!, metadata: metaData) { (metadata, error) in
-            if error != nil {
-                return
-            } else {
-                let fileURL = metadata?.downloadURLs![0].absoluteString
-                let newAlbum = self.albumRef.childByAutoId().key
-                let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL!] as [String : Any]
-                self.albumRef.child(newAlbum).setValue(albumData)
-                if UserDefaults.standard.bool(forKey: "firstAddAlbum") == true {
-                    self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([newAlbum: newAlbum])
-                    UserDefaults.standard.set(false, forKey: "firstAddAlbum")
-                    completion()
-                } else {
-            self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").updateChildValues([newAlbum: newAlbum])
-                    completion()
-                }
             }
         }
     }

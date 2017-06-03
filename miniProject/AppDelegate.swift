@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import FBSDKCoreKit
 import GoogleSignIn
+import GoogleMaps
+import GooglePlaces
 
 
 @UIApplicationMain
@@ -40,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
+        GMSServices.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
         return true
     }
 

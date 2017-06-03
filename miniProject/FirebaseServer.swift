@@ -30,51 +30,136 @@ class FirebaseServer {
     }
     
     private var album:[Album]
+    private var userData:UserModel?
+    private var selectAlbumNumber:Int?
     private let UserRef = Database.database().reference().child("User")
     private let albumRef = Database.database().reference().child("Album")
+    private let photoRef = Database.database().reference().child("Photo")
     
-    func checkUserGetAlbum(getType: DataEventType, completion: () -> ()) {
+    
+    func getRefPath(getPath:String) -> DatabaseReference {
+        var refPath:DatabaseReference?
+        switch getPath {
+        case "user":
+            refPath = UserRef
+        case "album":
+            refPath = albumRef
+        case "photo":
+            refPath = photoRef
+        default:
+            break
+        }
+        return refPath!
+    }
+    
+    func saveSelectNumber(num:Int?) {
+        selectAlbumNumber = num
+    }
+    
+    func getSelectAlbumData() -> Album {
+        return album[selectAlbumNumber!]
+    }
+    
+    func getPhotoArrayData(select:Int) -> PhotoDataModel {
+        let photoArray = album[selectAlbumNumber!].photos
+        return photoArray[select]
+    }
+    
+    func getPhotoArrayCount() -> Int {
+        return album[selectAlbumNumber!].photos.count
+    }
+    
+    func loadAllData(getType: DataEventType, completion:@escaping () -> ()) {
+       checkUserData(getType: getType) { (userCheck) in
+            if userCheck == true {
+                self.getAlbumData(getType: getType, completion: {
+                    self.getPhotoData(getType: getType, completion: {
+                        self.UserRef.removeAllObservers()
+                        self.albumRef.removeAllObservers()
+                        self.photoRef.removeAllObservers()
+                        self.dowloadAllPhoto()
+                        completion()
+                    })
+                })
+            } else {
+                self.firstUserData(completion: { 
+                    self.checkUserData(getType: getType, completion: { (_) in
+                        self.getAlbumData(getType: getType, completion: {
+                            self.getPhotoData(getType: getType, completion: {
+                                self.UserRef.removeAllObservers()
+                                self.albumRef.removeAllObservers()
+                                self.photoRef.removeAllObservers()
+                                self.dowloadAllPhoto()
+                                completion()
+                            })
+                        })
+                    })
+                })
+            }
+        }
+    }
+    
+    func dataArray(select:Int) -> Album {
+        return album[select]
+    }
+    
+    func dataArrayCount() -> Int {
+        return album.count
+    }
+    
+    func didSelectArrayData(select:Int) -> Album {
+        let num = select
+        return album[num]
+    }
+    
+    func saveAlbumDataToFirebase(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion: @escaping () -> ()) {
+        let imageFilePath = "\(Auth.auth().currentUser?.uid)/\(Date.timeIntervalSinceReferenceDate)"
+        let data = UIImageJPEGRepresentation(image, 0.001)
+        let meataData = StorageMetadata()
+        Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData) { (metadata, error) in
+            if error != nil {
+                return
+            } else {
+                let fileURL = meataData.downloadURLs![0].absoluteString
+                let newAlbum = self.albumRef.childByAutoId().key
+                let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL] as [String : Any]
+                self.albumRef.child(newAlbum).setValue(albumData)
+                if self.userData?.participateAlbum == nil {
+                self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([newAlbum:newAlbum])
+                    completion()
+                } else {
+                self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").updateChildValues([newAlbum:newAlbum])
+                    completion()
+                }
+            }
+        }
+    }
+    
+    func savePhotoDataToFirebase(photoData: PhotoDataModel) {
+        
+    }
+    
+    
+    private func firstUserData(completion:() -> ()) {
+        let newUser = UserRef.child((Auth.auth().currentUser?.uid)!)
+        let userId = ["userId": Auth.auth().currentUser?.uid]
+        newUser.setValue(userId)
+        completion()
+    }
+    
+    private func checkUserData(getType: DataEventType, completion: @escaping (Bool) -> ()) {
         self.UserRef.observe(.value, with: { (snapshot) in
             if let userDict = snapshot.value as? [String: AnyObject] {
                 for i in 0..<userDict.count {
                     if Array(userDict.keys)[i] == Auth.auth().currentUser?.uid {
                         if let getTheAlbumId = Array(userDict.values)[i] as? [String: AnyObject] {
-                            if let albumID = getTheAlbumId["participateAlbum"] as? [String:String] {
-                                for x in 0..<albumID.count {
-                                    self.getAlbumData(getType: getType, albumId: Array(albumID.keys)[x])
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        })
-    }
-
-    private func getAlbumData(getType: DataEventType, albumId:String) {
-        var loadAlbumModel = Album(key: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: UIImage(), photos: [PhotoDataModel]())
-        
-        albumRef.observe(getType, with: { (snapshot) in
-            if let dict = snapshot.value as? [String:AnyObject] {
-                for i in 0..<dict.count {
-                    if Array(dict.keys)[i] == albumId {
-                        if let getDetail = Array(dict.values)[i] as? [String:AnyObject] {
-                            let albumKey = Array(dict.keys)[i]
-                            let name = getDetail["travelName"] as? String
-                            let startDate = getDetail["startDate"] as? Double
-                            let endDate = getDetail["endDate"] as? Double
-                            let titleImage = getDetail["image"] as? String
-                            let photoRef = self.albumRef.child(albumKey).child("photos")
-                            let photoDataArray = self.getPhotoData(photoRef: photoRef, albumId: albumKey, getType: getType)
-                            let titleImageURL = URL(string: titleImage!)
-                            do {
-                                let data = try Data(contentsOf: titleImageURL!)
-                                let picture = UIImage(data: data)
-                                loadAlbumModel = Album(key: albumKey, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: picture!, photos: photoDataArray)
-                            } catch {
-                                
-                            }
-                            self.album.append(loadAlbumModel)
+                            let userId = getTheAlbumId["userId"] as? String
+                            let albumID = getTheAlbumId["participateAlbum"] as? [String:String]
+                            let setActivity = getTheAlbumId["setActivity"] as? [String:String]
+                            let participateActivity = getTheAlbumId["participateActivity"] as? [String:String]
+                            let userData = UserModel(userId: userId!, participateAlbum: albumID, setActivity: setActivity, participateActivity: participateActivity)
+                            self.userData = userData
+                            completion(true)
                         }
                     }
                 }
@@ -82,20 +167,51 @@ class FirebaseServer {
         })
     }
     
-    private func getPhotoData(photoRef: DatabaseReference, albumId:String, getType: DataEventType) -> [PhotoDataModel] {
-        var photoDataArray:[PhotoDataModel]?
-        var loadPhotoModel = PhotoDataModel(albumID: String(), photoID: String(), photoName: [String](), picturesDay: String(), coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(), longitude: CLLocationDegrees()))
+    private func getAlbumData(getType: DataEventType, completion:@escaping () -> ()) {
+        album.removeAll()
+        var loadAlbumModel = Album(key: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: String(), photos: [PhotoDataModel]())
+        if userData?.participateAlbum != nil {
+            albumRef.observe(getType, with: { (snapshot) in
+                if let dict = snapshot.value as? [String:AnyObject] {
+                    if let userAlbumKey = self.userData?.participateAlbum?.keys {
+                        for x in userAlbumKey {
+                            for i in 0..<dict.count {
+                                if Array(dict.keys)[i] == x  {
+                                    if let getDetail = Array(dict.values)[i] as? [String:AnyObject] {
+                                        let albumKey = Array(dict.keys)[i]
+                                        let name = getDetail["travelName"] as? String
+                                        let startDate = getDetail["startDate"] as? Double
+                                        let endDate = getDetail["endDate"] as? Double
+                                        let titleImage = getDetail["image"] as? String
+                                        Library.firstDownloadImage(url: titleImage!)
+                                        loadAlbumModel = Album(key: albumKey, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: titleImage!, photos: [PhotoDataModel]())
+                                        self.album.append(loadAlbumModel)
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                completion()
+            })
+        }
+    }
+    
+    private func getPhotoData(getType: DataEventType, completion: @escaping () -> ()) {
+        var loadPhotoModel = PhotoDataModel(albumID: String(), photoID: String(), locationName: String(), photoName: [String](), picturesDay: Double(), coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(), longitude: CLLocationDegrees()), selectSwitch: false)
         photoRef.observe(getType, with: { (snapshot) in
             if let photodict = snapshot.value as? [String: AnyObject] {
                 for i in 0..<photodict.count {
                     if let getPhotoDetail = Array(photodict.values)[i] as? [String: AnyObject] {
                         let key = Array(getPhotoDetail.keys)[i]
+                        let albumId = getPhotoDetail["albumid"] as? String
+                        let locationName = getPhotoDetail["locationName"] as? String
                         let photoName = getPhotoDetail["photoName"] as? Array<String>
-                        let day = getPhotoDetail["day"] as? String
+                        let day = getPhotoDetail["day"] as? Double
                         let latitude = getPhotoDetail["latitude"] as? Double
                         let longitude = getPhotoDetail["longitude"] as? Double
-                        loadPhotoModel = PhotoDataModel(albumID: albumId, photoID: key, photoName: photoName!, picturesDay: day!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
-                        
+                        loadPhotoModel = PhotoDataModel(albumID: albumId!, photoID: key, locationName: locationName!, photoName: photoName!, picturesDay: day!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
                         for i in self.album {
                             if loadPhotoModel.albumID == i.key {
                                 i.photos.append(loadPhotoModel)
@@ -103,9 +219,26 @@ class FirebaseServer {
                         }
                     }
                 }
-                
             }
+            completion()
         })
     }
     
+    private func dowloadAllPhoto() {
+        if album.count != 0 {
+            for i in album {
+                if i.photos.count != 0 {
+                    for x in i.photos {
+                        if x.photoName.count != 0 {
+                            for z in x.photoName {
+                                Library.firstDownloadImage(url: z)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 }
+

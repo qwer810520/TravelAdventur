@@ -14,8 +14,7 @@ import UIKit
 class ShowMapDetailCollectionViewController: UICollectionViewController {
 
     
-    var photoArray:[PhotoDataModel] = [
-    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,7 +34,7 @@ class ShowMapDetailCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoArray.count
+        return FirebaseServer.firebase().getPhotoArray().count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

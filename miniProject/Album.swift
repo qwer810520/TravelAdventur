@@ -13,10 +13,10 @@ class Album {
     var travelName: String
     var startDate: Double
     var endDate: Double
-    var titleImage: UIImage
+    var titleImage: String
     var photos:Array<PhotoDataModel>
     
-    init(key:String, travelName:String, startDate:Double, endDate:Double, titleImage:UIImage, photos:Array<PhotoDataModel>) {
+    init(key:String, travelName:String, startDate:Double, endDate:Double, titleImage:String, photos:Array<PhotoDataModel>) {
         self.key = key
         self.travelName = travelName
         self.startDate = startDate
@@ -59,10 +59,7 @@ extension AddViewController {
     }
     
     func startDateCheckButtonSet() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = "yyyy年MM月dd日"
-        startDateTextField.text = dateFormatter.string(from: startDateDataPicker.date)
+        startDateTextField.text = Library.dateToShowString(date: startDateDataPicker.date.timeIntervalSince1970)
         endDateDatePicker.minimumDate = startDateDataPicker.date
         startDate = startDateDataPicker.date.timeIntervalSince1970
         endDateTextField.becomeFirstResponder()
@@ -73,10 +70,7 @@ extension AddViewController {
     }
     
     func endDateCheckButtonSet() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = "yyyy年MM月dd日"
-        endDateTextField.text = dateFormatter.string(from: endDateDatePicker.date)
+        endDateTextField.text = Library.dateToShowString(date: endDateDatePicker.date.timeIntervalSince1970)
         endDate = endDateDatePicker.date.timeIntervalSince1970
         endDateTextField.resignFirstResponder()
     }

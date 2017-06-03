@@ -29,7 +29,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
                 self.firebaseAuthSingin(credential: credential)
             }
         } else {
-            present(Library.AlertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, button2switch: false, checkButton2: "", checkButton2Type: .default), animated: true, completion: nil)
+            present(Library.alertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
         }
     }
     
@@ -37,7 +37,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         if Library.isInternetOk() == true {
             GIDSignIn.sharedInstance().signIn()
         } else {
-            present(Library.AlertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, button2switch: false, checkButton2: "", checkButton2Type: .default), animated: true, completion: nil)
+           present(Library.alertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
         }
         
     }
