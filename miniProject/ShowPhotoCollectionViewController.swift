@@ -12,7 +12,8 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.collectionView?.showsVerticalScrollIndicator = false
+        self.collectionView?.showsHorizontalScrollIndicator = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,7 +34,6 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(FirebaseServer.firebase().getPhotoArrayCount())
         return FirebaseServer.firebase().getPhotoArrayCount()
     }
     
@@ -58,6 +58,25 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
             cell.dateDetailLabel.text = Library.dateToShowString(date: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).picturesDay)
         }
         return cell
+    }
+    
+//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        <#code#>
+//    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("willDisplay: \(indexPath.row)")
+        if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch == false {
+            FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch = true
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("didEndDisPlaying: \(indexPath.row)")
+        if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch == true {
+            FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch = false
+            NotificationCenter.default.post(name: Notification.Name("changColor"), object: nil, userInfo: ["changSwitch": true])
+        }
     }
 
 }

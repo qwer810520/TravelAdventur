@@ -38,8 +38,6 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     }
     @IBAction func saveItem(_ sender: UIBarButtonItem) {
         checkInputTextAndUpdata(location: locationTextField.text!, day: selectDate!)
-        navigationController?.popViewController(animated: true)
-        
     }
     
     let selectDatePickerView = UIDatePicker()
@@ -119,9 +117,7 @@ extension AddLocationViewController {
         PhotoData.locationName = place.name
         PhotoData.latitude = place.coordinate.latitude
         PhotoData.longitude = place.coordinate.longitude
-        print(place.name)
-        print(place.coordinate.latitude)
-        print(place.coordinate.longitude)
+    
         dismiss(animated: true, completion: nil)
     }
     

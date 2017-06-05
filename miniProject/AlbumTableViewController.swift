@@ -17,6 +17,7 @@ class AlbumTableViewController: UITableViewController {
         navigationController?.pushViewController(pushViewController, animated: true)
         
     }
+    var first = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,20 +25,23 @@ class AlbumTableViewController: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-       navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+       let test = navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if Library.isInternetOk() == true {
+        if first == true {
+            if Library.isInternetOk() == true {
                 SVProgressHUD.show(withStatus: "讀取中...")
-            FirebaseServer.firebase().loadAllData(getType: .value, completion: { 
-                SVProgressHUD.showSuccess(withStatus: "完成")
-                SVProgressHUD.dismiss(withDelay: 1.5)
-                self.tableView.reloadData()
-            })
-        } else {
-            present(Library.alertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
+                FirebaseServer.firebase().loadAllData(getType: .value, completion: {
+                    SVProgressHUD.showSuccess(withStatus: "完成")
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    self.tableView.reloadData()
+                    self.first = false
+                })
+            } else {
+                present(Library.alertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
+            }
         }
     }
     

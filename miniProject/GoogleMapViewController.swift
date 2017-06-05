@@ -27,11 +27,41 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
         mapView.camera = camera
         mapView.mapType = .normal
+        
+        if FirebaseServer.firebase().getPhotoArrayCount() != 0 {
+            for i in FirebaseServer.firebase().getSelectAlbumData().photos {
+                inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
+            }
+        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(newChangeColor(Not:)), name: Notification.Name("changColor"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(pushToPhotoController(Not:)), name: Notification.Name("pushToController"), object: nil)
     }
+    
+    func newChangeColor(Not:Notification) {
+        if let changeColor = Not.userInfo?["changSwitch"] as? Bool {
+            if changeColor == true {
+                mapView.clear()
+                for i in FirebaseServer.firebase().getSelectAlbumData().photos {
+                inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
+                }
+            }
+        }
+    }
+    
+    func pushToPhotoController(Not:Notification) {
+        if let pushSwitch = Not.userInfo?["push"] as? Bool {
+            if pushSwitch == true {
+                let showPhotoViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowPhotoViewController")
+                navigationController?.pushViewController(showPhotoViewController!, animated: true)
+            }
+        }
+    }
+    
     
     func inputLocationMarker(coordinate: CLLocationCoordinate2D, changeColor:Bool) {
         switch changeColor {
