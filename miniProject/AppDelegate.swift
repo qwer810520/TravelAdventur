@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-         UINavigationBar.appearance().barTintColor = UIColor(red: 216.0/255.0, green: 74.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+        UINavigationBar.appearance().barTintColor = UIColor(red: 216.0/255.0, green: 74.0/255.0, blue: 32.0/255.0, alpha: 1.0)
         
         UINavigationBar.appearance().tintColor = UIColor.white
         
@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
+        GMSPlacesClient.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
         return true
     }
 

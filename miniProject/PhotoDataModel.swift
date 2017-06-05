@@ -29,6 +29,24 @@ class PhotoDataModel {
     }
 }
 
+class savePhotoDataModel {
+    var photoID:String
+    var albumID:String
+    var locationName:String
+    var picturesDay: Double
+    var latitude: CLLocationDegrees
+    var longitude:CLLocationDegrees
+    
+    init(photoID:String, albumID:String, locationName:String, picturesDay:Double, latitude: CLLocationDegrees, longitude:CLLocationDegrees) {
+        self.photoID = photoID
+        self.albumID = albumID
+        self.locationName = locationName
+        self.picturesDay = picturesDay
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+}
+
 class modelPhotosData {
     var image:UIImage
     var bool:Bool

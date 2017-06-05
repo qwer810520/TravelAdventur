@@ -52,11 +52,12 @@ class FirebaseServer {
         return refPath!
     }
     
-    func saveSelectNumber(num:Int?) {
+    func saveSelectNumber(num:Int) {
         selectAlbumNumber = num
     }
     
     func getSelectAlbumData() -> Album {
+        print(selectAlbumNumber)
         return album[selectAlbumNumber!]
     }
     
@@ -135,8 +136,10 @@ class FirebaseServer {
         }
     }
     
-    func savePhotoDataToFirebase(photoData: PhotoDataModel) {
-        
+    func savePhotoDataToFirebase(photoID:String, photoData: savePhotoDataModel, completion: () -> ()) {
+        let savePhotoData = ["photoID":photoData.photoID, "albumID":photoData.albumID, "locationName":photoData.locationName, "picturesDay":photoData.picturesDay, "latitude": photoData.latitude, "longitude":photoData.longitude] as [String : Any]
+        self.photoRef.child(photoID).setValue(savePhotoData)
+        completion()
     }
     
     
@@ -169,7 +172,7 @@ class FirebaseServer {
     
     private func getAlbumData(getType: DataEventType, completion:@escaping () -> ()) {
         album.removeAll()
-        var loadAlbumModel = Album(key: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: String(), photos: [PhotoDataModel]())
+        var loadAlbumModel = Album(albumID: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: String(), photos: [PhotoDataModel]())
         if userData?.participateAlbum != nil {
             albumRef.observe(getType, with: { (snapshot) in
                 if let dict = snapshot.value as? [String:AnyObject] {
@@ -184,7 +187,7 @@ class FirebaseServer {
                                         let endDate = getDetail["endDate"] as? Double
                                         let titleImage = getDetail["image"] as? String
                                         Library.firstDownloadImage(url: titleImage!)
-                                        loadAlbumModel = Album(key: albumKey, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: titleImage!, photos: [PhotoDataModel]())
+                                        loadAlbumModel = Album(albumID: albumKey, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: titleImage!, photos: [PhotoDataModel]())
                                         self.album.append(loadAlbumModel)
                                         
                                     }
@@ -199,22 +202,26 @@ class FirebaseServer {
     }
     
     private func getPhotoData(getType: DataEventType, completion: @escaping () -> ()) {
-        var loadPhotoModel = PhotoDataModel(albumID: String(), photoID: String(), locationName: String(), photoName: [String](), picturesDay: Double(), coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(), longitude: CLLocationDegrees()), selectSwitch: false)
         photoRef.observe(getType, with: { (snapshot) in
             if let photodict = snapshot.value as? [String: AnyObject] {
-                for i in 0..<photodict.count {
-                    if let getPhotoDetail = Array(photodict.values)[i] as? [String: AnyObject] {
-                        let key = Array(getPhotoDetail.keys)[i]
-                        let albumId = getPhotoDetail["albumid"] as? String
-                        let locationName = getPhotoDetail["locationName"] as? String
-                        let photoName = getPhotoDetail["photoName"] as? Array<String>
-                        let day = getPhotoDetail["day"] as? Double
-                        let latitude = getPhotoDetail["latitude"] as? Double
-                        let longitude = getPhotoDetail["longitude"] as? Double
-                        loadPhotoModel = PhotoDataModel(albumID: albumId!, photoID: key, locationName: locationName!, photoName: photoName!, picturesDay: day!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
-                        for i in self.album {
-                            if loadPhotoModel.albumID == i.key {
-                                i.photos.append(loadPhotoModel)
+                for x in 0..<photodict.count {
+                    if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
+                        let albumID = getPhotoDetail["albumID"] as? String
+                    for i in self.album {
+                            if albumID == i.albumID {
+                                print(i.titleImage)
+                                let photoID = getPhotoDetail["photoID"] as? String
+                                let locationName = getPhotoDetail["locationName"] as? String
+                                let picturesDay = getPhotoDetail["picturesDay"] as? Double
+                                let latitude = getPhotoDetail["latitude"] as? Double
+                                let longitude = getPhotoDetail["longitude"] as? Double
+                                if i.photos.count == 0 {
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: [String](), picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
+                                    i.photos.append(loadPhotoModel)
+                                } else {
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: [String](), picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
+                                    i.photos.append(loadPhotoModel)
+                                }
                             }
                         }
                     }
@@ -239,6 +246,9 @@ class FirebaseServer {
             }
         }
     }
+}
+
+extension FirebaseServer {
     
 }
 

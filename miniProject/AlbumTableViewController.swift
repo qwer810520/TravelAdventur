@@ -76,6 +76,7 @@ class AlbumTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("開始轉場")
         FirebaseServer.firebase().saveSelectNumber(num: indexPath.row)
+        print(indexPath.row)
         let googleMapViewController = self.storyboard?.instantiateViewController(withIdentifier: "GoogleMapViewController")
         navigationController?.pushViewController(googleMapViewController!, animated: true)
         

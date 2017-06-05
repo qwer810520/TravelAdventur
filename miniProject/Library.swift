@@ -39,7 +39,7 @@ class Library {
     }
     
     static func isInternetOk() -> Bool {
-        let reachability = Reachability(hostName: "https://www.apple.com/tw/")
+        let reachability = Reachability(hostName: "https://www.google.com.tw/")
         if reachability?.currentReachabilityStatus().rawValue == 0 {
             return false
         } else {

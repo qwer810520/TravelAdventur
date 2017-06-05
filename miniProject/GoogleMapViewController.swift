@@ -10,15 +10,20 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 
+
 class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
 
     @IBOutlet weak var mapView: GMSMapView!
     
+    @IBAction func AddPhotoLocationButton(_ sender: UIBarButtonItem) {
+        let addLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController")
+        navigationController?.pushViewController(addLocationViewController!, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        FirebaseServer.firebase().getPhotoArrayData(select: 0).selectSwitch = true
-        
+    
         let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
         mapView.camera = camera
         mapView.mapType = .normal

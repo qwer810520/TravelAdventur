@@ -10,12 +10,26 @@ import UIKit
 import FirebaseDatabase
 import GoogleMaps
 import GooglePlaces
+import SVProgressHUD
 
 
-class AddLocationViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate{
+class AddLocationViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate{
     
-    
-    
+    @IBAction func locationTestField(_ sender: UITextField) {
+        if Library.isInternetOk() == true {
+            let searchPlaceController = GMSAutocompleteViewController()
+            searchPlaceController.tableCellSeparatorColor = UIColor(red: 216.0/255.0, green: 74.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+            searchPlaceController.tableCellBackgroundColor = UIColor.white
+            searchPlaceController.tintColor = UIColor.white
+            searchPlaceController.primaryTextColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
+            searchPlaceController.primaryTextHighlightColor = UIColor(red: 216.0/255.0, green: 74.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+            searchPlaceController.delegate = self
+            present(searchPlaceController, animated: true, completion: nil)
+        } else {
+             present(Library.alertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
+        }
+    }
+ 
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var dayTextField: UITextField!
     
@@ -23,20 +37,19 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
         selectDateSet(textField: sender)
     }
     @IBAction func saveItem(_ sender: UIBarButtonItem) {
-        checkInputTextAndUpdata(location: locationTextField.text!, day: dayTextField.text!)
+        checkInputTextAndUpdata(location: locationTextField.text!, day: selectDate!)
         navigationController?.popViewController(animated: true)
         
     }
     
     let selectDatePickerView = UIDatePicker()
     var selectDate:TimeInterval?
+    var PhotoData = savePhotoDataModel(photoID: String(), albumID: String(), locationName: String(), picturesDay: Double(), latitude: CLLocationDegrees(), longitude: CLLocationDegrees())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationTextField.delegate = self
         dayTextField.delegate = self
-        
-        locationTextField.becomeFirstResponder()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -66,7 +79,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
         toolBar.sizeToFit()
         
         let checkButton = UIBarButtonItem(title: "Check", style: .plain, target: self,  action: #selector(checkButtonSet))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: self, action: nil)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonSet))
         toolBar.setItems([cancelButton, spaceButton, checkButton], animated: true)
         toolBar.isUserInteractionEnabled = true
@@ -85,11 +98,41 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     }
     
     
-    func checkInputTextAndUpdata(location:String, day:String) {
-        if location == "" || day == "" {
+    func checkInputTextAndUpdata(location:String, day:TimeInterval) {
+        if location == "" || dayTextField.text == "" {
             present(Library.alertSet(title: "錯誤", message: "輸入框不能為空", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
         } else {
-          
+            let newPhotoID = FirebaseServer.firebase().getRefPath(getPath: "photo").childByAutoId().key
+            PhotoData.picturesDay = day
+            PhotoData.albumID = FirebaseServer.firebase().getSelectAlbumData().albumID
+            PhotoData.photoID = newPhotoID
+            FirebaseServer.firebase().savePhotoDataToFirebase(photoID: newPhotoID, photoData: PhotoData, completion: { 
+                self.navigationController?.popViewController(animated: true)
+            })
         }
+    }
+}
+
+extension AddLocationViewController {
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        locationTextField.text = place.name
+        PhotoData.locationName = place.name
+        PhotoData.latitude = place.coordinate.latitude
+        PhotoData.longitude = place.coordinate.longitude
+        print(place.name)
+        print(place.coordinate.latitude)
+        print(place.coordinate.longitude)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        present(Library.alertSet(title: "錯誤", message: "\(error.localizedDescription)", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
+            self.dismiss(animated: true, completion: nil)
+        }), animated: true, completion: nil)
+        
+    }
+
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
     }
 }

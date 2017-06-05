@@ -33,6 +33,7 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(FirebaseServer.firebase().getPhotoArrayCount())
         return FirebaseServer.firebase().getPhotoArrayCount()
     }
     
@@ -41,13 +42,19 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
         if FirebaseServer.firebase().getPhotoArrayCount() == 0 {
             cell.backView.isHidden = true
         } else {
+            cell.backView.isHidden = false
             cell.backView.layer.cornerRadius = 4
             cell.backView.clipsToBounds = true
             cell.titleLabel.text = FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).locationName
-            Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName[0], completion: { (image, loading) in
-                cell.titleImage.image = image
-                loading?.stopAnimating()
-            })
+            if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName.count != 0 {
+                cell.titleImage.isHidden = false
+                Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName[0], completion: { (image, loading) in
+                    cell.titleImage.image = image
+                    loading?.stopAnimating()
+                })
+            } else {
+                cell.titleImage.isHidden = true
+            }
             cell.dateDetailLabel.text = Library.dateToShowString(date: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).picturesDay)
         }
         return cell

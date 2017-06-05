@@ -18,7 +18,7 @@
                 <navigationController storyboardIdentifier="AlbumTableViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jfG-dN-Rde" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="photo" image="photoalbum" id="SnB-d1-EUM"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIH-yj-52j">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TIH-yj-52j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -317,14 +317,14 @@
                     <navigationItem key="navigationItem" title="Location" id="Zn4-EE-0Xx">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rm8-at-Ytf">
                             <connections>
-                                <action selector="addNewLocation:" destination="qzQ-jJ-ulk" id="y2E-r8-8hB"/>
+                                <action selector="AddPhotoLocationButton:" destination="qzQ-jJ-ulk" id="L5O-YS-3Py"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="kha-bV-Y8b" id="fzD-do-I29"/>
                         <segue destination="76r-9D-Dar" kind="show" identifier="photoDetail" id="aLi-s7-XOJ"/>
-                        <segue destination="Wpn-5u-pMH" kind="show" id="AXd-FV-ti6"/>
+                        <segue destination="Wpn-5u-pMH" kind="show" id="Nz9-8i-Sqh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBS-cu-bKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -335,7 +335,7 @@
         <scene sceneID="m4J-80-1mn">
             <objects>
                 <collectionViewController id="6Tr-k0-Cyn" customClass="ShowPhotoCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Tbc-gS-mC8">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="Tbc-gS-mC8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -428,13 +428,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-cu-GS9">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
-                            </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zfp-08-x66">
                                 <rect key="frame" x="46" y="94" width="283" height="250"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入完整的景點名稱 ex.陽明山國家公園" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fm1-fP-CpS">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入拍照地點" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fm1-fP-CpS">
                                         <rect key="frame" x="0.0" y="65" width="283" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="qHJ-bD-ttN"/>
@@ -442,6 +439,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="locationTestField:" destination="Wpn-5u-pMH" eventType="editingDidBegin" id="bsq-7A-BR5"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6c7-2k-uzL">
                                         <rect key="frame" x="0.0" y="10" width="283" height="35"/>
@@ -480,11 +480,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="zfp-08-x66" secondAttribute="trailing" constant="30" id="Qs4-Kp-C6Q"/>
-                            <constraint firstItem="fXb-cu-GS9" firstAttribute="top" secondItem="HuY-H3-xpb" secondAttribute="bottom" constant="-20" id="c8Y-1d-q48"/>
                             <constraint firstItem="zfp-08-x66" firstAttribute="leading" secondItem="DcR-MK-6Xc" secondAttribute="leadingMargin" constant="30" id="gln-56-7Bw"/>
-                            <constraint firstAttribute="trailing" secondItem="fXb-cu-GS9" secondAttribute="trailing" id="hen-la-qXR"/>
-                            <constraint firstItem="fXb-cu-GS9" firstAttribute="leading" secondItem="DcR-MK-6Xc" secondAttribute="leading" id="i0D-Ku-cbw"/>
-                            <constraint firstItem="aHg-pP-Pza" firstAttribute="top" secondItem="fXb-cu-GS9" secondAttribute="bottom" id="nzh-tX-XLK"/>
                             <constraint firstItem="zfp-08-x66" firstAttribute="top" secondItem="HuY-H3-xpb" secondAttribute="bottom" constant="30" id="szs-zl-dqU"/>
                         </constraints>
                     </view>
@@ -498,7 +494,6 @@
                     <connections>
                         <outlet property="dayTextField" destination="Jlo-hw-zEr" id="ZIm-gh-iZm"/>
                         <outlet property="locationTextField" destination="fm1-fP-CpS" id="6g3-1X-kI4"/>
-                        <outlet property="mapView" destination="fXb-cu-GS9" id="rCb-EK-71N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="03x-MQ-cWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
