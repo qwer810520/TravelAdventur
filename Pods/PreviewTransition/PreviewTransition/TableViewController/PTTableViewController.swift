@@ -92,7 +92,7 @@ extension PTTableViewController {
   open override func viewDidLoad() {
     super.viewDidLoad()
     
-    tableView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
+    tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     tableView.separatorStyle = .none
   }
   

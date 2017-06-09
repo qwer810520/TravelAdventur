@@ -102,7 +102,7 @@ extension PTDetailViewController {
     let imageView = UIImageView(frame: CGRect.zero)
     imageView.image = image
     imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.contentMode = .center
+    imageView.contentMode = .scaleAspectFit
     view.insertSubview(imageView, at: 0)
     
     // added constraints

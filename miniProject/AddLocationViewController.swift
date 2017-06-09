@@ -37,7 +37,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
         selectDateSet(textField: sender)
     }
     @IBAction func saveItem(_ sender: UIBarButtonItem) {
-        checkInputTextAndUpdata(location: locationTextField.text!, day: selectDate!)
+        checkInputTextAndUpdata()
     }
     
     let selectDatePickerView = UIDatePicker()
@@ -96,12 +96,12 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     }
     
     
-    func checkInputTextAndUpdata(location:String, day:TimeInterval) {
-        if location == "" || dayTextField.text == "" {
+    func checkInputTextAndUpdata() {
+        if locationTextField.text == "" || dayTextField.text == "" {
             present(Library.alertSet(title: "錯誤", message: "輸入框不能為空", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
         } else {
             let newPhotoID = FirebaseServer.firebase().getRefPath(getPath: "photo").childByAutoId().key
-            PhotoData.picturesDay = day
+            PhotoData.picturesDay = selectDate!
             PhotoData.albumID = FirebaseServer.firebase().getSelectAlbumData().albumID
             PhotoData.photoID = newPhotoID
             FirebaseServer.firebase().savePhotoDataToFirebase(photoID: newPhotoID, photoData: PhotoData, completion: { 

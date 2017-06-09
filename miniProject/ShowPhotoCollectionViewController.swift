@@ -26,7 +26,7 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: 160)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         layout.minimumLineSpacing = 18
-        layout.minimumLineSpacing = 20
+        layout.minimumInteritemSpacing = 0
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -60,9 +60,12 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
         return cell
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        FirebaseServer.firebase().saveSelectPhotoDataNum(num: indexPath.row) {
+            let showPhohoTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowPhohoTableViewController")
+            navigationController?.pushViewController(showPhohoTableViewController!, animated: true)
+        }
+    }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print("willDisplay: \(indexPath.row)")

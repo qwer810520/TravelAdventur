@@ -32,6 +32,7 @@ class FirebaseServer {
     private var album:[Album]
     private var userData:UserModel?
     private var selectAlbumNumber:Int?
+    private var selectPhotoNumber:Int?
     private let UserRef = Database.database().reference().child("User")
     private let albumRef = Database.database().reference().child("Album")
     private let photoRef = Database.database().reference().child("Photo")
@@ -52,23 +53,58 @@ class FirebaseServer {
         return refPath!
     }
     
+   
+//  =============================AlbumData================================
+    func getSelectAlbumData() -> Album {
+        print(selectAlbumNumber)
+        return album[selectAlbumNumber!]
+    }
+    
+    func dataArrayCount() -> Int {
+        return album.count
+    }
+    
+    func dataArray(select:Int) -> Album {
+        return album[select]
+    }
+    
     func saveSelectNumber(num:Int) {
         selectAlbumNumber = num
     }
     
-    func getSelectAlbumData() -> Album {
-        print(selectAlbumNumber)
-        return album[selectAlbumNumber!]
+//  =============================PhotoData================================
+    func getPhotoArrayCount() -> Int {
+        return album[selectAlbumNumber!].photos.count
     }
     
     func getPhotoArrayData(select:Int) -> PhotoDataModel {
         let photoArray = album[selectAlbumNumber!].photos
         return photoArray[select]
     }
-    
-    func getPhotoArrayCount() -> Int {
-        return album[selectAlbumNumber!].photos.count
+
+    func saveSelectPhotoDataNum(num:Int, completion:() -> ()) {
+        selectPhotoNumber = num
+        completion()
     }
+    
+    func getPhotoId() -> String {
+        return album[selectAlbumNumber!].photos[selectPhotoNumber!].photoID
+        
+    }
+    
+    func getSelectPhotoDataArray(selectPhoto:Int) -> String {
+       return album[selectAlbumNumber!].photos[selectPhotoNumber!].photoName[selectPhoto]
+    }
+    
+    func getSelectPhotoDataArrayCount() -> Int {
+        return album[selectAlbumNumber!].photos[selectPhotoNumber!].photoName.count
+    }
+    
+    func getSavePhotoId() -> String {
+        return album[selectAlbumNumber!].photos[selectPhotoNumber!].photoID
+    }
+    
+//  =============================Firebase================================
     
     func loadAllData(getType: DataEventType, completion:@escaping () -> ()) {
        checkUserData(getType: getType) { (userCheck) in
@@ -100,22 +136,10 @@ class FirebaseServer {
         }
     }
     
-    func dataArray(select:Int) -> Album {
-        return album[select]
-    }
-    
-    func dataArrayCount() -> Int {
-        return album.count
-    }
-    
-    func didSelectArrayData(select:Int) -> Album {
-        let num = select
-        return album[num]
-    }
     
     func saveAlbumDataToFirebase(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion: @escaping () -> ()) {
         let imageFilePath = "\(Auth.auth().currentUser?.uid)/\(Date.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(image, 0.001)
+        let data = UIImageJPEGRepresentation(image, 0.01)
         let meataData = StorageMetadata()
         Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData) { (metadata, error) in
             if error != nil {
@@ -140,6 +164,54 @@ class FirebaseServer {
         let savePhotoData = ["photoID":photoData.photoID, "albumID":photoData.albumID, "locationName":photoData.locationName, "picturesDay":photoData.picturesDay, "latitude": photoData.latitude, "longitude":photoData.longitude] as [String : Any]
         self.photoRef.child(photoID).setValue(savePhotoData)
         completion()
+    }
+    
+    
+    func savePhotoToFirebase(PhotoArray: [modelPhotosData], saveId:String, completion: @escaping () -> ()) {
+        print(PhotoArray.count)
+        var testSwitch = false
+        for i in 0..<PhotoArray.count {
+           savePhotoImage(photo: PhotoArray[i].image, saveID: saveId, completion: { (meataData) in
+                self.savePhotoDataToDatabase(meataData: meataData, setBool: testSwitch, photoID: saveId, completion: { 
+                    testSwitch = true
+                    print(i)
+                    if i == PhotoArray.count - 1 {
+                        completion()
+                    }
+                })
+           })
+        }
+    }
+    
+    private func savePhotoImage(photo: UIImage, saveID:String, completion: @escaping (StorageMetadata) -> ()) {
+        let imageFilePath = "\(saveID)/\(Date.timeIntervalSinceReferenceDate)"
+        let data = UIImageJPEGRepresentation(photo, 0.01)
+        let meataData = StorageMetadata()
+        Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData, completion: { (meataData, error) in
+            if error != nil {
+                return
+            } else {
+                completion(meataData!)
+            }
+        })
+    }
+    
+    private func savePhotoDataToDatabase(meataData:StorageMetadata,setBool:Bool, photoID:String, completion: () -> ()) {
+        print(setBool)
+        let fileURL = meataData.downloadURL()?.absoluteString
+        let photoId = self.photoRef.childByAutoId().key
+        if self.album[self.selectAlbumNumber!].photos[self.selectPhotoNumber!].photoName.count == 0 {
+            if setBool == false {
+                self.photoRef.child(photoID).child("Photo").setValue([photoId: fileURL])
+                completion()
+            } else {
+                self.photoRef.child(photoID).child("Photo").updateChildValues([photoId:fileURL!])
+                completion()
+            }
+        } else {
+            self.photoRef.child(photoID).child("Photo").updateChildValues([photoId:fileURL!])
+            completion()
+        }
     }
     
     
@@ -230,6 +302,7 @@ class FirebaseServer {
             completion()
         })
     }
+    
     
     private func dowloadAllPhoto() {
         if album.count != 0 {

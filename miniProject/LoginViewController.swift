@@ -47,6 +47,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         firebaseAuthSingin(credential: credential)
     }
     
+    
     func firebaseAuthSingin(credential: AuthCredential) {
         Auth.auth().signIn(with: credential) { (user, error) in
             if error != nil {

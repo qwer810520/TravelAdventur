@@ -313,7 +313,7 @@ extension ParallaxCell {
     let container = createImageContainer()
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.contentMode = .center
+    imageView.contentMode = .scaleAspectFit
     container.addSubview(imageView)
     return imageView
   }
