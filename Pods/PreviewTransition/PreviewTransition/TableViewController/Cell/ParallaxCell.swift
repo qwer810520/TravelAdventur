@@ -51,7 +51,7 @@ open class ParallaxCell: UITableViewCell {
   /// parallax offset
   @IBInspectable open var difference: CGFloat = 100 // image parallax
   
-  var bgImage: UIImageView?
+  open var bgImage: UIImageView?
   var parallaxTitle: UILabel?
   
   /// The foreground view’s background color.
@@ -313,7 +313,7 @@ extension ParallaxCell {
     let container = createImageContainer()
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.contentMode = .scaleAspectFit
+    imageView.contentMode = .scaleAspectFill
     container.addSubview(imageView)
     return imageView
   }

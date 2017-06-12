@@ -22,6 +22,8 @@
 // THE SOFTWARE.
 
 import UIKit
+
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -105,6 +107,7 @@ extension PTTableViewController {
     closeCurrentCellIfNeed(duration)
     moveDownCurrentLabelIfNeed()
   }
+    
 }
 
 // MARK: create
@@ -232,4 +235,8 @@ extension PTTableViewController {
   override open func scrollViewDidScroll(_ scrollView: UIScrollView) {
     parallaxOffsetDidChange(scrollView.contentOffset.y)
   }
+  
+   open func tableViewReload() {
+        tableView.reloadData()
+    }
 }

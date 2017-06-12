@@ -27,7 +27,53 @@ class FirebaseServer {
     
     private init() {
         album = []
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(upDateData(Not:)), name: Notification.Name("updata"), object: nil)
     }
+    
+    @objc private func upDateData(Not:Notification) {
+        if let upDateSwitch = Not.userInfo?["switch"] as? Bool {
+            if upDateSwitch == true {
+                NotificationCenter.default.post(name: Notification.Name("showSVP"), object: nil, userInfo: ["switch": true])
+                updatePhotoData(getType: .value, completion: {
+                    self.dowloadAllPhoto()
+                    NotificationCenter.default.post(name: Notification.Name("showSVP"), object: nil, userInfo: ["switch": false])
+                    self.photoRef.removeAllObservers()
+                })
+            }
+        }
+    }
+    
+    
+    
+    private func updatePhotoData(getType: DataEventType, completion: @escaping () -> ()) {
+        photoRef.observe(getType, with: { (snapshot) in
+            if let photodict = snapshot.value as? [String: AnyObject] {
+                for x in 0..<photodict.count {
+                    if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
+                        let albumID = getPhotoDetail["albumID"] as? String
+                        for i in self.album {
+                            if albumID == i.albumID {
+                                let photoID = getPhotoDetail["photoID"] as? String
+                                for z in i.photos {
+                                    if photoID == z.photoID {
+                                        if let photoData = getPhotoDetail["Photo"] as? [String:String] {
+                                            z.photoName.removeAll()
+                                            for photo in photoData {
+                                                z.photoName.append(photo.value)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                completion()
+            }
+        })
+    }
+
     
     private var album:[Album]
     private var userData:UserModel?
@@ -56,7 +102,6 @@ class FirebaseServer {
    
 //  =============================AlbumData================================
     func getSelectAlbumData() -> Album {
-        print(selectAlbumNumber)
         return album[selectAlbumNumber!]
     }
     
@@ -106,40 +151,10 @@ class FirebaseServer {
     
 //  =============================Firebase================================
     
-    func loadAllData(getType: DataEventType, completion:@escaping () -> ()) {
-       checkUserData(getType: getType) { (userCheck) in
-            if userCheck == true {
-                self.getAlbumData(getType: getType, completion: {
-                    self.getPhotoData(getType: getType, completion: {
-                        self.UserRef.removeAllObservers()
-                        self.albumRef.removeAllObservers()
-                        self.photoRef.removeAllObservers()
-                        self.dowloadAllPhoto()
-                        completion()
-                    })
-                })
-            } else {
-                self.firstUserData(completion: { 
-                    self.checkUserData(getType: getType, completion: { (_) in
-                        self.getAlbumData(getType: getType, completion: {
-                            self.getPhotoData(getType: getType, completion: {
-                                self.UserRef.removeAllObservers()
-                                self.albumRef.removeAllObservers()
-                                self.photoRef.removeAllObservers()
-                                self.dowloadAllPhoto()
-                                completion()
-                            })
-                        })
-                    })
-                })
-            }
-        }
-    }
-    
-    
+//  -----------------建立相簿-----------------
     func saveAlbumDataToFirebase(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion: @escaping () -> ()) {
         let imageFilePath = "\(Auth.auth().currentUser?.uid)/\(Date.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(image, 0.01)
+        let data = UIImageJPEGRepresentation(image, 0.1)
         let meataData = StorageMetadata()
         Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData) { (metadata, error) in
             if error != nil {
@@ -159,16 +174,15 @@ class FirebaseServer {
             }
         }
     }
-    
+//  -----------------儲存地點-----------------
     func savePhotoDataToFirebase(photoID:String, photoData: savePhotoDataModel, completion: () -> ()) {
         let savePhotoData = ["photoID":photoData.photoID, "albumID":photoData.albumID, "locationName":photoData.locationName, "picturesDay":photoData.picturesDay, "latitude": photoData.latitude, "longitude":photoData.longitude] as [String : Any]
         self.photoRef.child(photoID).setValue(savePhotoData)
         completion()
     }
     
-    
+//  -----------------最後儲存相片--------------------
     func savePhotoToFirebase(PhotoArray: [modelPhotosData], saveId:String, completion: @escaping () -> ()) {
-        print(PhotoArray.count)
         var testSwitch = false
         for i in 0..<PhotoArray.count {
            savePhotoImage(photo: PhotoArray[i].image, saveID: saveId, completion: { (meataData) in
@@ -185,7 +199,7 @@ class FirebaseServer {
     
     private func savePhotoImage(photo: UIImage, saveID:String, completion: @escaping (StorageMetadata) -> ()) {
         let imageFilePath = "\(saveID)/\(Date.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(photo, 0.01)
+        let data = UIImageJPEGRepresentation(photo, 1)
         let meataData = StorageMetadata()
         Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData, completion: { (meataData, error) in
             if error != nil {
@@ -214,6 +228,36 @@ class FirebaseServer {
         }
     }
     
+// -------------------loadFireBaseData------------------------
+    func loadAllData(getType: DataEventType, completion:@escaping () -> ()) {
+        checkUserData(getType: getType) { (userCheck) in
+            if userCheck == true {
+                self.getAlbumData(getType: getType, completion: {
+                    self.getPhotoData(getType: getType, completion: {
+                        self.UserRef.removeAllObservers()
+                        self.albumRef.removeAllObservers()
+                        self.photoRef.removeAllObservers()
+                        self.dowloadAllPhoto()
+                        completion()
+                    })
+                })
+            } else {
+                self.firstUserData(completion: {
+                    self.checkUserData(getType: getType, completion: { (_) in
+                        self.getAlbumData(getType: getType, completion: {
+                            self.getPhotoData(getType: getType, completion: {
+                                self.UserRef.removeAllObservers()
+                                self.albumRef.removeAllObservers()
+                                self.photoRef.removeAllObservers()
+                                self.dowloadAllPhoto()
+                                completion()
+                            })
+                        })
+                    })
+                })
+            }
+        }
+    }
     
     private func firstUserData(completion:() -> ()) {
         let newUser = UserRef.child((Auth.auth().currentUser?.uid)!)
@@ -287,11 +331,17 @@ class FirebaseServer {
                                 let picturesDay = getPhotoDetail["picturesDay"] as? Double
                                 let latitude = getPhotoDetail["latitude"] as? Double
                                 let longitude = getPhotoDetail["longitude"] as? Double
+                                var photoArray = [String]()
+                                if let photo = getPhotoDetail["Photo"] as? [String:String] {
+                                    for photo in photo {
+                                        photoArray.append(photo.value)
+                                    }
+                                }
                                 if i.photos.count == 0 {
-                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: [String](), picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
                                     i.photos.append(loadPhotoModel)
                                 } else {
-                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: [String](), picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
                                     i.photos.append(loadPhotoModel)
                                 }
                             }
@@ -319,6 +369,7 @@ class FirebaseServer {
             }
         }
     }
+    
 }
 
 extension FirebaseServer {

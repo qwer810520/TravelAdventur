@@ -21,9 +21,12 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
         print(selectImageArray.count)
         if selectImageArray.count != 0 {
             SVProgressHUD.show(withStatus: "上傳中...")
-            FirebaseServer.firebase().savePhotoToFirebase(PhotoArray: selectImageArray, saveId: FirebaseServer.firebase().getSavePhotoId(), completion: { 
+            FirebaseServer.firebase().savePhotoToFirebase(PhotoArray: selectImageArray, saveId: FirebaseServer.firebase().getSavePhotoId(), completion: {
                 SVProgressHUD.dismiss()
-                self.navigationController?.popViewController(animated: true)
+                Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (_) in
+                    NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": true])
+                    self.navigationController?.popViewController(animated: true)
+                })
             })
         } else {
             present(Library.alertSet(title: "錯誤", message: "請選擇照片", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
@@ -46,7 +49,7 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
         layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 2, height: (UIScreen.main.bounds.width / 3) + 1)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
+        layout.minimumInteritemSpacing = 2
     }
     
     
