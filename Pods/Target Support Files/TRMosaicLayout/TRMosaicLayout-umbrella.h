@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double PreviewTransitionVersionNumber;
-FOUNDATION_EXPORT const unsigned char PreviewTransitionVersionString[];
+FOUNDATION_EXPORT double TRMosaicLayoutVersionNumber;
+FOUNDATION_EXPORT const unsigned char TRMosaicLayoutVersionString[];
 

@@ -62,7 +62,7 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         FirebaseServer.firebase().saveSelectPhotoDataNum(num: indexPath.row) {
-            let showPhohoTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowPhohoTableViewController")
+            let showPhohoTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowPhotoDetailCollectionViewController")
             navigationController?.pushViewController(showPhohoTableViewController!, animated: true)
         }
     }

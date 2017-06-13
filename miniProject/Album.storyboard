@@ -18,7 +18,7 @@
                 <navigationController storyboardIdentifier="AlbumTableViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jfG-dN-Rde" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="photo" image="photoalbum" id="SnB-d1-EUM"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIH-yj-52j">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TIH-yj-52j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -322,7 +322,7 @@
                     <connections>
                         <outlet property="mapView" destination="kha-bV-Y8b" id="fzD-do-I29"/>
                         <segue destination="Wpn-5u-pMH" kind="show" id="Nz9-8i-Sqh"/>
-                        <segue destination="s4R-z2-cp0" kind="show" id="5Wt-zt-gCU"/>
+                        <segue destination="S3O-wF-8Od" kind="show" id="Jg1-IG-2Xh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBS-cu-bKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -333,7 +333,7 @@
         <scene sceneID="m4J-80-1mn">
             <objects>
                 <collectionViewController id="6Tr-k0-Cyn" customClass="ShowPhotoCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" id="Tbc-gS-mC8">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" dataMode="prototypes" id="Tbc-gS-mC8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -499,61 +499,62 @@
             <point key="canvasLocation" x="4084" y="-247.82608695652175"/>
         </scene>
         <!--Photos-->
-        <scene sceneID="5EC-eo-MV4">
+        <scene sceneID="okc-ZC-TpN">
             <objects>
-                <tableViewController storyboardIdentifier="ShowPhohoTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="s4R-z2-cp0" customClass="ShowPhohoTableViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" sectionHeaderHeight="28" sectionFooterHeight="28" id="ru3-Of-1ir">
+                <collectionViewController storyboardIdentifier="ShowPhotoDetailCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S3O-wF-8Od" customClass="ShowPhotoDetailCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="QM6-tT-rI2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="200" id="maF-1C-PJh" customClass="ShowPhotoTableViewCell" customModule="miniProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="200"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="maF-1C-PJh" id="AlV-KY-Myu">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nK0-lO-9FU">
+                            <size key="itemSize" width="222" height="213"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="kOw-9P-Rk6" customClass="ImageCollectionViewCell" customModule="miniProject" customModuleProvider="target">
+                                <rect key="frame" x="76.5" y="0.0" width="222" height="213"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="222" height="213"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UzB-E4-SVh">
+                                            <rect key="frame" x="0.0" y="-0.5" width="222" height="213"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="UzB-E4-SVh" firstAttribute="centerX" secondItem="kOw-9P-Rk6" secondAttribute="centerX" id="0vO-DY-J3J"/>
+                                    <constraint firstItem="UzB-E4-SVh" firstAttribute="width" secondItem="kOw-9P-Rk6" secondAttribute="width" id="R6z-CP-Ku9"/>
+                                    <constraint firstItem="UzB-E4-SVh" firstAttribute="centerY" secondItem="kOw-9P-Rk6" secondAttribute="centerY" id="hNI-9B-8I2"/>
+                                    <constraint firstItem="UzB-E4-SVh" firstAttribute="height" secondItem="kOw-9P-Rk6" secondAttribute="height" id="s8V-j7-8Wb"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="inputImage" destination="UzB-E4-SVh" id="K6j-sU-U9f"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
-                            <outlet property="dataSource" destination="s4R-z2-cp0" id="Hyz-tx-eP3"/>
-                            <outlet property="delegate" destination="s4R-z2-cp0" id="GM8-n2-OaF"/>
+                            <outlet property="dataSource" destination="S3O-wF-8Od" id="HW7-wf-L1R"/>
+                            <outlet property="delegate" destination="S3O-wF-8Od" id="4h9-mP-bab"/>
                         </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Photos" id="CIT-h4-bR9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="tQ7-wR-xWy">
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Photos" id="dgp-sf-iCQ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Cqy-PW-IIC">
                             <connections>
-                                <action selector="addPhotoBtu:" destination="s4R-z2-cp0" id="uBO-WA-cBa"/>
+                                <action selector="addPhotoButton:" destination="S3O-wF-8Od" id="4Oa-o4-Dw1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="Rgm-nZ-1QT" kind="show" id="Z7Q-O5-d2K"/>
-                        <segue destination="KbG-3g-ZWl" kind="show" id="TB2-gG-peZ"/>
+                        <segue destination="Rgm-nZ-1QT" kind="show" id="6sr-6w-vpF"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Smv-1b-6aV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OqT-h0-Zgn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4075" y="552"/>
-        </scene>
-        <!--Show Photo Detail View Controller-->
-        <scene sceneID="b8T-ST-ag6">
-            <objects>
-                <viewController storyboardIdentifier="ShowPhotoDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KbG-3g-ZWl" customClass="ShowPhotoDetailViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IUU-Ti-bzv"/>
-                        <viewControllerLayoutGuide type="bottom" id="ivc-4W-Tkv"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uIV-ja-v7R">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pxd-xj-4iR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4981" y="1000"/>
+            <point key="canvasLocation" x="4084" y="542.87856071964018"/>
         </scene>
         <!--AddPhotos-->
         <scene sceneID="pHS-LD-p55">

@@ -70,8 +70,8 @@ PODS:
   - GTMSessionFetcher/Core (1.1.10)
   - GTMSessionFetcher/Full (1.1.10):
     - GTMSessionFetcher/Core (= 1.1.10)
-  - PreviewTransition (2.0.1)
   - SVProgressHUD (2.1.2)
+  - TRMosaicLayout (1.0.0)
 
 DEPENDENCIES:
   - FBSDKCoreKit
@@ -84,8 +84,8 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - GoogleSignIn
-  - PreviewTransition
   - SVProgressHUD
+  - TRMosaicLayout
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
@@ -105,9 +105,9 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
-  PreviewTransition: 2f612e341ccae573a1c08b8521fe19a28fe5d763
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
 
-PODFILE CHECKSUM: 3a263fda0991076a3d60c4d9c5bd43f47497f27a
+PODFILE CHECKSUM: 217905011a3df5d6d11e8a98fdef8f8eca56d5d2
 
 COCOAPODS: 1.2.1

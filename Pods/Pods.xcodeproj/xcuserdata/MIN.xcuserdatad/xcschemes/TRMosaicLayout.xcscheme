@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '8BF0ECF39F54B4BBE8F8896879E8593B'
-               BlueprintName = 'PreviewTransition'
+               BlueprintIdentifier = '5BF8B3FE95EB80E41EEEB448C13FFF86'
+               BlueprintName = 'TRMosaicLayout'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'PreviewTransition.framework'>
+               BuildableName = 'TRMosaicLayout.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
