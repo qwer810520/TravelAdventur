@@ -18,6 +18,7 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("showSVP"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,6 +29,15 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
         layout.minimumLineSpacing = 18
         layout.minimumInteritemSpacing = 0
     }
+    
+    func showSVP(Not:Notification) {
+        if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
+            if SVPSwitch == false {
+                collectionView?.reloadData()
+            }
+        }
+    }
+
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -48,9 +58,10 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
             cell.titleLabel.text = FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).locationName
             if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName.count != 0 {
                 cell.titleImage.isHidden = false
-                Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName[0], completion: { (image, loading) in
+                Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName[0], completion: { (image, loading, view) in
                     cell.titleImage.image = image
                     loading?.stopAnimating()
+                    view?.removeFromSuperview()
                 })
             } else {
                 cell.titleImage.isHidden = true

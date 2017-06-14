@@ -54,9 +54,12 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ImageCollectionViewCell
         
-        Library.downloadImage(imageViewSet: cell.inputImage, URLString: FirebaseServer.firebase().getSelectPhotoDataArray(selectPhoto: indexPath.row)) { (photo, loading) in
-            cell.inputImage.image = photo
-            loading?.stopAnimating()
+        if FirebaseServer.firebase().getSelectPhotoDataArrayCount() != 0 {
+            Library.downloadImage(imageViewSet: cell.inputImage, URLString: FirebaseServer.firebase().getSelectPhotoDataArray(selectPhoto: indexPath.row), completion: { (photo, loading, view) in
+                cell.inputImage.image = photo
+                loading?.stopAnimating()
+                view?.removeFromSuperview()
+            })
         }
         return cell
     }

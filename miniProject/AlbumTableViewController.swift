@@ -73,9 +73,10 @@ class AlbumTableViewController: UITableViewController {
             cell.albumTitleImage.isHidden = false
             cell.albumTitle.text = FirebaseServer.firebase().dataArray(select: indexPath.row).travelName
             cell.albumMessage.text = "\(Library.dateToShowString(date: FirebaseServer.firebase().dataArray(select: indexPath.row).startDate)) ~ \(Library.endDateToShowString(date: FirebaseServer.firebase().dataArray(select: indexPath.row).endDate))"
-            Library.downloadImage(imageViewSet: cell.albumTitleImage, URLString: FirebaseServer.firebase().dataArray(select: indexPath.row).titleImage, completion: { (image, loading) in
+            Library.downloadImage(imageViewSet: cell.albumTitleImage, URLString: FirebaseServer.firebase().dataArray(select: indexPath.row).titleImage, completion: { (image, loading, view) in
                 cell.albumTitleImage.image = image
                 loading?.stopAnimating()
+                view?.removeFromSuperview()
             })
         }
         return cell

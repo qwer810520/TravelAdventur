@@ -72,24 +72,25 @@ class Library {
     }
     
    
-    static func downloadImage(imageViewSet:UIImageView, URLString:String, completion:@escaping (UIImage?, UIActivityIndicatorView?) -> ()) {
-        let activityIndicator = CGRect(x: (imageViewSet.bounds.width / 2) - 20  , y: (imageViewSet.bounds.height / 2) - 20 , width: 40, height: 40)
-        let loading = UIActivityIndicatorView(frame: activityIndicator)
+    static func downloadImage(imageViewSet:UIImageView, URLString:String, completion:@escaping (UIImage?, UIActivityIndicatorView?, UIVisualEffectView?) -> ()) {
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        blurEffectView.frame = imageViewSet.bounds
+        imageViewSet.addSubview(blurEffectView)
+        let loading = UIActivityIndicatorView(frame: CGRect(x: (imageViewSet.bounds.width / 2) - 20  , y: (imageViewSet.bounds.height / 2) - 20 , width: 40, height: 40))
         loading.hidesWhenStopped = true
-        imageViewSet.addSubview(loading)
-        imageViewSet.backgroundColor = UIColor(red: 165.0/255.0, green: 165.0/255.0, blue: 165.0/255.0, alpha: 0.33)
+        blurEffectView.addSubview(loading)
         if let imageURL = URL(string: URLString) {
             let fullFilePathName = NSHomeDirectory() + "/Library/CachesCache_\(imageURL.hashValue)"
             let cacheImage = UIImage(contentsOfFile: fullFilePathName)
             if cacheImage != nil {
-                completion(cacheImage, loading)
+                completion(cacheImage, loading, blurEffectView)
             } else {
                 let task = URLSession.shared.dataTask(with: imageURL, completionHandler: { (data, response, error) in
                     if error != nil {
                         return
                     } else {
                         if let checkData = data {
-                            completion(UIImage(data: checkData), loading)
+                            completion(UIImage(data: checkData), loading, blurEffectView)
                             do {
                                try checkData.write(to: URL(fileURLWithPath: fullFilePathName))
                             } catch {
