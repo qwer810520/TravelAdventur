@@ -45,9 +45,17 @@ class FirebaseServer {
     }
     
     
+    private var album:[Album]
+    private var userData:UserModel?
+    private var selectAlbumNumber:Int?
+    private var selectPhotoNumber:Int?
+    private let UserRef = Database.database().reference().child("User")
+    private let albumRef = Database.database().reference().child("Album")
+    private let photoRef = Database.database().reference().child("Photo")
     
-    private func updatePhotoData(getType: DataEventType, completion: @escaping () -> ()) {
-        photoRef.observe(getType, with: { (snapshot) in
+    
+    private func checkPhotoDataSet(completion:@escaping () -> ()) {
+        photoRef.observe(.value, with: { (snapshot) in
             if let photodict = snapshot.value as? [String: AnyObject] {
                 for x in 0..<photodict.count {
                     if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
@@ -57,11 +65,44 @@ class FirebaseServer {
                                 let photoID = getPhotoDetail["photoID"] as? String
                                 for z in i.photos {
                                     if photoID == z.photoID {
-                                        if let photoData = getPhotoDetail["Photo"] as? [String:String] {
-                                            z.photoName.removeAll()
-                                            for photo in photoData {
-                                                z.photoName.append(photo.value)
-                                            }
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            completion()
+        })
+
+    }
+    
+    
+    private func upadateLocationData(completion:@escaping () -> ()) {
+        photoRef.observe(.value, with: { (snapshot) in
+            if let photodict = snapshot.value as? [String: AnyObject] {
+                for x in 0..<photodict.count {
+                    if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
+                        let albumID = getPhotoDetail["albumID"] as? String
+                        for i in self.album {
+                            if albumID == i.albumID {
+                                let photoID = getPhotoDetail["photoID"] as? String
+                                for z in i.photos {
+                                    if photoID == z.photoID {
+                                        break
+                                    } else {
+                                        let locationName = getPhotoDetail["locationName"] as? String
+                                        let picturesDay = getPhotoDetail["picturesDay"] as? Double
+                                        let latitude = getPhotoDetail["latitude"] as? Double
+                                        let longitude = getPhotoDetail["longitude"] as? Double
+                                        let photoArray = [String]()
+                                        if i.photos.count == 0 {
+                                            let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
+                                            i.photos.append(loadPhotoModel)
+                                        } else {
+                                            let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
+                                            i.photos.append(loadPhotoModel)
                                         }
                                     }
                                 }
@@ -69,19 +110,10 @@ class FirebaseServer {
                         }
                     }
                 }
-                completion()
             }
+            completion()
         })
     }
-
-    
-    private var album:[Album]
-    private var userData:UserModel?
-    private var selectAlbumNumber:Int?
-    private var selectPhotoNumber:Int?
-    private let UserRef = Database.database().reference().child("User")
-    private let albumRef = Database.database().reference().child("Album")
-    private let photoRef = Database.database().reference().child("Photo")
     
     
     func getRefPath(getPath:String) -> DatabaseReference {
@@ -368,6 +400,34 @@ class FirebaseServer {
                 }
             }
         }
+    }
+    
+    private func updatePhotoData(getType: DataEventType, completion: @escaping () -> ()) {
+        photoRef.observe(getType, with: { (snapshot) in
+            if let photodict = snapshot.value as? [String: AnyObject] {
+                for x in 0..<photodict.count {
+                    if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
+                        let albumID = getPhotoDetail["albumID"] as? String
+                        for i in self.album {
+                            if albumID == i.albumID {
+                                let photoID = getPhotoDetail["photoID"] as? String
+                                for z in i.photos {
+                                    if photoID == z.photoID {
+                                        if let photoData = getPhotoDetail["Photo"] as? [String:String] {
+                                            z.photoName.removeAll()
+                                            for photo in photoData {
+                                                z.photoName.append(photo.value)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                completion()
+            }
+        })
     }
     
 }
