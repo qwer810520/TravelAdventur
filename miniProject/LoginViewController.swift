@@ -61,7 +61,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
                 self.present(alertController, animated: true, completion: nil)
                 return
             } else {
-                self.performSegue(withIdentifier: "inside", sender: nil)
+                guard let userPhotoURL = user?.photoURL?.absoluteString, let userName = user?.displayName else {
+                    return
+                }
+                FirebaseServer.firebase().takeUserData(name: userName, userPhoto: userPhotoURL, completion: { 
+                    self.performSegue(withIdentifier: "inside", sender: nil)
+                })
             }
         }
     }

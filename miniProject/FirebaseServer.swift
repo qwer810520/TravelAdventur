@@ -47,6 +47,8 @@ class FirebaseServer {
     
     private var album:[Album]
     private var userData:UserModel?
+    private var userName:String?
+    private var userPhotoURL:String?
     private var selectAlbumNumber:Int?
     private var selectPhotoNumber:Int?
     private let UserRef = Database.database().reference().child("User")
@@ -185,7 +187,8 @@ class FirebaseServer {
     
 //  -----------------建立相簿-----------------
     func saveAlbumDataToFirebase(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion: @escaping () -> ()) {
-        let imageFilePath = "\(Auth.auth().currentUser?.uid)/\(Date.timeIntervalSinceReferenceDate)"
+        let newAlbum = self.albumRef.childByAutoId().key
+        let imageFilePath = "\(newAlbum)/\(Date.timeIntervalSinceReferenceDate)"
         let data = UIImageJPEGRepresentation(image, 0.1)
         let meataData = StorageMetadata()
         Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData) { (metadata, error) in
@@ -193,11 +196,10 @@ class FirebaseServer {
                 return
             } else {
                 let fileURL = meataData.downloadURLs![0].absoluteString
-                let newAlbum = self.albumRef.childByAutoId().key
                 let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL] as [String : Any]
                 self.albumRef.child(newAlbum).setValue(albumData)
                 if self.userData?.participateAlbum == nil {
-                self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([newAlbum:newAlbum])
+            self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([newAlbum:newAlbum])
                     completion()
                 } else {
                 self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").updateChildValues([newAlbum:newAlbum])
@@ -291,9 +293,15 @@ class FirebaseServer {
         }
     }
     
+    func takeUserData(name:String, userPhoto:String, completion:() -> ()) {
+        userName = name
+        userPhotoURL = userPhoto
+        completion()
+    }
+    
     private func firstUserData(completion:() -> ()) {
         let newUser = UserRef.child((Auth.auth().currentUser?.uid)!)
-        let userId = ["userId": Auth.auth().currentUser?.uid]
+        let userId = ["userId": Auth.auth().currentUser?.uid, "userName": userName, "userPhoto": userPhotoURL]
         newUser.setValue(userId)
         completion()
     }
@@ -305,15 +313,20 @@ class FirebaseServer {
                     if Array(userDict.keys)[i] == Auth.auth().currentUser?.uid {
                         if let getTheAlbumId = Array(userDict.values)[i] as? [String: AnyObject] {
                             let userId = getTheAlbumId["userId"] as? String
+                            let userName = getTheAlbumId["userName"] as? String
+                            let userPhoto = getTheAlbumId["userPhoto"] as? String
                             let albumID = getTheAlbumId["participateAlbum"] as? [String:String]
                             let setActivity = getTheAlbumId["setActivity"] as? [String:String]
                             let participateActivity = getTheAlbumId["participateActivity"] as? [String:String]
-                            let userData = UserModel(userId: userId!, participateAlbum: albumID, setActivity: setActivity, participateActivity: participateActivity)
+                            Library.firstDownloadImage(url: userPhoto!)
+                            let userData = UserModel(userId: userId!, userName: userName!, userPhoto: userPhoto!, participateAlbum: albumID, setActivity: setActivity, participateActivity: participateActivity)
                             self.userData = userData
                             completion(true)
                         }
                     }
                 }
+            } else {
+                completion(false)
             }
         })
     }
@@ -346,6 +359,8 @@ class FirebaseServer {
                 }
                 completion()
             })
+        } else {
+            completion()
         }
     }
     

@@ -26,6 +26,7 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
         
         collectionView?.backgroundColor = .black
         
+        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
        
     }
