@@ -28,7 +28,7 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("showSVP"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("photoSVP"), object: nil)
     }
     
     func showSVP(Not:Notification) {

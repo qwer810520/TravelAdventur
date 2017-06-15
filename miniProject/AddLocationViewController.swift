@@ -104,7 +104,8 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
             PhotoData.picturesDay = selectDate!
             PhotoData.albumID = FirebaseServer.firebase().getSelectAlbumData().albumID
             PhotoData.photoID = newPhotoID
-            FirebaseServer.firebase().savePhotoDataToFirebase(photoID: newPhotoID, photoData: PhotoData, completion: { 
+            FirebaseServer.firebase().savePhotoDataToFirebase(photoID: newPhotoID, photoData: PhotoData, completion: {
+                NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Place"])
                 self.navigationController?.popViewController(animated: true)
             })
         }

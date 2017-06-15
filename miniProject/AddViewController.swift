@@ -108,6 +108,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 FirebaseServer.firebase().saveAlbumDataToFirebase(name: name, startDate: startDate, endDate: endDate, image: image!, completion: { 
                     SVProgressHUD.dismiss()
                     Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
+                        NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Album"])
                         self.navigationController?.popViewController(animated: true)
                     })
                 })

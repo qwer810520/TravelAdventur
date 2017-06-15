@@ -18,7 +18,7 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("showSVP"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("Collectionupdate"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

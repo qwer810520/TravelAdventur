@@ -24,9 +24,6 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
         let layout = self.collectionViewLayout as! StickyCollectionViewFlowLayout
         layout.firstItemTransform = 0.05
         
-        collectionView?.backgroundColor = .black
-        
-        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
        
     }
@@ -48,6 +45,23 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("albumSVP"), object: nil)
+    }
+    
+    func showSVP(Not:Notification) {
+        if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
+            if SVPSwitch == true {
+                SVProgressHUD.show(withStatus: "載入中...")
+            } else {
+                SVProgressHUD.showSuccess(withStatus: "完成")
+                SVProgressHUD.dismiss(withDelay: 1.5)
+                collectionView?.reloadData()
+            }
+        }
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return FirebaseServer.firebase().dataArrayCount()
     }
@@ -64,7 +78,7 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
             cell.backView.clipsToBounds = true
             cell.titleLabel.text = FirebaseServer.firebase().dataArray(select: indexPath.row).travelName
             Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().dataArray(select: indexPath.row).titleImage, completion: { (photo, loading, view) in
-               cell.titleImage.image = photo
+                cell.titleImage.image = photo
                 loading?.stopAnimating()
                 view?.removeFromSuperview()
             })

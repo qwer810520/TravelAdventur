@@ -24,7 +24,7 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
             FirebaseServer.firebase().savePhotoToFirebase(PhotoArray: selectImageArray, saveId: FirebaseServer.firebase().getSavePhotoId(), completion: {
                 SVProgressHUD.dismiss()
                 Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (_) in
-                    NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": true])
+                    NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Photo"])
                     self.navigationController?.popViewController(animated: true)
                 })
             })
@@ -46,9 +46,9 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let layout = self.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 2, height: (UIScreen.main.bounds.width / 3) + 1)
+        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 2, height: (UIScreen.main.bounds.width / 3) - 2)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2
     }
     

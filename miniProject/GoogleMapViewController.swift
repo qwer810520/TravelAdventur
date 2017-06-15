@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 import GoogleMaps
 import GooglePlaces
 
@@ -33,6 +34,24 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("placeSVP"), object: nil)
+    }
+    
+    func showSVP(Not:Notification) {
+        if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
+            if SVPSwitch == true {
+                SVProgressHUD.show(withStatus: "載入中...")
+            } else {
+                SVProgressHUD.showSuccess(withStatus: "完成")
+                SVProgressHUD.dismiss(withDelay: 1.5)
+                NotificationCenter.default.post(name: Notification.Name("Collectionupdate"), object: nil, userInfo: ["switch": true])
+                updateColor()
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -41,18 +60,23 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
                 inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
             }
         }
-
         NotificationCenter.default.addObserver(self, selector: #selector(newChangeColor(Not:)), name: Notification.Name("changColor"), object: nil)
     }
+    
+    
     
     func newChangeColor(Not:Notification) {
         if let changeColor = Not.userInfo?["changSwitch"] as? Bool {
             if changeColor == true {
-                mapView.clear()
-                for i in FirebaseServer.firebase().getSelectAlbumData().photos {
-                inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
-                }
+                updateColor()
             }
+        }
+    }
+    
+    private func updateColor() {
+        mapView.clear()
+        for i in FirebaseServer.firebase().getSelectAlbumData().photos {
+            inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
         }
     }
     
