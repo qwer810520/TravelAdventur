@@ -75,6 +75,7 @@ class Library {
     static func downloadImage(imageViewSet:UIImageView, URLString:String, completion:@escaping (UIImage?, UIActivityIndicatorView?, UIVisualEffectView?) -> ()) {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         blurEffectView.frame = imageViewSet.bounds
+        blurEffectView.center = imageViewSet.center
         imageViewSet.addSubview(blurEffectView)
         let loading = UIActivityIndicatorView(frame: CGRect(x: (imageViewSet.bounds.width / 2) - 20  , y: (imageViewSet.bounds.height / 2) - 20 , width: 40, height: 40))
         loading.hidesWhenStopped = true

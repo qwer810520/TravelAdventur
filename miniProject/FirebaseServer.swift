@@ -42,17 +42,20 @@ class FirebaseServer {
                 }
             case "Place":
                 NotificationCenter.default.post(name: Notification.Name("placeSVP"), object: nil, userInfo: ["switch": true])
-                updatePlaceData {
-                    NotificationCenter.default.post(name: Notification.Name("placeSVP"), object: nil, userInfo: ["switch": false])
-                    self.photoRef.removeAllObservers()
+                removeAllPhotoData {
+                    updatePlaceData(completion: {
+                        self.photoRef.removeAllObservers()
+                        print("=============已經load完資料，要發出通知停止SVP=============")
+                        NotificationCenter.default.post(name: Notification.Name("placeSVP"), object: nil, userInfo: ["switch": false])
+                    })
                 }
+                
             case "Photo":
                 NotificationCenter.default.post(name: Notification.Name("photoSVP"), object: nil, userInfo: ["switch": true])
                 updatePhotoData(getType: .value, completion: {
                     self.dowloadAllPhoto()
-                    NotificationCenter.default.post(name: Notification.Name("photoSVP"), object: nil, userInfo: ["switch": false])
                     self.photoRef.removeAllObservers()
-                    
+                    NotificationCenter.default.post(name: Notification.Name("photoSVP"), object: nil, userInfo: ["switch": false])
                 })
             default:
                 break
@@ -71,68 +74,6 @@ class FirebaseServer {
     private let UserRef = Database.database().reference().child("User")
     private let albumRef = Database.database().reference().child("Album")
     private let photoRef = Database.database().reference().child("Photo")
-    
-    
-    private func checkPhotoDataSet(completion:@escaping () -> ()) {
-        photoRef.observe(.value, with: { (snapshot) in
-            if let photodict = snapshot.value as? [String: AnyObject] {
-                for x in 0..<photodict.count {
-                    if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
-                        let albumID = getPhotoDetail["albumID"] as? String
-                        for i in self.album {
-                            if albumID == i.albumID {
-                                let photoID = getPhotoDetail["photoID"] as? String
-                                for z in i.photos {
-                                    if photoID == z.photoID {
-                                        break
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            completion()
-        })
-
-    }
-    
-    
-    private func upadateLocationData(completion:@escaping () -> ()) {
-        photoRef.observe(.value, with: { (snapshot) in
-            if let photodict = snapshot.value as? [String: AnyObject] {
-                for x in 0..<photodict.count {
-                    if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
-                        let albumID = getPhotoDetail["albumID"] as? String
-                        for i in self.album {
-                            if albumID == i.albumID {
-                                let photoID = getPhotoDetail["photoID"] as? String
-                                for z in i.photos {
-                                    if photoID == z.photoID {
-                                        break
-                                    } else {
-                                        let locationName = getPhotoDetail["locationName"] as? String
-                                        let picturesDay = getPhotoDetail["picturesDay"] as? Double
-                                        let latitude = getPhotoDetail["latitude"] as? Double
-                                        let longitude = getPhotoDetail["longitude"] as? Double
-                                        let photoArray = [String]()
-                                        if i.photos.count == 0 {
-                                            let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
-                                            i.photos.append(loadPhotoModel)
-                                        } else {
-                                            let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
-                                            i.photos.append(loadPhotoModel)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            completion()
-        })
-    }
     
     
     func getRefPath(getPath:String) -> DatabaseReference {
@@ -204,25 +145,32 @@ class FirebaseServer {
     
 //  -----------------建立相簿-----------------
     func saveAlbumDataToFirebase(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage, completion: @escaping () -> ()) {
+        print(image)
         let newAlbum = self.albumRef.childByAutoId().key
-        let imageFilePath = "\(newAlbum)/\(Date.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(image, 0.1)
+        saveAlbumPhoto(photo: image, albumID: newAlbum) { (metadata) in
+            let fileURL = metadata.downloadURL()?.absoluteString
+            let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL!] as [String : Any]
+            self.addAlnumID = newAlbum
+            self.albumRef.child(newAlbum).setValue(albumData)
+            if self.userData?.participateAlbum == nil {
+        self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([newAlbum:newAlbum])
+                completion()
+            } else {
+        self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").updateChildValues([newAlbum:newAlbum])
+                completion()
+            }
+        }
+    }
+    
+    private func saveAlbumPhoto(photo:UIImage, albumID:String, completion:@escaping (StorageMetadata) -> ()) {
+        let imageFilePath = "\(albumID)/\(Date.timeIntervalSinceReferenceDate)"
+        let data = UIImageJPEGRepresentation(photo, 0.05)
         let meataData = StorageMetadata()
-        Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData) { (metadata, error) in
+        Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData) { (metaData, error) in
             if error != nil {
                 return
             } else {
-                let fileURL = meataData.downloadURLs![0].absoluteString
-                let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL] as [String : Any]
-                self.addAlnumID = newAlbum
-                self.albumRef.child(newAlbum).setValue(albumData)
-                if self.userData?.participateAlbum == nil {
-            self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([newAlbum:newAlbum])
-                    completion()
-                } else {
-                self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").updateChildValues([newAlbum:newAlbum])
-                    completion()
-                }
+                completion(metaData!)
             }
         }
     }
@@ -251,8 +199,8 @@ class FirebaseServer {
     }
     
     private func savePhotoImage(photo: UIImage, saveID:String, completion: @escaping (StorageMetadata) -> ()) {
-        let imageFilePath = "\(saveID)/\(Date.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(photo, 1)
+        let imageFilePath = "\(album[selectAlbumNumber!].albumID)/\(saveID)/\(Date.timeIntervalSinceReferenceDate)"
+        let data = UIImageJPEGRepresentation(photo, 0.1)
         let meataData = StorageMetadata()
         Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData, completion: { (meataData, error) in
             if error != nil {
@@ -395,8 +343,13 @@ class FirebaseServer {
                                         photoArray.append(photo.value)
                                     }
                                 }
-                                let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
-                                i.photos.append(loadPhotoModel)
+                                if i.photos.count == 0 {
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
+                                    i.photos.append(loadPhotoModel)
+                                } else {
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
+                                    i.photos.append(loadPhotoModel)
+                                }
                             }
                         }
                     }
@@ -447,28 +400,48 @@ class FirebaseServer {
         })
     }
     
-    private func updatePlaceData(completion:@escaping () -> ()) {
-        photoRef.observe(.value, with: { (snapshot) in
+    private func removeAllPhotoData(completion:() -> ()) {
+        for i in self.album {
+            i.photos.removeAll()
+        }
+        completion()
+    }
+    
+    
+    private func updatePlaceData(completion:@escaping () -> ()) { 
+        photoRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let photodict = snapshot.value as? [String: AnyObject] {
                 for x in 0..<photodict.count {
                     if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
-                        let photoID = getPhotoDetail["photoID"] as? String
-                        if photoID == self.addPlaceID {
-                            let albumID = getPhotoDetail["albumID"] as? String
-                            let locationName = getPhotoDetail["locationName"] as? String
-                            let picturesDay = getPhotoDetail["picturesDay"] as? Double
-                            let latitude = getPhotoDetail["latitude"] as? Double
-                            let longitude = getPhotoDetail["longitude"] as? Double
-                            let photoArray = [String]()
-                            let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
-                            self.album[self.selectAlbumNumber!].photos.append(loadPhotoModel)
+                        let albumID = getPhotoDetail["albumID"] as? String
+                        for i in self.album {
+                            print(i.photos.count)
+                            if albumID == i.albumID {
+                                let photoID = getPhotoDetail["photoID"] as? String
+                                let locationName = getPhotoDetail["locationName"] as? String
+                                let picturesDay = getPhotoDetail["picturesDay"] as? Double
+                                let latitude = getPhotoDetail["latitude"] as? Double
+                                let longitude = getPhotoDetail["longitude"] as? Double
+                                var photoArray = [String]()
+                                if let photo = getPhotoDetail["Photo"] as? [String:String] {
+                                    for photo in photo {
+                                        photoArray.append(photo.value)
+                                    }
+                                }
+                                if i.photos.count == 0 {
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
+                                    i.photos.append(loadPhotoModel)    
+                                } else {
+                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
+                                    i.photos.append(loadPhotoModel)
+                                }
+                            }
                         }
                     }
                 }
             }
             completion()
         })
-
     }
     
     

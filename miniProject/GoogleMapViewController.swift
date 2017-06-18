@@ -46,8 +46,9 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
             } else {
                 SVProgressHUD.showSuccess(withStatus: "完成")
                 SVProgressHUD.dismiss(withDelay: 1.5)
-                NotificationCenter.default.post(name: Notification.Name("Collectionupdate"), object: nil, userInfo: ["switch": true])
+                FirebaseServer.firebase().getPhotoArrayData(select: 0).selectSwitch = true
                 updateColor()
+                print("--------------我是分隔線--------------")
             }
         }
     }
@@ -75,7 +76,11 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
     
     private func updateColor() {
         mapView.clear()
+        let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
+        mapView.camera = camera
         for i in FirebaseServer.firebase().getSelectAlbumData().photos {
+            print(i.selectSwitch)
+            print(i.locationName)
             inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
         }
     }

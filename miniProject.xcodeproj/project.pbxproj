@@ -105,6 +105,16 @@
 			name = Album;
 			sourceTree = "<group>";
 		};
+		392C70141EF2E9A200B62498 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				39B915F91E84127C0093E1AF /* Main.storyboard */,
+				39810FDE1ED4621900461313 /* Usermodel.swift */,
+				39ED9E421E9661C4002880DE /* LoginViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		3930412A1E9902210070CC98 /* MapView */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,11 +162,9 @@
 			children = (
 				39B915F51E84127C0093E1AF /* AppDelegate.swift */,
 				39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */,
-				39B915F91E84127C0093E1AF /* Main.storyboard */,
-				39810FDE1ED4621900461313 /* Usermodel.swift */,
-				39ED9E421E9661C4002880DE /* LoginViewController.swift */,
 				39638B471ED7394A006A9615 /* Library.swift */,
 				397B35A11EDBED3200FAE3F2 /* FirebaseServer.swift */,
+				392C70141EF2E9A200B62498 /* Login */,
 				39069E131E9880F9000B6DCC /* Album */,
 				39A17F841E864534002910E9 /* activity.swift */,
 				39B916091E8422010093E1AF /* user.storyboard */,

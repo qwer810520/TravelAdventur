@@ -18,7 +18,7 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("Collectionupdate"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("placeSVP"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +34,8 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
         if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
             if SVPSwitch == false {
                 collectionView?.reloadData()
+                collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .right, animated: true)
+                FirebaseServer.firebase().getPhotoArrayData(select: 0).selectSwitch = true
             }
         }
     }
@@ -49,6 +51,8 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ShowPhotoCollectionViewCell
+        print(FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).locationName)
+        print(FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch)
         if FirebaseServer.firebase().getPhotoArrayCount() == 0 {
             cell.backView.isHidden = true
         } else {
@@ -79,18 +83,20 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("willDisplay: \(indexPath.row)")
         if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch == false {
             FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch = true
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("didEndDisPlaying: \(indexPath.row)")
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {    
         if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch == true {
             FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch = false
             NotificationCenter.default.post(name: Notification.Name("changColor"), object: nil, userInfo: ["changSwitch": true])
         }
     }
+    
+    
+    
+    
 
 }
