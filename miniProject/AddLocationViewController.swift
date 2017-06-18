@@ -32,6 +32,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
  
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var dayTextField: UITextField!
+    @IBOutlet weak var backImageView: UIImageView!
     
     @IBAction func dateTextField(_ sender: UITextField) {
         selectDateSet(textField: sender)
@@ -48,6 +49,10 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
         super.viewDidLoad()
         locationTextField.delegate = self
         dayTextField.delegate = self
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        blurEffectView.frame = backImageView.bounds
+        blurEffectView.center = backImageView.center
+        backImageView.addSubview(blurEffectView)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

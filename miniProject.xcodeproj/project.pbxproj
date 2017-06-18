@@ -105,11 +105,20 @@
 			name = Album;
 			sourceTree = "<group>";
 		};
+		391F99C01EF674F40017A62C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				39B916091E8422010093E1AF /* user.storyboard */,
+				39A17F841E864534002910E9 /* activity.swift */,
+				39810FDE1ED4621900461313 /* Usermodel.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
 		392C70141EF2E9A200B62498 /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				39B915F91E84127C0093E1AF /* Main.storyboard */,
-				39810FDE1ED4621900461313 /* Usermodel.swift */,
 				39ED9E421E9661C4002880DE /* LoginViewController.swift */,
 			);
 			name = Login;
@@ -166,8 +175,7 @@
 				397B35A11EDBED3200FAE3F2 /* FirebaseServer.swift */,
 				392C70141EF2E9A200B62498 /* Login */,
 				39069E131E9880F9000B6DCC /* Album */,
-				39A17F841E864534002910E9 /* activity.swift */,
-				39B916091E8422010093E1AF /* user.storyboard */,
+				391F99C01EF674F40017A62C /* User */,
 				39B915FC1E84127C0093E1AF /* Assets.xcassets */,
 				39B916011E84127C0093E1AF /* Info.plist */,
 				39ED9E401E965DA7002880DE /* GoogleService-Info.plist */,

@@ -42,14 +42,10 @@ class FirebaseServer {
                 }
             case "Place":
                 NotificationCenter.default.post(name: Notification.Name("placeSVP"), object: nil, userInfo: ["switch": true])
-                removeAllPhotoData {
-                    updatePlaceData(completion: {
-                        self.photoRef.removeAllObservers()
-                        print("=============已經load完資料，要發出通知停止SVP=============")
-                        NotificationCenter.default.post(name: Notification.Name("placeSVP"), object: nil, userInfo: ["switch": false])
-                    })
+                updatePlaceData {
+                    self.photoRef.removeAllObservers()
+                NotificationCenter.default.post(name: Notification.Name("placeSVP"), object: nil, userInfo: ["switch": false])
                 }
-                
             case "Photo":
                 NotificationCenter.default.post(name: Notification.Name("photoSVP"), object: nil, userInfo: ["switch": true])
                 updatePhotoData(getType: .value, completion: {
@@ -400,42 +396,32 @@ class FirebaseServer {
         })
     }
     
-    private func removeAllPhotoData(completion:() -> ()) {
-        for i in self.album {
-            i.photos.removeAll()
-        }
-        completion()
-    }
-    
-    
     private func updatePlaceData(completion:@escaping () -> ()) { 
         photoRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let photodict = snapshot.value as? [String: AnyObject] {
                 for x in 0..<photodict.count {
-                    if let getPhotoDetail = Array(photodict.values)[x] as? [String: AnyObject] {
-                        let albumID = getPhotoDetail["albumID"] as? String
-                        for i in self.album {
-                            print(i.photos.count)
-                            if albumID == i.albumID {
-                                let photoID = getPhotoDetail["photoID"] as? String
-                                let locationName = getPhotoDetail["locationName"] as? String
-                                let picturesDay = getPhotoDetail["picturesDay"] as? Double
-                                let latitude = getPhotoDetail["latitude"] as? Double
-                                let longitude = getPhotoDetail["longitude"] as? Double
-                                var photoArray = [String]()
-                                if let photo = getPhotoDetail["Photo"] as? [String:String] {
-                                    for photo in photo {
-                                        photoArray.append(photo.value)
-                                    }
-                                }
-                                if i.photos.count == 0 {
-                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
-                                    i.photos.append(loadPhotoModel)    
-                                } else {
-                                    let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
-                                    i.photos.append(loadPhotoModel)
+                    if let getPhotoDetail = Array(photodict.values)[x] as? [String:AnyObject] {
+                        let photoID = getPhotoDetail["photoID"] as? String
+                        if photoID == self.addPlaceID {
+                            let albumID = getPhotoDetail["albumID"] as? String
+                            let locationName = getPhotoDetail["locationName"] as? String
+                            let picturesDay = getPhotoDetail["picturesDay"] as? Double
+                            let latitude = getPhotoDetail["latitude"] as? Double
+                            let longitude = getPhotoDetail["longitude"] as? Double
+                            var photoArray = [String]()
+                            if let photo = getPhotoDetail["Photo"] as? [String:String] {
+                                for photo in photo {
+                                    photoArray.append(photo.value)
                                 }
                             }
+                            if self.album[self.selectAlbumNumber!].photos.count == 0 {
+                                let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
+                                self.album[self.selectAlbumNumber!].photos.append(loadPhotoModel)
+                            } else {
+                                let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
+                                self.album[self.selectAlbumNumber!].photos.append(loadPhotoModel)
+                            }
+
                         }
                     }
                 }
