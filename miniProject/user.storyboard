@@ -64,7 +64,7 @@
                 <navigationController restorationIdentifier="userTableViewController" storyboardIdentifier="userTableViewController" automaticallyAdjustsScrollViewInsets="NO" id="1aG-rR-GnO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="User" image="user" id="Jtg-Mn-gdn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bsH-2u-Anq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bsH-2u-Anq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
