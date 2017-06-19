@@ -13,6 +13,15 @@ class UserMenuTableViewController: UITableViewController {
     @IBOutlet weak var userPhoto: UIImageView!
     @IBOutlet weak var userName: UILabel!
     
+    @IBOutlet weak var touchIDSwitch: UISwitch!
+    
+    @IBAction func touchIDSet(_ sender: UISwitch) {
+        if sender.isOn == true {
+            UserDefaults.standard.set(true, forKey: "touchIDSwitch")
+        } else {
+            UserDefaults.standard.set(false, forKey: "touchIDSwitch")
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         userPhoto.layer.cornerRadius = userPhoto.frame.width / 2
@@ -25,7 +34,16 @@ class UserMenuTableViewController: UITableViewController {
         }
         
         userName.text = FirebaseServer.firebase().getUserData().userName
-       
+        
+        if UserDefaults.standard.bool(forKey: "touchIDSwitch") == true {
+            touchIDSwitch.isOn = true
+        } else {
+            touchIDSwitch.isOn = false
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
     

@@ -33,9 +33,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="G2C-Bb-c2T" kind="show" id="gAc-j5-jq9"/>
-                        <segue destination="dch-e4-L2h" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="c4N-rh-Cb5"/>
                         <segue destination="P9G-ee-cnZ" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="qD8-XP-1wn"/>
+                        <segue destination="G2C-Bb-c2T" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="E0C-de-yeF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i4L-re-B22" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -165,7 +164,4 @@
         <image name="google" width="256" height="256"/>
         <image name="user" width="25" height="25"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="c4N-rh-Cb5"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -22,6 +22,7 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        revealViewController().rearViewRevealWidth = 225
         
         if revealViewController() != nil {
             menuButton.target = revealViewController()

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,7 +38,7 @@
                                                                 <constraint firstAttribute="height" constant="100" id="nr6-Tx-s5w"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jz-NN-6rH">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jz-NN-6rH">
                                                             <rect key="frame" x="0.0" y="110" width="100" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,37 +68,55 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gE7-Vo-CaK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="gE7-Vo-CaK">
                                         <rect key="frame" x="0.0" y="176" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gE7-Vo-CaK" id="6zS-xQ-dF5">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Touch ID" translatesAutoresizingMaskIntoConstraints="NO" id="d3j-rg-nlo">
-                                                    <rect key="frame" x="20" y="5" width="33.5" height="33.5"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wdJ-pI-jk4">
+                                                    <rect key="frame" x="20" y="6.5" width="197.5" height="31"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Touch ID" translatesAutoresizingMaskIntoConstraints="NO" id="d3j-rg-nlo">
+                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="31"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="25" id="dDp-lm-evq"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TouchID登入" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmL-16-6dv">
+                                                            <rect key="frame" x="35" y="0.0" width="103.5" height="31"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="103.5" id="x4c-M1-H0W"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Um0-sh-qBx">
+                                                            <rect key="frame" x="148.5" y="0.0" width="51" height="31"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="49" id="GG8-fx-hLM"/>
+                                                            </constraints>
+                                                            <color key="onTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <connections>
+                                                                <action selector="touchIDSet:" destination="QNE-vF-zVE" eventType="valueChanged" id="Kfy-yx-NUK"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="33.5" id="Gdw-v4-mDs"/>
-                                                        <constraint firstAttribute="width" constant="33.5" id="Ser-Xk-36T"/>
+                                                        <constraint firstAttribute="height" constant="31" id="8dZ-Qz-eiX"/>
+                                                        <constraint firstAttribute="width" secondItem="wdJ-pI-jk4" secondAttribute="height" multiplier="197:31" id="Q1i-fb-NKv"/>
+                                                        <constraint firstAttribute="width" constant="197.5" id="X6j-xB-TOq"/>
+                                                        <constraint firstItem="d3j-rg-nlo" firstAttribute="height" secondItem="wdJ-pI-jk4" secondAttribute="height" id="ZYi-N2-gef"/>
+                                                        <constraint firstItem="dmL-16-6dv" firstAttribute="height" secondItem="d3j-rg-nlo" secondAttribute="height" id="uNw-FX-yNp"/>
+                                                        <constraint firstItem="Um0-sh-qBx" firstAttribute="height" secondItem="dmL-16-6dv" secondAttribute="height" id="ue6-s5-gVL"/>
                                                     </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TouchID登入" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmL-16-6dv">
-                                                    <rect key="frame" x="63" y="9" width="150" height="25.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="150" id="bVe-j0-Gio"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="dmL-16-6dv" firstAttribute="centerY" secondItem="6zS-xQ-dF5" secondAttribute="centerY" id="0gG-UH-S0w"/>
-                                                <constraint firstItem="d3j-rg-nlo" firstAttribute="centerY" secondItem="6zS-xQ-dF5" secondAttribute="centerY" id="FY5-ht-qW5"/>
-                                                <constraint firstItem="dmL-16-6dv" firstAttribute="leading" secondItem="d3j-rg-nlo" secondAttribute="trailing" constant="10" id="bBs-Ia-vVS"/>
-                                                <constraint firstItem="d3j-rg-nlo" firstAttribute="leading" secondItem="6zS-xQ-dF5" secondAttribute="leading" constant="20" id="hYc-rr-Kmf"/>
-                                                <constraint firstItem="d3j-rg-nlo" firstAttribute="top" secondItem="6zS-xQ-dF5" secondAttribute="top" constant="5" id="jAP-pf-Ste"/>
-                                                <constraint firstAttribute="bottom" secondItem="d3j-rg-nlo" secondAttribute="bottom" constant="5" id="lH7-0t-4fb"/>
+                                                <constraint firstItem="wdJ-pI-jk4" firstAttribute="centerY" secondItem="6zS-xQ-dF5" secondAttribute="centerY" id="TNy-Em-hP4"/>
+                                                <constraint firstItem="wdJ-pI-jk4" firstAttribute="leading" secondItem="6zS-xQ-dF5" secondAttribute="leading" constant="20" id="rez-qD-6HU"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -109,30 +128,33 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logout" translatesAutoresizingMaskIntoConstraints="NO" id="5Yf-Xg-utW">
-                                                    <rect key="frame" x="20" y="5" width="33.5" height="33.5"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="K3b-J2-a0g">
+                                                    <rect key="frame" x="20" y="6.5" width="197.5" height="31"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logout" translatesAutoresizingMaskIntoConstraints="NO" id="5Yf-Xg-utW">
+                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="31"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="25" id="g7C-8k-j80"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登出" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VkG-X3-4hi">
+                                                            <rect key="frame" x="35" y="0.0" width="162.5" height="31"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="33.5" id="6hf-Qn-0pA"/>
-                                                        <constraint firstAttribute="width" constant="33.5" id="Gen-04-543"/>
+                                                        <constraint firstAttribute="height" constant="31" id="3Fz-ci-Ake"/>
+                                                        <constraint firstItem="5Yf-Xg-utW" firstAttribute="height" secondItem="K3b-J2-a0g" secondAttribute="height" id="5Ay-6O-I7z"/>
+                                                        <constraint firstAttribute="width" constant="197.5" id="9pK-DP-jcY"/>
+                                                        <constraint firstAttribute="width" secondItem="K3b-J2-a0g" secondAttribute="height" multiplier="197:31" id="YWW-3k-NI9"/>
                                                     </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登出" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VkG-X3-4hi">
-                                                    <rect key="frame" x="63.5" y="5" width="150" height="33.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="150" id="AS8-Fg-X4m"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="5Yf-Xg-utW" secondAttribute="bottom" constant="5" id="VeE-aa-RgM"/>
-                                                <constraint firstItem="VkG-X3-4hi" firstAttribute="leading" secondItem="5Yf-Xg-utW" secondAttribute="trailing" constant="10" id="Xiw-TD-5f9"/>
-                                                <constraint firstAttribute="bottom" secondItem="VkG-X3-4hi" secondAttribute="bottom" constant="5" id="bIN-wi-UW4"/>
-                                                <constraint firstItem="VkG-X3-4hi" firstAttribute="top" secondItem="21K-mv-qGo" secondAttribute="top" constant="5" id="rUC-Eb-Eac"/>
-                                                <constraint firstItem="5Yf-Xg-utW" firstAttribute="leading" secondItem="21K-mv-qGo" secondAttribute="leading" constant="20" id="ra3-DJ-t1J"/>
-                                                <constraint firstItem="5Yf-Xg-utW" firstAttribute="top" secondItem="21K-mv-qGo" secondAttribute="top" constant="5" id="vNo-Ib-DKU"/>
+                                                <constraint firstItem="K3b-J2-a0g" firstAttribute="centerY" secondItem="21K-mv-qGo" secondAttribute="centerY" id="Ppk-Xm-vFE"/>
+                                                <constraint firstItem="K3b-J2-a0g" firstAttribute="leading" secondItem="21K-mv-qGo" secondAttribute="leading" constant="20" id="TZf-TB-PwY"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -146,6 +168,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="touchIDSwitch" destination="Um0-sh-qBx" id="fg3-b1-d6B"/>
                         <outlet property="userName" destination="6jz-NN-6rH" id="a8o-xJ-cgS"/>
                         <outlet property="userPhoto" destination="jvG-pm-Ly5" id="SeX-77-eMv"/>
                     </connections>
