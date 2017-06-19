@@ -61,7 +61,7 @@
         <!--User-->
         <scene sceneID="clq-Xd-UnQ">
             <objects>
-                <navigationController restorationIdentifier="userTableViewController" storyboardIdentifier="userTableViewController" automaticallyAdjustsScrollViewInsets="NO" id="1aG-rR-GnO" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="activityTableViewController" storyboardIdentifier="activityTableViewController" automaticallyAdjustsScrollViewInsets="NO" id="1aG-rR-GnO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="User" image="user" id="Jtg-Mn-gdn"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bsH-2u-Anq">

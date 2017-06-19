@@ -11,6 +11,37 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--userMenuTableViewController-->
+        <scene sceneID="yKr-iu-KWp">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="userMenuTableViewController" storyboardName="userMenu" referencedIdentifier="userMenuTableViewController" id="P9G-ee-cnZ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DU1-da-t25" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-190" y="-156"/>
+        </scene>
+        <!--Reveal View Controller-->
+        <scene sceneID="g3S-cW-ZWU">
+            <objects>
+                <viewController id="QM5-Ck-unC" customClass="SWRevealViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="n6y-iy-vqA"/>
+                        <viewControllerLayoutGuide type="bottom" id="aXA-tU-Obs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ecX-s3-wfd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="G2C-Bb-c2T" kind="show" id="gAc-j5-jq9"/>
+                        <segue destination="dch-e4-L2h" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="c4N-rh-Cb5"/>
+                        <segue destination="P9G-ee-cnZ" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="qD8-XP-1wn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i4L-re-B22" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-428" y="474"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="fH3-Pa-0Dz">
             <objects>
@@ -79,12 +110,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="G2C-Bb-c2T" kind="presentation" identifier="inside" modalPresentationStyle="pageSheet" id="WyI-mT-zLV"/>
+                        <segue destination="QM5-Ck-unC" kind="presentation" identifier="inside" modalTransitionStyle="crossDissolve" id="bJH-kF-xRW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w5V-Lq-gtm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-644" y="475.41229385307349"/>
+            <point key="canvasLocation" x="-1284" y="474"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Fuy-PI-afX">
@@ -114,12 +145,12 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Uz-vu-DDa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1010" y="-187"/>
+            <point key="canvasLocation" x="910" y="-243"/>
         </scene>
-        <!--userTableViewController-->
+        <!--activityTableViewController-->
         <scene sceneID="ZRo-1k-DTt">
             <objects>
-                <viewControllerPlaceholder storyboardName="user" referencedIdentifier="userTableViewController" id="FWv-F0-lY9" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="activity" referencedIdentifier="activityTableViewController" id="FWv-F0-lY9" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" enabled="NO" title="User" image="user" id="vas-yl-Yd1"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yDP-eN-7Mw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -134,4 +165,7 @@
         <image name="google" width="256" height="256"/>
         <image name="user" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="c4N-rh-Cb5"/>
+    </inferredMetricsTieBreakers>
 </document>

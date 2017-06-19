@@ -331,6 +331,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Travel Adventur" id="0dz-Ro-s6Y">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="Cti-o4-pz4"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mn1-Cf-E66">
                             <connections>
                                 <action selector="addAlbumItem:" destination="jxf-9m-1rO" id="5Lx-xw-GjW"/>
@@ -338,6 +339,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="menuButton" destination="Cti-o4-pz4" id="4IK-rv-aWV"/>
                         <segue destination="qzQ-jJ-ulk" kind="show" id="VoX-V1-zD7"/>
                         <segue destination="gIq-jJ-N3J" kind="show" id="J7h-kU-L1o"/>
                     </connections>
@@ -644,6 +646,7 @@
     </scenes>
     <resources>
         <image name="addPlace" width="375" height="667"/>
+        <image name="menu" width="22" height="22"/>
         <image name="photoalbum" width="36" height="36"/>
         <image name="photoalbum-1" width="64" height="64"/>
     </resources>

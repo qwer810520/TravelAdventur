@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		391F99E61EF6ADF70017A62C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 391F99E51EF6ADF70017A62C /* SWRevealViewController.m */; };
+		391F99E81EF6B0AC0017A62C /* userMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 391F99E71EF6B0AC0017A62C /* userMenu.storyboard */; };
+		391F99EA1EF764140017A62C /* UserMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391F99E91EF764140017A62C /* UserMenuTableViewController.swift */; };
 		393041291E9886480070CC98 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393041281E9886480070CC98 /* AddViewController.swift */; };
 		3930412D1E9902B00070CC98 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930412C1E9902B00070CC98 /* AddLocationViewController.swift */; };
 		393570191EE009950026A1B0 /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393570181EE009950026A1B0 /* GoogleMapViewController.swift */; };
@@ -24,14 +27,13 @@
 		3988C4491EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C4481EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift */; };
 		399128AC1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */; };
 		399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */; };
-		39A17F851E864534002910E9 /* activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A17F841E864534002910E9 /* activity.swift */; };
 		39A180681E87562B002910E9 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A180671E87562B002910E9 /* Album.swift */; };
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FB1E84127C0093E1AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915F91E84127C0093E1AF /* Main.storyboard */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
 		39B916081E841C650093E1AF /* Album.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B916071E841C650093E1AF /* Album.storyboard */; };
-		39B9160A1E8422010093E1AF /* user.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B916091E8422010093E1AF /* user.storyboard */; };
+		39B9160A1E8422010093E1AF /* activity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B916091E8422010093E1AF /* activity.storyboard */; };
 		39ED9E3F1E9658B9002880DE /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */; };
 		39ED9E411E965DA7002880DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39ED9E401E965DA7002880DE /* GoogleService-Info.plist */; };
 		39ED9E431E9661C4002880DE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED9E421E9661C4002880DE /* LoginViewController.swift */; };
@@ -40,6 +42,10 @@
 
 /* Begin PBXFileReference section */
 		361112AB1DD1F483A23E5993 /* Pods_miniProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_miniProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		391F99E41EF6ADF70017A62C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		391F99E51EF6ADF70017A62C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		391F99E71EF6B0AC0017A62C /* userMenu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = userMenu.storyboard; sourceTree = "<group>"; };
+		391F99E91EF764140017A62C /* UserMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMenuTableViewController.swift; sourceTree = "<group>"; };
 		393041281E9886480070CC98 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		3930412C1E9902B00070CC98 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		3930412E1E99D65F0070CC98 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = miniProject/MyPlayground.playground; sourceTree = "<group>"; };
@@ -60,7 +66,6 @@
 		3988C4481EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileAlbumCollectionViewController.swift; sourceTree = "<group>"; };
 		399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePhotosCollectionViewCell.swift; sourceTree = "<group>"; };
-		39A17F841E864534002910E9 /* activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = activity.swift; sourceTree = "<group>"; };
 		39A180671E87562B002910E9 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		39B915F21E84127C0093E1AF /* miniProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39B915F51E84127C0093E1AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,7 +74,7 @@
 		39B915FF1E84127C0093E1AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39B916011E84127C0093E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39B916071E841C650093E1AF /* Album.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Album.storyboard; sourceTree = "<group>"; };
-		39B916091E8422010093E1AF /* user.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = user.storyboard; sourceTree = "<group>"; };
+		39B916091E8422010093E1AF /* activity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = activity.storyboard; sourceTree = "<group>"; };
 		39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionViewCell.swift; path = ../ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		39ED9E401E965DA7002880DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		39ED9E421E9661C4002880DE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -108,9 +113,11 @@
 		391F99C01EF674F40017A62C /* User */ = {
 			isa = PBXGroup;
 			children = (
-				39B916091E8422010093E1AF /* user.storyboard */,
-				39A17F841E864534002910E9 /* activity.swift */,
+				391F99E71EF6B0AC0017A62C /* userMenu.storyboard */,
 				39810FDE1ED4621900461313 /* Usermodel.swift */,
+				391F99E91EF764140017A62C /* UserMenuTableViewController.swift */,
+				391F99E41EF6ADF70017A62C /* SWRevealViewController.h */,
+				391F99E51EF6ADF70017A62C /* SWRevealViewController.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -177,6 +184,7 @@
 				39069E131E9880F9000B6DCC /* Album */,
 				391F99C01EF674F40017A62C /* User */,
 				39B915FC1E84127C0093E1AF /* Assets.xcassets */,
+				39B916091E8422010093E1AF /* activity.storyboard */,
 				39B916011E84127C0093E1AF /* Info.plist */,
 				39ED9E401E965DA7002880DE /* GoogleService-Info.plist */,
 				39638B441ED6D3F4006A9615 /* Reachability.h */,
@@ -273,7 +281,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39B9160A1E8422010093E1AF /* user.storyboard in Resources */,
+				39B9160A1E8422010093E1AF /* activity.storyboard in Resources */,
+				391F99E81EF6B0AC0017A62C /* userMenu.storyboard in Resources */,
 				39B916081E841C650093E1AF /* Album.storyboard in Resources */,
 				39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */,
 				39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */,
@@ -342,7 +351,6 @@
 				3988C4491EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift in Sources */,
 				393041291E9886480070CC98 /* AddViewController.swift in Sources */,
 				393570471EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift in Sources */,
-				39A17F851E864534002910E9 /* activity.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
 				397B35A21EDBED3200FAE3F2 /* FirebaseServer.swift in Sources */,
 				39810FDF1ED4621900461313 /* Usermodel.swift in Sources */,
@@ -356,8 +364,10 @@
 				39ED9E431E9661C4002880DE /* LoginViewController.swift in Sources */,
 				396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */,
 				39638B461ED6D3F4006A9615 /* Reachability.m in Sources */,
+				391F99E61EF6ADF70017A62C /* SWRevealViewController.m in Sources */,
 				3988C4471EF0E16300EFBAAB /* AlbumCollectionViewCell.swift in Sources */,
 				399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */,
+				391F99EA1EF764140017A62C /* UserMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

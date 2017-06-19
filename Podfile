@@ -18,5 +18,6 @@ target 'miniProject' do
     pod 'GoogleMaps'
     pod 'GooglePlaces'
     pod 'GoogleSignIn'
+    pod ''
 
 end

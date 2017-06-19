@@ -86,6 +86,10 @@ class FirebaseServer {
         }
         return refPath!
     }
+//  =============================userData================================
+    func getUserData() -> UserModel {
+        return userData!
+    }
     
    
 //  =============================AlbumData================================
@@ -460,8 +464,3 @@ class FirebaseServer {
     }
     
 }
-
-extension FirebaseServer {
-    
-}
-
