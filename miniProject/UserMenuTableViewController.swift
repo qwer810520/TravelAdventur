@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FBSDKLoginKit
+import GoogleSignIn
+import Firebase
 
 class UserMenuTableViewController: UITableViewController {
     
@@ -43,7 +46,34 @@ class UserMenuTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        switch indexPath.row {
+        case 3:
+            if let providerData = Auth.auth().currentUser?.providerData {
+                let userInfo = providerData[0]
+                switch userInfo.providerID {
+                case "google.com":
+                    GIDSignIn.sharedInstance().signOut()
+                    do {
+                        try Auth.auth().signOut()
+                        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                    } catch {
+                        
+                    }
+                case "facebook.com":
+                    FBSDKLoginManager().logOut()
+                    do {
+                        try Auth.auth().signOut()
+                        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                    } catch {
+                        
+                    }
+                default:
+                    break
+                }
+            }
+        default:
+            break
+        }
     }
     
     
