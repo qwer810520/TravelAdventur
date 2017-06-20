@@ -65,6 +65,7 @@ class FirebaseServer {
     private var userPhotoURL:String?
     private var selectAlbumNumber:Int?
     private var selectPhotoNumber:Int?
+    private var selectPhotoDetail:Int?
     private var addAlnumID:String?
     private var addPlaceID:String?
     private let UserRef = Database.database().reference().child("User")
@@ -141,6 +142,14 @@ class FirebaseServer {
         return album[selectAlbumNumber!].photos[selectPhotoNumber!].photoID
     }
     
+    func savePhotoDetailNumber(num:Int) {
+        selectPhotoDetail = num
+    }
+    
+    func getselectPhotoDetail() -> Int {
+        return selectPhotoDetail!
+    }
+    
 //  =============================Firebase================================
     
 //  -----------------建立相簿-----------------
@@ -200,7 +209,7 @@ class FirebaseServer {
     
     private func savePhotoImage(photo: UIImage, saveID:String, completion: @escaping (StorageMetadata) -> ()) {
         let imageFilePath = "\(album[selectAlbumNumber!].albumID)/\(saveID)/\(Date.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(photo, 0.1)
+        let data = UIImageJPEGRepresentation(photo, 1)
         let meataData = StorageMetadata()
         Storage.storage().reference().child(imageFilePath).putData(data!, metadata: meataData, completion: { (meataData, error) in
             if error != nil {

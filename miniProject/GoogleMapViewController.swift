@@ -14,7 +14,23 @@ import GooglePlaces
 
 class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
 
+    @IBOutlet weak var placeView: UIView!
     @IBOutlet weak var mapView: GMSMapView!
+    @IBOutlet weak var qrcodeView: UIImageView!
+    
+    @IBAction func cheangeValue(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            mapView.isHidden = false
+            placeView.isHidden = false
+            qrcodeView.isHidden = true
+            UIScreen.main.brightness = 0.5
+        } else {
+            mapView.isHidden = true
+            placeView.isHidden = true
+            qrcodeView.isHidden = false
+            UIScreen.main.brightness = 1.0
+        }
+    }
     
     @IBAction func AddPhotoLocationButton(_ sender: UIBarButtonItem) {
         let addLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationViewController")
@@ -24,6 +40,9 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        qrcodeView.isHidden = true
+        
+        qrcodeView.image = Library.qrcodeImage(str: FirebaseServer.firebase().getSelectAlbumData().albumID, image: qrcodeView)
     
         let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
         mapView.camera = camera
@@ -79,8 +98,6 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
         mapView.camera = camera
         for i in FirebaseServer.firebase().getSelectAlbumData().photos {
-            print(i.selectSwitch)
-            print(i.locationName)
             inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
         }
     }
@@ -98,7 +115,6 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
             marker.icon = redIcon
             marker.map = mapView            
         }
-        
     }
 
 

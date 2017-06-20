@@ -29,6 +29,8 @@
 		399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */; };
 		39A180681E87562B002910E9 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A180671E87562B002910E9 /* Album.swift */; };
 		39A7054A1EF7AFF500EE2881 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39A705491EF7AFF500EE2881 /* LocalAuthentication.framework */; };
+		39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A705691EF7F04100EE2881 /* PhotoCollectionViewController.swift */; };
+		39A7056C1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */; };
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FB1E84127C0093E1AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915F91E84127C0093E1AF /* Main.storyboard */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
@@ -69,6 +71,8 @@
 		399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		39A180671E87562B002910E9 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		39A705491EF7AFF500EE2881 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		39A705691EF7F04100EE2881 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		39B915F21E84127C0093E1AF /* miniProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39B915F51E84127C0093E1AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		39B915FA1E84127C0093E1AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 			children = (
 				3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */,
 				39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */,
+				39A705691EF7F04100EE2881 /* PhotoCollectionViewController.swift */,
+				39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */,
 				399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */,
 				399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */,
 			);
@@ -367,8 +373,10 @@
 				393570491EE12C800026A1B0 /* ShowPhotoCollectionViewController.swift in Sources */,
 				39ED9E431E9661C4002880DE /* LoginViewController.swift in Sources */,
 				396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */,
+				39A7056C1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift in Sources */,
 				39638B461ED6D3F4006A9615 /* Reachability.m in Sources */,
 				391F99E61EF6ADF70017A62C /* SWRevealViewController.m in Sources */,
+				39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */,
 				3988C4471EF0E16300EFBAAB /* AlbumCollectionViewCell.swift in Sources */,
 				399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */,
 				391F99EA1EF764140017A62C /* UserMenuTableViewController.swift in Sources */,

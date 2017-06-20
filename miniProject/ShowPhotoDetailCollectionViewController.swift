@@ -64,6 +64,13 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        FirebaseServer.firebase().savePhotoDetailNumber(num: indexPath.row)
+        let photoCollectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PhotoCollectionViewController")
+        present(photoCollectionViewController!, animated: true, completion: nil)
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, mosaicCellSizeTypeAtIndexPath indexPath: IndexPath) -> TRMosaicCellType {
         return indexPath.item % 3 == 0 ? TRMosaicCellType.big : TRMosaicCellType.small
     }

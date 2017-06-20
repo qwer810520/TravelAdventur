@@ -94,9 +94,4 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
             NotificationCenter.default.post(name: Notification.Name("changColor"), object: nil, userInfo: ["changSwitch": true])
         }
     }
-    
-    
-    
-    
-
 }

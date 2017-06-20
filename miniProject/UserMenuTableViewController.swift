@@ -43,6 +43,9 @@ class UserMenuTableViewController: UITableViewController {
         } else {
             touchIDSwitch.isOn = false
         }
+        let view = UIView()
+        view.backgroundColor = .black
+        tableView.tableFooterView = view
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

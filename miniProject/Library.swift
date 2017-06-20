@@ -75,9 +75,8 @@ class Library {
     static func downloadImage(imageViewSet:UIImageView, URLString:String, completion:@escaping (UIImage?, UIActivityIndicatorView?, UIVisualEffectView?) -> ()) {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         blurEffectView.frame = imageViewSet.bounds
-        blurEffectView.center = imageViewSet.center
         imageViewSet.addSubview(blurEffectView)
-        let loading = UIActivityIndicatorView(frame: CGRect(x: (imageViewSet.bounds.width / 2) - 20  , y: (imageViewSet.bounds.height / 2) - 20 , width: 40, height: 40))
+        let loading = UIActivityIndicatorView(frame: CGRect(x: (blurEffectView.bounds.width / 2) - 20  , y: (blurEffectView.bounds.height / 2) - 20 , width: 40, height: 40))
         loading.hidesWhenStopped = true
         blurEffectView.addSubview(loading)
         if let imageURL = URL(string: URLString) {
@@ -106,6 +105,19 @@ class Library {
                 task.resume()
             }
         }
+    }
+    
+    static func qrcodeImage(str:String, image:UIImageView) -> UIImage {
+        var qrcodeImage:CIImage?
+        let data = str.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
+        let fileter = CIFilter(name: "CIQRCodeGenerator")
+        fileter?.setValue(data, forKey: "inputMessage")
+        fileter?.setValue("Q", forKey: "inputCorrectionLevel")
+        qrcodeImage = fileter?.outputImage
+        let scaleX = image.frame.size.width / (qrcodeImage?.extent.size.width)!
+        let scaleY = image.frame.size.height / (qrcodeImage?.extent.size.height)!
+        let transFormedImage = qrcodeImage?.applying(CGAffineTransform(scaleX: scaleX, y: scaleY))
+        return UIImage(ciImage: transFormedImage!)
     }
     
 }
