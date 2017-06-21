@@ -11,13 +11,13 @@ import SVProgressHUD
 
 
 class AlbumCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+    
     @IBAction func addAlbumItem(_ sender: UIBarButtonItem) {
         let addViewController = self.storyboard?.instantiateViewController(withIdentifier: "AddViewController")
         navigationController?.pushViewController(addViewController!, animated: true)
     }
+
     
-    var first = true
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -29,24 +29,26 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        navigationController?.navigationBar.isHidden = false
         
         let layout = self.collectionViewLayout as! StickyCollectionViewFlowLayout
         layout.firstItemTransform = 0.05
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        FirebaseServer.firebase().saveScreenbrightness(db: Double(UIScreen.main.brightness))
        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if first == true {
+        if FirebaseServer.firebase().firstLoginSwitch() == true {
             if Library.isInternetOk() == true {
                 SVProgressHUD.show(withStatus: "讀取中...")
                 FirebaseServer.firebase().loadAllData(getType: .value, completion: { 
                     SVProgressHUD.showSuccess(withStatus: "完成")
                     SVProgressHUD.dismiss(withDelay: 1.5)
                     self.collectionView?.reloadData()
-                    self.first = false
+                    FirebaseServer.firebase().changeLoginSwitch()
                 })
             } else {
                 present(Library.alertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
@@ -56,6 +58,7 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
         NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("albumSVP"), object: nil)
     }
     
@@ -118,5 +121,9 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     }
 }

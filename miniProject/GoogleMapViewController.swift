@@ -23,7 +23,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
             mapView.isHidden = false
             placeView.isHidden = false
             qrcodeView.isHidden = true
-            UIScreen.main.brightness = 0.5
+            UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
         } else {
             mapView.isHidden = true
             placeView.isHidden = true

@@ -12,11 +12,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--photo-->
+        <!--I-->
         <scene sceneID="ZrF-GW-F5A">
             <objects>
                 <navigationController storyboardIdentifier="AlbumTableViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jfG-dN-Rde" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="photo" image="photoalbum" id="SnB-d1-EUM"/>
+                    <tabBarItem key="tabBarItem" title="I" image="photoalbum" id="SnB-d1-EUM"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TIH-yj-52j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -24,7 +24,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="jxf-9m-1rO" kind="relationship" relationship="rootViewController" id="9xP-bh-suG"/>
+                        <segue destination="jxf-9m-1rO" kind="relationship" relationship="rootViewController" id="jRi-eo-ejf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cfr-sk-nZ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -256,7 +256,7 @@
         <!--Travel Adventur-->
         <scene sceneID="DeW-oW-9e1">
             <objects>
-                <collectionViewController id="jxf-9m-1rO" customClass="AlbumCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="AlbumCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jxf-9m-1rO" customClass="AlbumCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="7s0-gs-YW4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -358,19 +358,19 @@
                         <barButtonItem key="leftBarButtonItem" image="menu" id="Cti-o4-pz4"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mn1-Cf-E66">
                             <connections>
-                                <action selector="addAlbumItem:" destination="jxf-9m-1rO" id="5Lx-xw-GjW"/>
+                                <action selector="addAlbumItem:" destination="jxf-9m-1rO" id="Xfn-m2-c60"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="menuButton" destination="Cti-o4-pz4" id="4IK-rv-aWV"/>
-                        <segue destination="qzQ-jJ-ulk" kind="show" id="VoX-V1-zD7"/>
-                        <segue destination="gIq-jJ-N3J" kind="show" id="J7h-kU-L1o"/>
+                        <segue destination="gIq-jJ-N3J" kind="show" id="t4Q-a2-lx9"/>
+                        <segue destination="qzQ-jJ-ulk" kind="show" id="U4Q-pJ-GDw"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJR-dk-4oy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2104.8000000000002" y="-216.34182908545728"/>
+            <point key="canvasLocation" x="2151" y="-216"/>
         </scene>
         <!--Show Photo Collection View Controller-->
         <scene sceneID="m4J-80-1mn">

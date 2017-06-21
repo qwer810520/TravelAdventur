@@ -20,7 +20,7 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
         let mosaicLayout = TRMosaicLayout()
         self.collectionView?.collectionViewLayout = mosaicLayout
         mosaicLayout.delegate = self

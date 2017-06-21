@@ -47,6 +47,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIScreen.main.brightness = 0.5
         locationTextField.delegate = self
         dayTextField.delegate = self
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))

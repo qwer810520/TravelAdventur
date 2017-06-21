@@ -27,6 +27,7 @@ class FirebaseServer {
     
     private init() {
         album = []
+        firstLogin = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(upDateData(Not:)), name: Notification.Name("updata"), object: nil)
     }
@@ -53,6 +54,16 @@ class FirebaseServer {
                     self.photoRef.removeAllObservers()
                     NotificationCenter.default.post(name: Notification.Name("photoSVP"), object: nil, userInfo: ["switch": false])
                 })
+            case "joinNewAlbum":
+                NotificationCenter.default.post(name: Notification.Name("albumSVP"), object: nil, userInfo: ["switch": true])
+                joinNewAlbumData {
+                    self.albumRef.removeAllObservers()
+                    self.joinNewPlaceData {
+                        self.photoRef.removeAllObservers()
+                        self.dowloadAllPhoto()
+                        NotificationCenter.default.post(name: Notification.Name("albumSVP"), object: nil, userInfo: ["switch": false])
+                    }
+                }
             default:
                 break
             }
@@ -61,6 +72,7 @@ class FirebaseServer {
     
     private var album:[Album]
     private var userData:UserModel?
+    private var firstLogin:Bool
     private var userName:String?
     private var userPhotoURL:String?
     private var selectAlbumNumber:Int?
@@ -68,10 +80,12 @@ class FirebaseServer {
     private var selectPhotoDetail:Int?
     private var addAlnumID:String?
     private var addPlaceID:String?
+    private var Screenbrightness:Double?
     private let UserRef = Database.database().reference().child("User")
     private let albumRef = Database.database().reference().child("Album")
     private let photoRef = Database.database().reference().child("Photo")
     
+
     
     func getRefPath(getPath:String) -> DatabaseReference {
         var refPath:DatabaseReference?
@@ -94,6 +108,22 @@ class FirebaseServer {
     
    
 //  =============================AlbumData================================
+    func saveScreenbrightness(db:Double) {
+        Screenbrightness = db
+    }
+    
+    func getScreenbrightness() -> Double {
+        return Screenbrightness!
+    }
+    
+    func firstLoginSwitch() -> Bool {
+        return firstLogin
+    }
+    
+    func changeLoginSwitch() {
+        firstLogin = false
+    }
+    
     func getSelectAlbumData() -> Album {
         return album[selectAlbumNumber!]
     }
@@ -340,7 +370,6 @@ class FirebaseServer {
                         let albumID = getPhotoDetail["albumID"] as? String
                     for i in self.album {
                             if albumID == i.albumID {
-                                print(i.titleImage)
                                 let photoID = getPhotoDetail["photoID"] as? String
                                 let locationName = getPhotoDetail["locationName"] as? String
                                 let picturesDay = getPhotoDetail["picturesDay"] as? Double
@@ -471,5 +500,101 @@ class FirebaseServer {
             }
         })
     }
+    
+//  ========================QRcode加入新相簿==============================
+    
+    func checkJoinNewAlbumID(str:String, completion:@escaping (Bool) -> ()) {
+        addAlnumID = str
+        checkJoinNewAlbumID { (check) in
+            if check == true {
+                if self.userData?.participateAlbum == nil {
+                self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").setValue([str:str])
+                    completion(check)
+                } else {
+                self.UserRef.child((Auth.auth().currentUser?.uid)!).child("participateAlbum").updateChildValues([str:str])
+                    completion(check)
+                }
+            } else {
+            completion(check)
+            }
+ 
+        }
+    }
+    
+    
+    private func checkJoinNewAlbumID(completion:@escaping (Bool) -> ()) {
+        albumRef.observe(.value, with: { (snapshot) in
+            if let dict = snapshot.value as? [String:AnyObject] {
+                for i in 0..<dict.count {
+                    if Array(dict.keys)[i] == self.addAlnumID  {
+                        completion(true)
+                    }
+                }
+            } else {
+                completion(false)
+            }
+        })
+    }
+
+    private func joinNewAlbumData(completion:@escaping () -> ()) {
+        var loadAlbumModel = Album(albumID: String(), travelName: String(), startDate: Double(), endDate: Double(), titleImage: String(), photos: [PhotoDataModel]())
+        albumRef.observe(.value, with: { (snapshot) in
+            if let dict = snapshot.value as? [String:AnyObject] {
+                for i in 0..<dict.count {
+                    if Array(dict.keys)[i] == self.addAlnumID  {
+                        if let getDetail = Array(dict.values)[i] as? [String:AnyObject] {
+                            let albumKey = Array(dict.keys)[i]
+                            let name = getDetail["travelName"] as? String
+                            let startDate = getDetail["startDate"] as? Double
+                            let endDate = getDetail["endDate"] as? Double
+                            let titleImage = getDetail["image"] as? String
+                            Library.firstDownloadImage(url: titleImage!)
+                            loadAlbumModel = Album(albumID: albumKey, travelName: name!, startDate: startDate!, endDate: endDate!, titleImage: titleImage!, photos: [PhotoDataModel]())
+                            self.album.append(loadAlbumModel)
+                        }
+                    }
+                }
+            }
+            completion()
+        })
+    }
+    
+    private func joinNewPlaceData(completion:@escaping () -> ()) {
+        photoRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let photodict = snapshot.value as? [String: AnyObject] {
+                for x in 0..<photodict.count {
+                    if let getPhotoDetail = Array(photodict.values)[x] as? [String:AnyObject] {
+                        let albumID = getPhotoDetail["albumID"] as? String
+                        if albumID == self.addAlnumID {
+                            let photoID = getPhotoDetail["photoID"] as? String
+                            let locationName = getPhotoDetail["locationName"] as? String
+                            let picturesDay = getPhotoDetail["picturesDay"] as? Double
+                            let latitude = getPhotoDetail["latitude"] as? Double
+                            let longitude = getPhotoDetail["longitude"] as? Double
+                            var photoArray = [String]()
+                            if let photo = getPhotoDetail["Photo"] as? [String:String] {
+                                for photo in photo {
+                                    photoArray.append(photo.value)
+                                }
+                            }
+                            for i in self.album {
+                                if i.albumID == albumID {
+                                    if i.photos.count == 0 {
+                                         let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: true)
+                                        i.photos.append(loadPhotoModel)
+                                    } else {
+                                        let loadPhotoModel = PhotoDataModel(albumID: albumID!, photoID: photoID!, locationName: locationName!, photoName: photoArray, picturesDay: picturesDay!, coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), selectSwitch: false)
+                                        i.photos.append(loadPhotoModel)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            completion()
+        })
+    }
+
     
 }

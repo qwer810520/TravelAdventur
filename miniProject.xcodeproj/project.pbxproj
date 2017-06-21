@@ -19,6 +19,7 @@
 		39638B481ED7394A006A9615 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39638B471ED7394A006A9615 /* Library.swift */; };
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
 		396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396C01741E89461300BF57F6 /* PhotoDataModel.swift */; };
+		397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */; };
 		397B35A21EDBED3200FAE3F2 /* FirebaseServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397B35A11EDBED3200FAE3F2 /* FirebaseServer.swift */; };
 		39810FDF1ED4621900461313 /* Usermodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39810FDE1ED4621900461313 /* Usermodel.swift */; };
 		3988C41D1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */; };
@@ -61,6 +62,7 @@
 		39638B471ED7394A006A9615 /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
+		397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeTearderViewController.swift; sourceTree = "<group>"; };
 		397B35A11EDBED3200FAE3F2 /* FirebaseServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseServer.swift; sourceTree = "<group>"; };
 		39810FDE1ED4621900461313 /* Usermodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Usermodel.swift; sourceTree = "<group>"; };
 		3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoDetailCollectionViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				391F99E71EF6B0AC0017A62C /* userMenu.storyboard */,
 				39810FDE1ED4621900461313 /* Usermodel.swift */,
 				391F99E91EF764140017A62C /* UserMenuTableViewController.swift */,
+				397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */,
 				391F99E41EF6ADF70017A62C /* SWRevealViewController.h */,
 				391F99E51EF6ADF70017A62C /* SWRevealViewController.m */,
 			);
@@ -375,6 +378,7 @@
 				396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */,
 				39A7056C1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift in Sources */,
 				39638B461ED6D3F4006A9615 /* Reachability.m in Sources */,
+				397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */,
 				391F99E61EF6ADF70017A62C /* SWRevealViewController.m in Sources */,
 				39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */,
 				3988C4471EF0E16300EFBAAB /* AlbumCollectionViewCell.swift in Sources */,
