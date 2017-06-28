@@ -54,12 +54,8 @@ FIR_SWIFT_NAME(Analytics)
 ///     supported. NSString parameter values can be up to 100 characters long. The "firebase_",
 ///     "google_", and "ga_" prefixes are reserved and should not be used for parameter names.
 + (void)logEventWithName:(NSString *)name
-<<<<<<< HEAD
-              parameters:(nullable NSDictionary<NSString *, id> *)parameters;
-=======
               parameters:(nullable NSDictionary<NSString *, id> *)parameters
     FIR_SWIFT_NAME(logEvent(_:parameters:));
->>>>>>> NewFunction
 
 /// Sets a user property to a given value. Up to 25 user property names are supported. Once set,
 /// user property values persist throughout the app lifecycle and across sessions.

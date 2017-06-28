@@ -42,15 +42,6 @@ static NSString *const kFIRParameterAdNetworkClickID
 static NSString *const kFIRParameterAffiliation FIR_SWIFT_NAME(AnalyticsParameterAffiliation) =
     @"affiliation";
 
-/// The store or affiliation from which this transaction occurred (NSString).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterAffiliation : @"Google Store",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterAffiliation = @"affiliation";
-
 /// The individual campaign name, slogan, promo code, etc. Some networks have pre-defined macro to
 /// capture campaign information, otherwise can be populated by developer. Highly Recommended
 /// (NSString).
@@ -92,24 +83,6 @@ static NSString *const kFIRParameterCheckoutStep FIR_SWIFT_NAME(AnalyticsParamet
 /// </pre>
 static NSString *const kFIRParameterCheckoutOption
     FIR_SWIFT_NAME(AnalyticsParameterCheckoutOption) = @"checkout_option";
-
-/// The checkout step (1..N) (unsigned 64-bit integer as NSNumber).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterCheckoutStep : @"1",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterCheckoutStep = @"checkout_step";
-
-/// Some option on a step in an ecommerce flow (NSString).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterCheckoutOption : @"Visa",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterCheckoutOption = @"checkout_option";
 
 /// Campaign content (NSString).
 static NSString *const kFIRParameterContent FIR_SWIFT_NAME(AnalyticsParameterContent) = @"content";
@@ -162,24 +135,6 @@ static NSString *const kFIRParameterCreativeName FIR_SWIFT_NAME(AnalyticsParamet
 /// </pre>
 static NSString *const kFIRParameterCreativeSlot FIR_SWIFT_NAME(AnalyticsParameterCreativeSlot) =
     @"creative_slot";
-
-/// The name of a creative used in a promotional spot (NSString).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterCreativeName : @"Summer Sale",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterCreativeName = @"creative_name";
-
-/// The name of a creative slot (NSString).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterCreativeSlot : @"summer_banner2",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterCreativeSlot = @"creative_slot";
 
 /// Purchase currency in 3-letter <a href="http://en.wikipedia.org/wiki/ISO_4217#Active_codes">
 /// ISO_4217</a> format (NSString).
@@ -250,15 +205,6 @@ static NSString *const kFIRParameterIndex FIR_SWIFT_NAME(AnalyticsParameterIndex
 static NSString *const kFIRParameterItemBrand FIR_SWIFT_NAME(AnalyticsParameterItemBrand) =
     @"item_brand";
 
-/// Item brand (NSString).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterItemBrand : @"Google",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterItemBrand = @"item_brand";
-
 /// Item category (NSString).
 /// <pre>
 ///     NSDictionary *params = @{
@@ -318,24 +264,6 @@ static NSString *const kFIRParameterItemList FIR_SWIFT_NAME(AnalyticsParameterIt
 /// </pre>
 static NSString *const kFIRParameterItemVariant FIR_SWIFT_NAME(AnalyticsParameterItemVariant) =
     @"item_variant";
-
-/// The list in which the item was presented to the user (NSString).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterItemList : @"Search Results",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterItemList = @"item_list";
-
-/// Item variant (NSString).
-/// <pre>
-///     NSDictionary *params = @{
-///       kFIRParameterItemVariant : @"Red",
-///       // ...
-///     };
-/// </pre>
-static NSString *const kFIRParameterItemVariant = @"item_variant";
 
 /// Level in game (signed 64-bit integer as NSNumber).
 /// <pre>
