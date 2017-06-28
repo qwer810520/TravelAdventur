@@ -22,16 +22,7 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrcodeFrameView:UIView?
-//    let supportedCodeType = [AVMetadataObjectTypeUPCECode,
-//                             AVMetadataObjectTypeCode39Code,
-//                             AVMetadataObjectTypeCode39Mod43Code,
-//                             AVMetadataObjectTypeCode93Code,
-//                             AVMetadataObjectTypeCode128Code,
-//                             AVMetadataObjectTypeEAN8Code,
-//                             AVMetadataObjectTypeEAN13Code,
-//                             AVMetadataObjectTypeAztecCode,
-//                             AVMetadataObjectTypePDF417Code,
-//                             AVMetadataObjectTypeQRCode]
+
     let supportedCodeType = [AVMetadataObjectTypeQRCode]
     
 
@@ -39,7 +30,10 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
         super.viewDidLoad()
         
         topbar.backgroundColor = UIColor(red: 216.0/255.0, green: 74.0/255.0, blue: 32.0/255.0, alpha: 0.8)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         do {
             let input = try AVCaptureDeviceInput(device: captureDevice)

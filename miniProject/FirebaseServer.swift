@@ -29,10 +29,10 @@ class FirebaseServer {
         album = []
         firstLogin = true
         
-        NotificationCenter.default.addObserver(self, selector: #selector(upDateData(Not:)), name: Notification.Name("updata"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(upDateAlnumData(Not:)), name: Notification.Name("updata"), object: nil)
     }
     
-    @objc private func upDateData(Not:Notification) {
+    @objc private func upDateAlnumData(Not:Notification) {
         if let string = Not.userInfo?["switch"] as? String {
             switch string {
             case "Album":
@@ -70,8 +70,9 @@ class FirebaseServer {
         }
     }
     
+    
+    fileprivate var userData:UserModel?
     private var album:[Album]
-    private var userData:UserModel?
     private var firstLogin:Bool
     private var userName:String?
     private var userPhotoURL:String?
@@ -596,5 +597,10 @@ class FirebaseServer {
         })
     }
 
+    
+}
+
+extension FirebaseServer {
+    
     
 }

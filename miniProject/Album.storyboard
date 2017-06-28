@@ -12,13 +12,13 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--I-->
+        <!--Navigation Controller-->
         <scene sceneID="ZrF-GW-F5A">
             <objects>
                 <navigationController storyboardIdentifier="AlbumTableViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jfG-dN-Rde" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="I" image="photoalbum" id="SnB-d1-EUM"/>
+                    <tabBarItem key="tabBarItem" title="" image="photoalbum" id="SnB-d1-EUM"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TIH-yj-52j">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIH-yj-52j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -245,6 +245,7 @@
                         <outlet property="mapView" destination="kha-bV-Y8b" id="fzD-do-I29"/>
                         <outlet property="placeView" destination="NMv-C2-TG3" id="nbB-2D-F6Y"/>
                         <outlet property="qrcodeView" destination="gRS-Mt-sfv" id="sph-fA-VeF"/>
+                        <outlet property="segmentedSet" destination="WQf-mW-Bkn" id="kvq-A0-5cz"/>
                         <segue destination="Wpn-5u-pMH" kind="show" id="Nz9-8i-Sqh"/>
                         <segue destination="S3O-wF-8Od" kind="show" id="Jg1-IG-2Xh"/>
                     </connections>
@@ -257,7 +258,7 @@
         <scene sceneID="DeW-oW-9e1">
             <objects>
                 <collectionViewController storyboardIdentifier="AlbumCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jxf-9m-1rO" customClass="AlbumCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="7s0-gs-YW4">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="7s0-gs-YW4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.82623625497527531" green="0.70185448703434261" blue="0.57271741614319149" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -376,7 +377,7 @@
         <scene sceneID="m4J-80-1mn">
             <objects>
                 <collectionViewController id="6Tr-k0-Cyn" customClass="ShowPhotoCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" dataMode="prototypes" id="Tbc-gS-mC8">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" id="Tbc-gS-mC8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -553,7 +554,7 @@
         <scene sceneID="okc-ZC-TpN">
             <objects>
                 <collectionViewController storyboardIdentifier="ShowPhotoDetailCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S3O-wF-8Od" customClass="ShowPhotoDetailCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="QM6-tT-rI2">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="QM6-tT-rI2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -607,75 +608,23 @@
             </objects>
             <point key="canvasLocation" x="4084" y="542.87856071964018"/>
         </scene>
-        <!--Photo Collection View Controller-->
-        <scene sceneID="mg5-Mj-TUc">
+        <!--View Controller-->
+        <scene sceneID="rx4-84-amP">
             <objects>
-                <collectionViewController storyboardIdentifier="PhotoCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="deA-6E-Rum" customClass="PhotoCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" dataMode="prototypes" id="fGh-Gl-jLC">
+                <viewController id="gl6-qm-4cv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SXm-ie-JbH"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tor-U8-bOj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AIf-ao-O3a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vRc-Rm-Jc1">
-                            <size key="itemSize" width="373" height="646"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="meN-SM-RzO" customClass="PhotoCollectionViewCell" customModule="miniProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="10.5" width="373" height="646"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="646"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpp-yt-60z">
-                                            <rect key="frame" x="0.0" y="-0.5" width="373" height="646"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="87J-aO-GK8">
-                                                    <rect key="frame" x="0.0" y="0.5" width="373" height="646"/>
-                                                </imageView>
-                                            </subviews>
-                                        </scrollView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WqX-rf-Dul">
-                                            <rect key="frame" x="18" y="18" width="40" height="40"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="L15-7f-CTD"/>
-                                                <constraint firstAttribute="width" constant="40" id="ji3-KP-NSJ"/>
-                                            </constraints>
-                                            <state key="normal" image="Cancel"/>
-                                            <connections>
-                                                <action selector="disMissButton:" destination="deA-6E-Rum" eventType="touchUpInside" id="0r9-zq-U79"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="tpp-yt-60z" firstAttribute="top" secondItem="meN-SM-RzO" secondAttribute="top" id="4oe-K8-Gcv"/>
-                                    <constraint firstItem="WqX-rf-Dul" firstAttribute="top" secondItem="meN-SM-RzO" secondAttribute="topMargin" constant="10" id="BnU-6Z-DWY"/>
-                                    <constraint firstItem="87J-aO-GK8" firstAttribute="width" secondItem="meN-SM-RzO" secondAttribute="width" id="HVW-o0-aKj"/>
-                                    <constraint firstItem="87J-aO-GK8" firstAttribute="height" secondItem="meN-SM-RzO" secondAttribute="height" id="M8k-kP-sqd"/>
-                                    <constraint firstItem="87J-aO-GK8" firstAttribute="centerY" secondItem="meN-SM-RzO" secondAttribute="centerY" id="Nzq-fZ-SqN"/>
-                                    <constraint firstItem="87J-aO-GK8" firstAttribute="centerX" secondItem="meN-SM-RzO" secondAttribute="centerX" id="cSk-3r-TBp"/>
-                                    <constraint firstAttribute="bottom" secondItem="tpp-yt-60z" secondAttribute="bottom" id="hr9-zC-vd8"/>
-                                    <constraint firstItem="WqX-rf-Dul" firstAttribute="leading" secondItem="meN-SM-RzO" secondAttribute="leadingMargin" constant="10" id="jCU-1z-1vE"/>
-                                    <constraint firstAttribute="trailing" secondItem="tpp-yt-60z" secondAttribute="trailing" id="r3d-ve-82g"/>
-                                    <constraint firstItem="tpp-yt-60z" firstAttribute="leading" secondItem="meN-SM-RzO" secondAttribute="leading" id="rJi-Ne-pFM"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="photoImage" destination="87J-aO-GK8" id="WwH-gO-qLm"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="deA-6E-Rum" id="S6m-RT-Vjz"/>
-                            <outlet property="delegate" destination="deA-6E-Rum" id="2wv-FF-voW"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BtF-64-LrK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mE2-9K-xdm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4845.6000000000004" y="1175.2623688155923"/>
+            <point key="canvasLocation" x="5319" y="1023"/>
         </scene>
         <!--AddPhotos-->
         <scene sceneID="pHS-LD-p55">
@@ -739,7 +688,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Cancel" width="75" height="75"/>
         <image name="addPlace" width="375" height="667"/>
         <image name="menu" width="22" height="22"/>
         <image name="photoalbum" width="36" height="36"/>

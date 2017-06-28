@@ -52,7 +52,6 @@
 		391F99E91EF764140017A62C /* UserMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMenuTableViewController.swift; sourceTree = "<group>"; };
 		393041281E9886480070CC98 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		3930412C1E9902B00070CC98 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
-		3930412E1E99D65F0070CC98 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = miniProject/MyPlayground.playground; sourceTree = "<group>"; };
 		393570181EE009950026A1B0 /* GoogleMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
 		393570461EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		393570481EE12C800026A1B0 /* ShowPhotoCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoCollectionViewController.swift; sourceTree = "<group>"; };
@@ -169,7 +168,6 @@
 		39B915E91E84127C0093E1AF = {
 			isa = PBXGroup;
 			children = (
-				3930412E1E99D65F0070CC98 /* MyPlayground.playground */,
 				39B915F41E84127C0093E1AF /* miniProject */,
 				39B915F31E84127C0093E1AF /* Products */,
 				DDC2B9B906CCAB37AEE979CA /* Pods */,

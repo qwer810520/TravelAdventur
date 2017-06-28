@@ -17,6 +17,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var placeView: UIView!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var qrcodeView: UIImageView!
+    @IBOutlet weak var segmentedSet: UISegmentedControl!
     
     @IBAction func cheangeValue(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -55,6 +56,14 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if segmentedSet.selectedSegmentIndex == 1 {
+            segmentedSet.selectedSegmentIndex = 0
+            mapView.isHidden = false
+            placeView.isHidden = false
+            qrcodeView.isHidden = true
+            UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("placeSVP"), object: nil)
     }
     
@@ -67,7 +76,6 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
                 SVProgressHUD.dismiss(withDelay: 1.5)
                 FirebaseServer.firebase().getPhotoArrayData(select: 0).selectSwitch = true
                 updateColor()
-                print("--------------我是分隔線--------------")
             }
         }
     }
