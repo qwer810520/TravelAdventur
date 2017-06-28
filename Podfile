@@ -14,8 +14,10 @@ target 'miniProject' do
     pod 'Firebase/Database'
     pod 'Firebase/Storage'
     pod 'SVProgressHUD'
-    pod 'PreviewTransition'
+    pod 'TRMosaicLayout'
     pod 'GoogleMaps'
     pod 'GooglePlaces'
+    pod 'GoogleSignIn'
+
 
 end

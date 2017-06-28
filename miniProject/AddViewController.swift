@@ -10,19 +10,17 @@ import UIKit
 import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
+import SVProgressHUD
 
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    var albumRef = FIRDatabase.database().reference().child("Album")
     var imageView = UIImage()
     
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var buttonImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var yearTextField: UITextField!
-    @IBOutlet weak var monthTextField: UITextField!
-    @IBOutlet weak var dayTextField: UITextField!
-    @IBOutlet weak var dateTextField: UITextField!
+    @IBOutlet weak var startDateTextField: UITextField!
+    @IBOutlet weak var endDateTextField: UITextField!
     
     @IBAction func inputImageBotton(_ sender: UIButton) {
         UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
@@ -33,13 +31,29 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         present(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func saveItem(_ sender: UIBarButtonItem) {
-        
-        checkInputValue(name: nameTextField.text!, year: yearTextField.text!, month: monthTextField.text!, day: dayTextField.text!, date: dateTextField.text!, image: imageView)
-        
-        navigationController?.popViewController(animated: true)
+    @IBAction func startDateBegin(_ sender: UITextField) {
+        inputDatePickerSet(textField: sender)
+    
     }
     
+    @IBAction func endDateBegin(_ sender: UITextField) {
+        if startDateTextField.text == "" {
+            present(Library.alertSet(title: "錯誤", message: "請先輸入開始日期", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
+                self.startDateTextField.becomeFirstResponder()
+            }), animated: true, completion: nil)
+        } else {
+            inputDatePickerSet(textField: sender)
+        }
+    }
+    
+    @IBAction func saveItem(_ sender: UIBarButtonItem) {
+        checkInputValue(name: nameTextField.text!, startDate: startDate!, endDate: endDate!, image: imageView)
+    }
+    
+    var startDateDataPicker = UIDatePicker()
+    var endDateDatePicker = UIDatePicker()
+    var startDate:TimeInterval?
+    var endDate:TimeInterval?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,89 +65,53 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         
         nameTextField.becomeFirstResponder()
         nameTextField.delegate = self
-        dateTextField.delegate = self
-        yearTextField.delegate = self
-        monthTextField.delegate = self
-        dayTextField.delegate = self
+        startDateTextField.delegate = self
+        endDateTextField.delegate = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        //        let alert = UIAlertController(title: "請輸入", message: "1.行程名稱\n 2.旅遊日期\n 3.旅遊天數\n 4.封面照片", preferredStyle: .alert)
-        //        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        //        present(alert, animated: true, completion: nil)
-        
-    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == nameTextField {
-            yearTextField.becomeFirstResponder()
+            startDateTextField.becomeFirstResponder()
             return false
-        } else if textField == yearTextField {
-            monthTextField.becomeFirstResponder()
+        } else if textField == startDateTextField {
+            endDateTextField.becomeFirstResponder()
             return false
-        } else if textField == monthTextField {
-            dayTextField.becomeFirstResponder()
-            return false
-        } else if textField == dayTextField {
-            dateTextField.becomeFirstResponder()
-            return false
-        } else if textField == dateTextField {
-            dateTextField.resignFirstResponder()
-            let alert = UIAlertController(title: "提醒", message: "請按下下面圖片來設定封面照片", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-            present(alert, animated: true, completion: nil)
+        } else if textField == endDateTextField {
+            endDateTextField.resignFirstResponder()
             return false
         }
         return true
     }
     
-    
-    func checkInputValue(name:String, year:String, month:String,  day:String, date:String, image:UIImage?) {
-        if name == "" || year == "" || month == "" || date == "" || day == "" {
-            let alert = UIAlertController(title: "錯誤", message: "輸入框請勿空白", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-        } else {
-            print("所有字數都有值")
-            if year.characters.count != 4 || month.characters.count != 2 || day.characters.count != 2 {
-                print(year.characters.count)
-                print(month.characters.count)
-                print(day.characters.count)
-                let alert = UIAlertController(title: "請輸入正確的日期格式", message: "yyyy/mm/dd", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                present(alert, animated: true, completion: nil)
-            } else {
-                if date.characters.count > 2 {
-                    let alert = UIAlertController(title: "請輸入正確的旅遊天數", message: "", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    present(alert, animated: true, completion: nil)
-                } else {
-                    if image == nil {
-                        let alert = UIAlertController(title: "錯誤", message: "請設定封面相片", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-                        present(alert, animated: true, completion: nil)
-                    } else {
-                        print("所有值都沒問題")
-                        saveTextField(name: name, year: year, month: month, day: day, date: date, image: image!)
-                    }
-                }
-            }
+    func inputDatePickerSet(textField: UITextField) {
+        if textField.tag == 1 {
+            startDateDataPicker.datePickerMode = .date
+            startDateDataPicker.locale = NSLocale(localeIdentifier: "Chinese") as Locale
+            setToolBar(textField: textField)
+        } else if textField.tag == 2 {
+            endDateDatePicker.datePickerMode = .date
+            endDateDatePicker.locale = NSLocale(localeIdentifier: "Chinese") as Locale
+            setToolBar(textField: textField)
         }
     }
     
-    func saveTextField(name:String, year:String, month:String, day:String, date:String, image:UIImage) {
-        let imageFilePath = "\(FIRAuth.auth()?.currentUser?.uid)/\(NSDate.timeIntervalSinceReferenceDate)"
-        let data = UIImageJPEGRepresentation(image, 0.01)
-        let metaData = FIRStorageMetadata()
-        FIRStorage.storage().reference().child(imageFilePath).put(data!, metadata: metaData) { (metadata, error) in
-            if error != nil {
-                return
+    func checkInputValue(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage?) {
+        
+        if name == "" || startDateTextField.text == "" || endDateTextField.text == "" {
+            present(Library.alertSet(title: "錯誤", message: "輸入框請勿空白", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
+        } else {
+            if image == nil {
+                present(Library.alertSet(title: "錯誤", message: "請設定封面相片", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
             } else {
-                let fileURL = metadata?.downloadURLs![0].absoluteString
-                let time = "\(year)/\(month)/\(day)"
-                let newAlbum = self.albumRef.childByAutoId()
-                let albumData = ["travelName": name, "time": time, "day":date, "image": fileURL!]
-                newAlbum.setValue(albumData)
+                SVProgressHUD.show(withStatus: "新增中...")
+                FirebaseServer.firebase().saveAlbumDataToFirebase(name: name, startDate: startDate, endDate: endDate, image: image!, completion: { 
+                    SVProgressHUD.dismiss()
+                    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
+                        NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Album"])
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                })
             }
         }
     }

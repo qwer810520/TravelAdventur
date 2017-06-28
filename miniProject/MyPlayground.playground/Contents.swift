@@ -1,8 +1,11 @@
-let number = "1234"
 
-let test = number.characters.count
+import UIKit
+
+let date = Date()
+
+let dateFormatter = DateFormatter()
+
+print(String(describing: date))
+print(Date())
 
 
-if test == 4 {
-    print("enter")
-}
