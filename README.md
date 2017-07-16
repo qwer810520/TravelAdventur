@@ -18,7 +18,7 @@
 
 ### QRCode
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/QRCodeDemo.PNG)
-![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/QRCode_Demo.gif)
+![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/QRCode_Demo1.gif)
 
 * 利用相簿ID來製作QRCode。
 * 讓另一名使用者利用QRcode來讀取ID來加入相簿。
