@@ -3,20 +3,24 @@
 ##Demo
 
 ###網路判斷
+
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/NetworkJudgment.PNG)
 
 * 當無法連接網路時會跳出Alert來提醒使用者。
  
 ###TouchID
+
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/TouchID_Demo.gif)
 
 ###首頁相簿呈現(StickyCollectionView-Swift)
+
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/HomeCollectionView_Demo.gif)
 
 * 使用的第三方： <https://github.com/matbeich/StickyCollectionView-Swift>
 * 修改套件裡的一些參數來調整Cell大小。
 
 ###QRCode
+
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/QRCodeDemo.PNG)
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/QRCode_Demo.gif)
 
@@ -24,11 +28,13 @@
 * 讓另一名使用者利用QRcode來讀取ID來加入相簿。
 
 ###GoogleMap
+
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/GoogleMap_Demo.gif)
 
 * 切換CollectionViewCell來更新顯示拍照的地點。
 
 ###GooglePlace
+
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/GooglePlace_Demo.gif)
 
 * 使用GooglePlace來搜尋拍照地點，確認後在GoogleMap加入新圖標。
