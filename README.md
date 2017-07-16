@@ -1,6 +1,7 @@
 #TravelAdventur
 			
 ##Demo
+
 ###網路判斷
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/NetworkJudgment.PNG)
 
@@ -33,6 +34,7 @@
 * 使用GooglePlace來搜尋拍照地點，確認後在GoogleMap加入新圖標。
 
 ###顯示相片頁面(mosaic-layout)
+
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/DetailCollectionIView_Demo.gif)
 
 * 使用的第三方: <https://github.com/vinnyoodles/mosaic-layout>
@@ -47,3 +49,4 @@
 * 將相簿ID製作成QRcode，讓使用者要分享相簿時只需讓朋友掃瞄QRCode就能加入相簿。
 * 以上有關資料存取部分皆以FirebaseAuth、database、storage來做存取。
 * 此作品持續更新中.... 
+
