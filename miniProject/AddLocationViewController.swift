@@ -47,7 +47,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIScreen.main.brightness = 0.5
+        UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
         locationTextField.delegate = self
         dayTextField.delegate = self
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))

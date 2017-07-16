@@ -65,9 +65,9 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        FirebaseServer.firebase().savePhotoDetailNumber(num: indexPath.row)
-        let photoCollectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PhotoCollectionViewController")
-        present(photoCollectionViewController!, animated: true, completion: nil)
+//        FirebaseServer.firebase().savePhotoDetailNumber(num: indexPath.row)
+//        let photoCollectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PhotoCollectionViewController")
+//        present(photoCollectionViewController!, animated: true, completion: nil)
         
     }
     

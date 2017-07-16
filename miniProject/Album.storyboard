@@ -18,7 +18,7 @@
                 <navigationController storyboardIdentifier="AlbumTableViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jfG-dN-Rde" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="photoalbum" id="SnB-d1-EUM"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIH-yj-52j">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TIH-yj-52j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -258,7 +258,7 @@
         <scene sceneID="DeW-oW-9e1">
             <objects>
                 <collectionViewController storyboardIdentifier="AlbumCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jxf-9m-1rO" customClass="AlbumCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="7s0-gs-YW4">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="7s0-gs-YW4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.82623625497527531" green="0.70185448703434261" blue="0.57271741614319149" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -377,7 +377,7 @@
         <scene sceneID="m4J-80-1mn">
             <objects>
                 <collectionViewController id="6Tr-k0-Cyn" customClass="ShowPhotoCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" id="Tbc-gS-mC8">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" dataMode="prototypes" id="Tbc-gS-mC8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -554,7 +554,7 @@
         <scene sceneID="okc-ZC-TpN">
             <objects>
                 <collectionViewController storyboardIdentifier="ShowPhotoDetailCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S3O-wF-8Od" customClass="ShowPhotoDetailCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="QM6-tT-rI2">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="QM6-tT-rI2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -630,7 +630,7 @@
         <scene sceneID="pHS-LD-p55">
             <objects>
                 <collectionViewController storyboardIdentifier="MobileAlbumCollectionViewController" id="Rgm-nZ-1QT" customClass="MobileAlbumCollectionViewController" customModule="miniProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="D5e-3S-IeI">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="D5e-3S-IeI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

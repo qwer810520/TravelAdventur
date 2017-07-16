@@ -129,7 +129,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="dch-e4-L2h" kind="relationship" relationship="viewControllers" id="Bpw-L5-Gif"/>
-                        <segue destination="FWv-F0-lY9" kind="relationship" relationship="viewControllers" id="Lnc-Ic-2DH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3fQ-g1-x3p" userLabel="First Responder" sceneMemberID="firstResponder"/>

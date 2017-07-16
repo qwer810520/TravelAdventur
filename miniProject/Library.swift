@@ -49,60 +49,64 @@ class Library {
     
     
     static func firstDownloadImage(url:String) {
-        if let imageURL = URL(string: url) {
-            let fullFilePathName = NSHomeDirectory() + "/Library/CachesCache_\(imageURL.hashValue)"
-            let cacheImage = UIImage(contentsOfFile: fullFilePathName)
-            if cacheImage == nil {
-                let task = URLSession.shared.dataTask(with: imageURL, completionHandler: { (data, response, error) in
-                    if error != nil {
-                        return
-                    } else {
-                        if let checkData = data {
-                            do {
-                                try checkData.write(to: URL(fileURLWithPath: fullFilePathName))
-                            } catch {
-                                
+        DispatchQueue.main.async {
+            if let imageURL = URL(string: url) {
+                let fullFilePathName = NSHomeDirectory() + "/Library/CachesCache_\(imageURL.hashValue)"
+                let cacheImage = UIImage(contentsOfFile: fullFilePathName)
+                if cacheImage == nil {
+                    let task = URLSession.shared.dataTask(with: imageURL, completionHandler: { (data, response, error) in
+                        if error != nil {
+                            return
+                        } else {
+                            if let checkData = data {
+                                do {
+                                    try checkData.write(to: URL(fileURLWithPath: fullFilePathName))
+                                } catch {
+                                    
+                                }
                             }
                         }
-                    }
-                })
-                task.resume()
+                    })
+                    task.resume()
+                }
             }
         }
     }
     
    
     static func downloadImage(imageViewSet:UIImageView, URLString:String, completion:@escaping (UIImage?, UIActivityIndicatorView?, UIVisualEffectView?) -> ()) {
-        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        blurEffectView.frame = imageViewSet.bounds
-        imageViewSet.addSubview(blurEffectView)
-        let loading = UIActivityIndicatorView(frame: CGRect(x: (blurEffectView.bounds.width / 2) - 20  , y: (blurEffectView.bounds.height / 2) - 20 , width: 40, height: 40))
-        loading.hidesWhenStopped = true
-        blurEffectView.addSubview(loading)
-        if let imageURL = URL(string: URLString) {
-            let fullFilePathName = NSHomeDirectory() + "/Library/CachesCache_\(imageURL.hashValue)"
-            let cacheImage = UIImage(contentsOfFile: fullFilePathName)
-            if cacheImage != nil {
-                completion(cacheImage, loading, blurEffectView)
-            } else {
-                let task = URLSession.shared.dataTask(with: imageURL, completionHandler: { (data, response, error) in
-                    if error != nil {
-                        return
-                    } else {
-                        if let checkData = data {
-                            completion(UIImage(data: checkData), loading, blurEffectView)
-                            do {
-                               try checkData.write(to: URL(fileURLWithPath: fullFilePathName))
-                            } catch {
-                                
+        DispatchQueue.main.async {
+            let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+            blurEffectView.frame = imageViewSet.bounds
+            imageViewSet.addSubview(blurEffectView)
+            let loading = UIActivityIndicatorView(frame: CGRect(x: (blurEffectView.bounds.width / 2) - 20  , y: (blurEffectView.bounds.height / 2) - 20 , width: 40, height: 40))
+            loading.hidesWhenStopped = true
+            blurEffectView.addSubview(loading)
+            if let imageURL = URL(string: URLString) {
+                let fullFilePathName = NSHomeDirectory() + "/Library/CachesCache_\(imageURL.hashValue)"
+                let cacheImage = UIImage(contentsOfFile: fullFilePathName)
+                if cacheImage != nil {
+                    completion(cacheImage, loading, blurEffectView)
+                } else {
+                    let task = URLSession.shared.dataTask(with: imageURL, completionHandler: { (data, response, error) in
+                        if error != nil {
+                            return
+                        } else {
+                            if let checkData = data {
+                                completion(UIImage(data: checkData), loading, blurEffectView)
+                                do {
+                                    try checkData.write(to: URL(fileURLWithPath: fullFilePathName))
+                                } catch {
+                                    
+                                }
                             }
                         }
+                    })
+                    DispatchQueue.main.async {
+                        loading.startAnimating()
                     }
-                })
-                DispatchQueue.main.async {
-                    loading.startAnimating()
+                    task.resume()
                 }
-                task.resume()
             }
         }
     }

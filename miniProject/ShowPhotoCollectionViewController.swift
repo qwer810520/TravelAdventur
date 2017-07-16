@@ -34,7 +34,7 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
         if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
             if SVPSwitch == false {
                 collectionView?.reloadData()
-                collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .right, animated: true)
+                collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
                 FirebaseServer.firebase().getPhotoArrayData(select: 0).selectSwitch = true
             }
         }

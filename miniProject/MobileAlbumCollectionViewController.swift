@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import SVProgressHUD
 
+
 class MobileAlbumCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var modelImageArray = [modelPhotosData]()
@@ -64,10 +65,10 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
         if fetchResult.count > 0 {
             
                 for i in 0..<fetchResult.count {
-                    imageManager.requestImage(for: fetchResult.object(at: i), targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, error) in
+                    imageManager.requestImage(for: fetchResult.object(at: i), targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions, resultHandler: { [weak self] (image, error) in
                         let photoData = modelPhotosData(image: image!, bool: false)
-                      self.modelImageArray.append(photoData)
-                        self.imageArrayCount += 1
+                      self?.modelImageArray.append(photoData)
+                        self?.imageArrayCount += 1
                     })
                 }
             } else {

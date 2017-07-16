@@ -89,11 +89,13 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
             cell.backView.layer.cornerRadius = 7
             cell.backView.clipsToBounds = true
             cell.titleLabel.text = FirebaseServer.firebase().dataArray(select: indexPath.row).travelName
+            
             Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().dataArray(select: indexPath.row).titleImage, completion: { (photo, loading, view) in
                 cell.titleImage.image = photo
                 loading?.stopAnimating()
                 view?.removeFromSuperview()
             })
+            
             cell.titleDetail.text = "\(Library.dateToShowString(date: FirebaseServer.firebase().dataArray(select: indexPath.row).startDate)) ~ \(Library.endDateToShowString(date: FirebaseServer.firebase().dataArray(select: indexPath.row).endDate))"
         } else {
             cell.titleLabel.isHidden = true

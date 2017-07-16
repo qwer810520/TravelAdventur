@@ -22,10 +22,10 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrcodeFrameView:UIView?
-
+    
     let supportedCodeType = [AVMetadataObjectTypeQRCode]
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,22 +77,22 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
                     if let newAlbumID = metadataObj.stringValue {
                         print(newAlbumID)
                         SVProgressHUD.show(withStatus: "搜尋中...")
-                            FirebaseServer.firebase().checkJoinNewAlbumID(str: newAlbumID, completion: { (check) in
-                                if check == true {
-                                    SVProgressHUD.dismiss()
-                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    let albumCollectionViewController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-                                    self.navigationController?.pushViewController(albumCollectionViewController, animated: true)
-                                    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
-                                        NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "joinNewAlbum"])
-                                    })
-                                } else {
-                                    SVProgressHUD.dismiss()
-                                    self.present(Library.alertSet(title: "錯誤", message:"請掃描正確的QRcode", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
-                                        self.captureSession?.startRunning()
-                                    }), animated: true, completion: nil)
-                                }
-                            })
+                        FirebaseServer.firebase().checkJoinNewAlbumID(str: newAlbumID, completion: { (check) in
+                            if check == true {
+                                SVProgressHUD.dismiss()
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let albumCollectionViewController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+                                self.navigationController?.pushViewController(albumCollectionViewController, animated: true)
+                                Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
+                                    NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "joinNewAlbum"])
+                                })
+                            } else {
+                                SVProgressHUD.dismiss()
+                                self.present(Library.alertSet(title: "錯誤", message:"請掃描正確的QRcode", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
+                                    self.captureSession?.startRunning()
+                                }), animated: true, completion: nil)
+                            }
+                        })
                     }
                 } else {
                     self.present(Library.alertSet(title: "錯誤", message:"請掃描正確的QRcode", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
@@ -102,6 +102,6 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
             }
         }
     }
-
-   
+    
+    
 }
