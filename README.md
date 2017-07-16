@@ -12,7 +12,7 @@
 ###首頁相簿呈現(StickyCollectionView-Swift)
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/HomeCollectionView_Demo.gif)
 
-* 參考第三方：<https://github.com/matbeich/StickyCollectionView-Swift>
+* 使用的第三方： <https://github.com/matbeich/StickyCollectionView-Swift>
 * 修改套件裡的一些參數來調整Cell大小。
 
 ###QRCode
@@ -35,7 +35,7 @@
 ###顯示相片頁面(mosaic-layout)
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/DetailCollectionIView_Demo.gif)
 
-* 參考的第三方:<https://github.com/vinnyoodles/mosaic-layout>
+* 使用的第三方: <https://github.com/vinnyoodles/mosaic-layout>
 
 ##目前應用功能有
 * 以Singleton模式來做撰寫。
@@ -47,7 +47,3 @@
 * 將相簿ID製作成QRcode，讓使用者要分享相簿時只需讓朋友掃瞄QRCode就能加入相簿。
 * 以上有關資料存取部分皆以FirebaseAuth、database、storage來做存取。
 * 此作品持續更新中.... 
-
-
-
-
