@@ -15,7 +15,7 @@ class PhotoCollectionViewController: UICollectionViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-     collectionView?.scrollToItem(at: IndexPath(item: FirebaseServer.firebase().getselectPhotoDetail(), section: 0), at: .right, animated: false)  
+     collectionView?.scrollToItem(at: IndexPath(item: FirebaseManager.shared.getselectPhotoDetail(), section: 0), at: .right, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,12 +37,12 @@ class PhotoCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return FirebaseServer.firebase().getSelectPhotoDataArrayCount()
+        return FirebaseManager.shared.getSelectPhotoDataArrayCount()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCollectionViewCell
-        Library.downloadImage(imageViewSet: cell.photoImage, URLString: FirebaseServer.firebase().getSelectPhotoDataArray(selectPhoto: indexPath.row)) { (photo, loading, view) in
+        Library.downloadImage(imageViewSet: cell.photoImage, URLString: FirebaseManager.shared.getSelectPhotoDataArray(selectPhoto: indexPath.row)) { (photo, loading, view) in
             cell.photoImage.image = photo
             loading?.stopAnimating()
             view?.removeFromSuperview()

@@ -35,20 +35,20 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
         layout.firstItemTransform = 0.05
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        FirebaseServer.firebase().saveScreenbrightness(db: Double(UIScreen.main.brightness))
+        FirebaseManager.shared.saveScreenbrightness(db: Double(UIScreen.main.brightness))
        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if FirebaseServer.firebase().firstLoginSwitch() == true {
+        if FirebaseManager.shared.firstLoginSwitch() == true {
             if Library.isInternetOk() == true {
                 SVProgressHUD.show(withStatus: "讀取中...")
-                FirebaseServer.firebase().loadAllData(getType: .value, completion: { 
+                FirebaseManager.shared.loadAllData(getType: .value, completion: {
                     SVProgressHUD.showSuccess(withStatus: "完成")
                     SVProgressHUD.dismiss(withDelay: 1.5)
                     self.collectionView?.reloadData()
-                    FirebaseServer.firebase().changeLoginSwitch()
+                    FirebaseManager.shared.changeLoginSwitch()
                 })
             } else {
                 present(Library.alertSet(title: "錯誤", message: "網路無法連線，請確認網路是否開啟", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
@@ -58,11 +58,11 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
+        UIScreen.main.brightness = CGFloat(FirebaseManager.shared.getScreenbrightness())
         NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("albumSVP"), object: nil)
     }
     
-    func showSVP(Not:Notification) {
+    @objc func showSVP(Not:Notification) {
         if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
             if SVPSwitch == true {
                 SVProgressHUD.show(withStatus: "載入中...")
@@ -75,12 +75,12 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return FirebaseServer.firebase().dataArrayCount()
+        return FirebaseManager.shared.dataArrayCount()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AlbumCollectionViewCell
-        if FirebaseServer.firebase().dataArrayCount() != 0 {
+        if FirebaseManager.shared.dataArrayCount() != 0 {
             cell.titleDetail.isHidden = false
             cell.titleImage.isHidden = false
             cell.titleLabel.isHidden = false
@@ -88,15 +88,15 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
             cell.labelBackView.isHidden = false
             cell.backView.layer.cornerRadius = 7
             cell.backView.clipsToBounds = true
-            cell.titleLabel.text = FirebaseServer.firebase().dataArray(select: indexPath.row).travelName
+            cell.titleLabel.text = FirebaseManager.shared.dataArray(select: indexPath.row).travelName
             
-            Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().dataArray(select: indexPath.row).titleImage, completion: { (photo, loading, view) in
+            Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseManager.shared.dataArray(select: indexPath.row).titleImage, completion: { (photo, loading, view) in
                 cell.titleImage.image = photo
                 loading?.stopAnimating()
                 view?.removeFromSuperview()
             })
             
-            cell.titleDetail.text = "\(Library.dateToShowString(date: FirebaseServer.firebase().dataArray(select: indexPath.row).startDate)) ~ \(Library.endDateToShowString(date: FirebaseServer.firebase().dataArray(select: indexPath.row).endDate))"
+            cell.titleDetail.text = "\(Library.dateToShowString(date: FirebaseManager.shared.dataArray(select: indexPath.row).startDate)) ~ \(Library.endDateToShowString(date: FirebaseManager.shared.dataArray(select: indexPath.row).endDate))"
         } else {
             cell.titleLabel.isHidden = true
             cell.titleImage.isHidden = true
@@ -108,7 +108,7 @@ class AlbumCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        FirebaseServer.firebase().saveSelectNumber(num: indexPath.row)
+        FirebaseManager.shared.saveSelectNumber(num: indexPath.row)
         let googleMapViewController = self.storyboard?.instantiateViewController(withIdentifier: "GoogleMapViewController")
         navigationController?.pushViewController(googleMapViewController!, animated: true)
     }

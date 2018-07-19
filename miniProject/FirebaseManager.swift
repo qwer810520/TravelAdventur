@@ -12,23 +12,31 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
 import GoogleMaps
+import LocalAuthentication
 
-
-class FirebaseServer {
+class FirebaseManager: NSObject {
     
-    private static var FirebaseModel:FirebaseServer?
+    static let shared = FirebaseManager()
     
-    static func firebase() -> FirebaseServer {
-        if FirebaseModel == nil {
-            FirebaseModel = FirebaseServer()
+    private(set) var loginUserModel: LoginUserModel?
+     
+    func signInForFirebase(credential: AuthCredential, complectionHandler: @escaping (_ error: Error?) -> ()) {
+        Auth.auth().signInAndRetrieveData(with: credential) { [weak self] (user, error) in
+            guard error == nil, let userData = user else {
+                complectionHandler(error!)
+                return
+            }
+            self?.loginUserModel = LoginUserModel(name: userData.user.displayName!, photoURL: userData.user.photoURL?.absoluteString ?? "")
+            complectionHandler(nil)
         }
-        return FirebaseModel!
     }
     
-    private init() {
+    // MARK: -----------------------------------------------------------------------
+    
+    private override init() {
         album = []
         firstLogin = true
-        
+        super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(upDateAlnumData(Not:)), name: Notification.Name("updata"), object: nil)
     }
     
@@ -188,8 +196,8 @@ class FirebaseServer {
         print(image)
         let newAlbum = self.albumRef.childByAutoId().key
         saveAlbumPhoto(photo: image, albumID: newAlbum) { (metadata) in
-            let fileURL = metadata.downloadURL()?.absoluteString
-            let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": fileURL!] as [String : Any]
+//            let fileURL = metadata.downloadURL()?.absoluteString
+            let albumData = ["travelName": name, "startDate": startDate, "endDate":endDate, "image": ""] as [String : Any]
             self.addAlnumID = newAlbum
             self.albumRef.child(newAlbum).setValue(albumData)
             if self.userData?.participateAlbum == nil {
@@ -253,18 +261,19 @@ class FirebaseServer {
     
     private func savePhotoDataToDatabase(meataData:StorageMetadata,setBool:Bool, photoID:String, completion: () -> ()) {
         print(setBool)
-        let fileURL = meataData.downloadURL()?.absoluteString
+//        let fileURL = meataData.downloadURL()?.absoluteString
+        let fileURL = ""
         let photoId = self.photoRef.childByAutoId().key
         if self.album[self.selectAlbumNumber!].photos[self.selectPhotoNumber!].photoName.count == 0 {
             if setBool == false {
                 self.photoRef.child(photoID).child("Photo").setValue([photoId: fileURL])
                 completion()
             } else {
-                self.photoRef.child(photoID).child("Photo").updateChildValues([photoId:fileURL!])
+                self.photoRef.child(photoID).child("Photo").updateChildValues([photoId:fileURL])
                 completion()
             }
         } else {
-            self.photoRef.child(photoID).child("Photo").updateChildValues([photoId:fileURL!])
+            self.photoRef.child(photoID).child("Photo").updateChildValues([photoId:fileURL])
             completion()
         }
     }
@@ -292,7 +301,7 @@ class FirebaseServer {
         }
     }
 //  -----------------使用者資訊確認----------------------
-    func takeUserData(name:String, userPhoto:String, completion:() -> ()) {
+    func setUserData(name:String, userPhoto:String, completion:() -> ()) {
         userName = name
         userPhotoURL = userPhoto
         completion()
@@ -600,7 +609,7 @@ class FirebaseServer {
     
 }
 
-extension FirebaseServer {
+extension FirebaseManager {
     
     
 }

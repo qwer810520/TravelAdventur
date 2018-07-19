@@ -39,12 +39,15 @@ class Library {
     }
     
     static func isInternetOk() -> Bool {
+        /*
         let reachability = Reachability(hostName: "https://www.google.com.tw/")
         if reachability?.currentReachabilityStatus().rawValue == 0 {
             return false
         } else {
             return true
         }
+         */
+        return true
     }
     
     
@@ -120,8 +123,9 @@ class Library {
         qrcodeImage = fileter?.outputImage
         let scaleX = image.frame.size.width / (qrcodeImage?.extent.size.width)!
         let scaleY = image.frame.size.height / (qrcodeImage?.extent.size.height)!
-        let transFormedImage = qrcodeImage?.applying(CGAffineTransform(scaleX: scaleX, y: scaleY))
-        return UIImage(ciImage: transFormedImage!)
+//        let transFormedImage = qrcodeImage?.applying(CGAffineTransform(scaleX: scaleX, y: scaleY))
+//        return UIImage(ciImage: transFormedImage!)
+        return UIImage()
     }
     
 }

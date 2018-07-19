@@ -105,7 +105,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 present(Library.alertSet(title: "錯誤", message: "請設定封面相片", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
             } else {
                 SVProgressHUD.show(withStatus: "新增中...")
-                FirebaseServer.firebase().saveAlbumDataToFirebase(name: name, startDate: startDate, endDate: endDate, image: image!, completion: { 
+                FirebaseManager.shared.saveAlbumDataToFirebase(name: name, startDate: startDate, endDate: endDate, image: image!, completion: { 
                     SVProgressHUD.dismiss()
                     Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
                         NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Album"])

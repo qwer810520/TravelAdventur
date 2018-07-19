@@ -24,7 +24,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
             mapView.isHidden = false
             placeView.isHidden = false
             qrcodeView.isHidden = true
-            UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
+            UIScreen.main.brightness = CGFloat(FirebaseManager.shared.getScreenbrightness())
         } else {
             mapView.isHidden = true
             placeView.isHidden = true
@@ -43,7 +43,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         super.viewDidLoad()
         qrcodeView.isHidden = true
         
-        qrcodeView.image = Library.qrcodeImage(str: FirebaseServer.firebase().getSelectAlbumData().albumID, image: qrcodeView)
+        qrcodeView.image = Library.qrcodeImage(str: FirebaseManager.shared.getSelectAlbumData().albumID, image: qrcodeView)
     
         let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
         mapView.camera = camera
@@ -61,20 +61,20 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
             mapView.isHidden = false
             placeView.isHidden = false
             qrcodeView.isHidden = true
-            UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
+            UIScreen.main.brightness = CGFloat(FirebaseManager.shared.getScreenbrightness())
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("placeSVP"), object: nil)
     }
     
-    func showSVP(Not:Notification) {
+    @objc func showSVP(Not:Notification) {
         if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
             if SVPSwitch == true {
                 SVProgressHUD.show(withStatus: "載入中...")
             } else {
                 SVProgressHUD.showSuccess(withStatus: "完成")
                 SVProgressHUD.dismiss(withDelay: 1.5)
-                FirebaseServer.firebase().getPhotoArrayData(select: 0).selectSwitch = true
+                FirebaseManager.shared.getPhotoArrayData(select: 0).selectSwitch = true
                 updateColor()
             }
         }
@@ -83,8 +83,8 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if FirebaseServer.firebase().getPhotoArrayCount() != 0 {
-            for i in FirebaseServer.firebase().getSelectAlbumData().photos {
+        if FirebaseManager.shared.getPhotoArrayCount() != 0 {
+            for i in FirebaseManager.shared.getSelectAlbumData().photos {
                 inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
             }
         }
@@ -93,7 +93,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
     
     
     
-    func newChangeColor(Not:Notification) {
+    @objc func newChangeColor(Not:Notification) {
         if let changeColor = Not.userInfo?["changSwitch"] as? Bool {
             if changeColor == true {
                 updateColor()
@@ -105,7 +105,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         mapView.clear()
         let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
         mapView.camera = camera
-        for i in FirebaseServer.firebase().getSelectAlbumData().photos {
+        for i in FirebaseManager.shared.getSelectAlbumData().photos {
             inputLocationMarker(coordinate: i.coordinate, changeColor: i.selectSwitch)
         }
     }

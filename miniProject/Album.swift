@@ -58,24 +58,24 @@ extension AddViewController {
         }
     }
     
-    func startDateCheckButtonSet() {
+    @objc func startDateCheckButtonSet() {
         startDateTextField.text = Library.dateToShowString(date: startDateDataPicker.date.timeIntervalSince1970)
         endDateDatePicker.minimumDate = startDateDataPicker.date
         startDate = startDateDataPicker.date.timeIntervalSince1970
         endDateTextField.becomeFirstResponder()
     }
     
-    func startDateCancelButtonSet() {
+    @objc func startDateCancelButtonSet() {
         startDateTextField.resignFirstResponder()
     }
     
-    func endDateCheckButtonSet() {
+    @objc func endDateCheckButtonSet() {
         endDateTextField.text = Library.dateToShowString(date: endDateDatePicker.date.timeIntervalSince1970)
         endDate = endDateDatePicker.date.timeIntervalSince1970
         endDateTextField.resignFirstResponder()
     }
     
-    func endDateCancelButtonSet() {
+    @objc func endDateCancelButtonSet() {
         endDateTextField.resignFirstResponder()
     }
 }

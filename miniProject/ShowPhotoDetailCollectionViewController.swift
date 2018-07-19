@@ -20,7 +20,7 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
+        UIScreen.main.brightness = CGFloat(FirebaseManager.shared.getScreenbrightness())
         let mosaicLayout = TRMosaicLayout()
         self.collectionView?.collectionViewLayout = mosaicLayout
         mosaicLayout.delegate = self
@@ -31,7 +31,7 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
         NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("photoSVP"), object: nil)
     }
     
-    func showSVP(Not:Notification) {
+    @objc func showSVP(Not:Notification) {
         if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
             if SVPSwitch == true {
                 SVProgressHUD.show(withStatus: "載入中...")
@@ -48,14 +48,14 @@ class ShowPhotoDetailCollectionViewController: UICollectionViewController, TRMos
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return FirebaseServer.firebase().getSelectPhotoDataArrayCount()
+        return FirebaseManager.shared.getSelectPhotoDataArrayCount()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ImageCollectionViewCell
         
-        if FirebaseServer.firebase().getSelectPhotoDataArrayCount() != 0 {
-            Library.downloadImage(imageViewSet: cell.inputImage, URLString: FirebaseServer.firebase().getSelectPhotoDataArray(selectPhoto: indexPath.row), completion: { (photo, loading, view) in
+        if FirebaseManager.shared.getSelectPhotoDataArrayCount() != 0 {
+            Library.downloadImage(imageViewSet: cell.inputImage, URLString: FirebaseManager.shared.getSelectPhotoDataArray(selectPhoto: indexPath.row), completion: { (photo, loading, view) in
                 cell.inputImage.image = photo
                 loading?.stopAnimating()
                 view?.removeFromSuperview()

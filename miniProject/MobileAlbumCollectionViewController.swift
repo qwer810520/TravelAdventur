@@ -22,7 +22,7 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
         print(selectImageArray.count)
         if selectImageArray.count != 0 {
             SVProgressHUD.show(withStatus: "上傳中...")
-            FirebaseServer.firebase().savePhotoToFirebase(PhotoArray: selectImageArray, saveId: FirebaseServer.firebase().getSavePhotoId(), completion: {
+            FirebaseManager.shared.savePhotoToFirebase(PhotoArray: selectImageArray, saveId: FirebaseManager.shared.getSavePhotoId(), completion: {
                 SVProgressHUD.dismiss()
                 Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (_) in
                     NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Photo"])
@@ -39,7 +39,7 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
         super.viewDidLoad()
        grabPhotos()
        collectionView?.allowsMultipleSelection = true
-       print(FirebaseServer.firebase().getPhotoId())
+       print(FirebaseManager.shared.getPhotoId())
         
     }
     

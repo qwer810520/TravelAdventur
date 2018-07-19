@@ -20,4 +20,5 @@ target 'miniProject' do
     pod 'GooglePlaces'
     pod 'GoogleSignIn'
     pod 'SDWebImage'
+    pod 'ReachabilitySwift'
 end

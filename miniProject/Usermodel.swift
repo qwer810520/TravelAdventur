@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class UserModel {
+struct UserModel {
     var userId:String?
     var userName:String?
     var userPhoto:String?

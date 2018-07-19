@@ -47,7 +47,7 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIScreen.main.brightness = CGFloat(FirebaseServer.firebase().getScreenbrightness())
+        UIScreen.main.brightness = CGFloat(FirebaseManager.shared.getScreenbrightness())
         locationTextField.delegate = self
         dayTextField.delegate = self
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -70,8 +70,8 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
     func selectDateSet(textField:UITextField) {
         selectDatePickerView.datePickerMode = .date
         selectDatePickerView.locale = NSLocale(localeIdentifier: "Chinese") as Locale
-        selectDatePickerView.minimumDate = Date(timeIntervalSince1970: FirebaseServer.firebase().getSelectAlbumData().startDate)
-        selectDatePickerView.maximumDate = Date(timeIntervalSince1970: FirebaseServer.firebase().getSelectAlbumData().endDate)
+        selectDatePickerView.minimumDate = Date(timeIntervalSince1970: FirebaseManager.shared.getSelectAlbumData().startDate)
+        selectDatePickerView.maximumDate = Date(timeIntervalSince1970: FirebaseManager.shared.getSelectAlbumData().endDate)
         toolBarSet(textField: textField)
         
     }
@@ -91,13 +91,13 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
         dayTextField.inputAccessoryView = toolBar
     }
     
-    func checkButtonSet() {
+    @objc func checkButtonSet() {
         dayTextField.text = Library.dateToShowString(date: selectDatePickerView.date.timeIntervalSince1970)
         selectDate = selectDatePickerView.date.timeIntervalSince1970
         dayTextField.resignFirstResponder()
     }
     
-    func cancelButtonSet() {
+    @objc func cancelButtonSet() {
         dayTextField.resignFirstResponder()
     }
     
@@ -106,11 +106,11 @@ class AddLocationViewController: UIViewController, UINavigationControllerDelegat
         if locationTextField.text == "" || dayTextField.text == "" {
             present(Library.alertSet(title: "錯誤", message: "輸入框不能為空", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
         } else {
-            let newPhotoID = FirebaseServer.firebase().getRefPath(getPath: "photo").childByAutoId().key
+            let newPhotoID = FirebaseManager.shared.getRefPath(getPath: "photo").childByAutoId().key
             PhotoData.picturesDay = selectDate!
-            PhotoData.albumID = FirebaseServer.firebase().getSelectAlbumData().albumID
+            PhotoData.albumID = FirebaseManager.shared.getSelectAlbumData().albumID
             PhotoData.photoID = newPhotoID
-            FirebaseServer.firebase().savePhotoDataToFirebase(photoID: newPhotoID, photoData: PhotoData, completion: {
+            FirebaseManager.shared.savePhotoDataToFirebase(photoID: newPhotoID, photoData: PhotoData, completion: {
                 NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Place"])
                 self.navigationController?.popViewController(animated: true)
             })

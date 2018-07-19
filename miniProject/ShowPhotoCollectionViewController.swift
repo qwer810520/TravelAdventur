@@ -30,12 +30,12 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
         layout.minimumInteritemSpacing = 0
     }
     
-    func showSVP(Not:Notification) {
+    @objc func showSVP(Not:Notification) {
         if let SVPSwitch = Not.userInfo?["switch"] as? Bool {
             if SVPSwitch == false {
                 collectionView?.reloadData()
                 collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
-                FirebaseServer.firebase().getPhotoArrayData(select: 0).selectSwitch = true
+                FirebaseManager.shared.getPhotoArrayData(select: 0).selectSwitch = true
             }
         }
     }
@@ -46,23 +46,23 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return FirebaseServer.firebase().getPhotoArrayCount()
+        return FirebaseManager.shared.getPhotoArrayCount()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ShowPhotoCollectionViewCell
-        print(FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).locationName)
-        print(FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch)
-        if FirebaseServer.firebase().getPhotoArrayCount() == 0 {
+        print(FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).locationName)
+        print(FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).selectSwitch)
+        if FirebaseManager.shared.getPhotoArrayCount() == 0 {
             cell.backView.isHidden = true
         } else {
             cell.backView.isHidden = false
             cell.backView.layer.cornerRadius = 4
             cell.backView.clipsToBounds = true
-            cell.titleLabel.text = FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).locationName
-            if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName.count != 0 {
+            cell.titleLabel.text = FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).locationName
+            if FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).photoName.count != 0 {
                 cell.titleImage.isHidden = false
-                Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).photoName[0], completion: { (image, loading, view) in
+                Library.downloadImage(imageViewSet: cell.titleImage, URLString: FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).photoName[0], completion: { (image, loading, view) in
                     cell.titleImage.image = image
                     loading?.stopAnimating()
                     view?.removeFromSuperview()
@@ -70,27 +70,27 @@ class ShowPhotoCollectionViewController: UICollectionViewController {
             } else {
                 cell.titleImage.isHidden = true
             }
-            cell.dateDetailLabel.text = Library.dateToShowString(date: FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).picturesDay)
+            cell.dateDetailLabel.text = Library.dateToShowString(date: FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).picturesDay)
         }
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        FirebaseServer.firebase().saveSelectPhotoDataNum(num: indexPath.row) {
+        FirebaseManager.shared.saveSelectPhotoDataNum(num: indexPath.row) {
             let showPhohoTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowPhotoDetailCollectionViewController")
             navigationController?.pushViewController(showPhohoTableViewController!, animated: true)
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch == false {
-            FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch = true
+        if FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).selectSwitch == false {
+            FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).selectSwitch = true
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {    
-        if FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch == true {
-            FirebaseServer.firebase().getPhotoArrayData(select: indexPath.row).selectSwitch = false
+        if FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).selectSwitch == true {
+            FirebaseManager.shared.getPhotoArrayData(select: indexPath.row).selectSwitch = false
             NotificationCenter.default.post(name: Notification.Name("changColor"), object: nil, userInfo: ["changSwitch": true])
         }
     }
