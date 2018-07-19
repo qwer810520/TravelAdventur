@@ -30,6 +30,7 @@
 		3988C4451EF0E14100EFBAAB /* AlbumCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C4441EF0E14100EFBAAB /* AlbumCollectionViewController.swift */; };
 		3988C4471EF0E16300EFBAAB /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C4461EF0E16300EFBAAB /* AlbumCollectionViewCell.swift */; };
 		3988C4491EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C4481EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift */; };
+		3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3989C0A921008F7C00E8BE56 /* TATabbarController.swift */; };
 		399128AC1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */; };
 		399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */; };
 		39A180681E87562B002910E9 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A180671E87562B002910E9 /* Album.swift */; };
@@ -72,6 +73,7 @@
 		3988C4441EF0E14100EFBAAB /* AlbumCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewController.swift; sourceTree = "<group>"; };
 		3988C4461EF0E16300EFBAAB /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		3988C4481EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		3989C0A921008F7C00E8BE56 /* TATabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TATabbarController.swift; sourceTree = "<group>"; };
 		399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileAlbumCollectionViewController.swift; sourceTree = "<group>"; };
 		399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		39A180671E87562B002910E9 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 		3930BF5C20FC38F200A39CAF /* Tabbar */ = {
 			isa = PBXGroup;
 			children = (
+				3989C0A921008F7C00E8BE56 /* TATabbarController.swift */,
 			);
 			path = Tabbar;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */,
+				3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */,
 				399128AC1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift in Sources */,
 				39638B481ED7394A006A9615 /* Library.swift in Sources */,
 				3988C4491EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift in Sources */,
