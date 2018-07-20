@@ -13,7 +13,7 @@ class TAStyle {
     typealias JSONDictionary = [String: AnyObject]
     
     class var orange: UIColor {
-        return #colorLiteral(red: 0.9987706218, green: 0.5847493011, blue: 0.007274393888, alpha: 1)
+        return #colorLiteral(red: 0.8666666667, green: 0.3960784314, blue: 0.2509803922, alpha: 1)
     }
     
     class var backgroundColor: UIColor {

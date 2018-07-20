@@ -23,8 +23,9 @@ class TANavigationController: UINavigationController {
     
     private func setUserInterface() {
         navigationBar.tintColor = .white
-        navigationBar.backgroundColor = #colorLiteral(red: 0.8470588235, green: 0.2901960784, blue: 0.1287725311, alpha: 1)
-        navigationBar.barTintColor = nil
+        navigationBar.barTintColor = TAStyle.orange
+        navigationBar.backgroundColor = TAStyle.orange
         
+        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
     }
 }

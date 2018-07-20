@@ -26,9 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
         GMSPlacesClient.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
         
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = LoginViewController()
+//        window?.rootViewController = LoginViewController()
+        window?.rootViewController = TATabbarController()
         window?.makeKeyAndVisible()
+        
+        
         return true
     }
     

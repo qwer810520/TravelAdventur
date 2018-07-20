@@ -79,9 +79,8 @@ class LoginViewController: ParentViewController {
                 self?.showAlert(title: "Login Error", message: nil, checkAction: nil)
                 return
             }
-            
             print("登入成功")
-            // 轉場待處理
+            self?.present(TATabbarController(), animated: true, completion: nil)
         }
     }
     

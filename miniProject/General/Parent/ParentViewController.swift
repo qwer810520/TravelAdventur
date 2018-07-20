@@ -10,10 +10,17 @@ import UIKit
 import Reachability
 import SVProgressHUD
 
+enum NaviBarButtonType {
+    case _Add
+}
+
 class ParentViewController: UIViewController {
     
     private let reachability = Reachability()
     private(set) var isLoading = false
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    
     private let loadingBackgroudView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         view.backgroundColor = .clear
@@ -41,7 +48,18 @@ class ParentViewController: UIViewController {
         
     }
     
-    func setNavigation(title: String) {
+    func setNavigation(title: String, barButtonType: NaviBarButtonType) {
+        navigationItem.title = title
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.leftBarButtonItem = nil
+        
+        switch barButtonType {
+        case ._Add:
+            navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
+        }
+    }
+    
+    @objc func addButtonDidPressed() {
         
     }
     
@@ -50,6 +68,11 @@ class ParentViewController: UIViewController {
         alertVC.addAction(UIAlertAction(title: "確定", style: .default, handler: checkAction))
         alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
         present(alertVC, animated: true, completion: nil)
+    }
+    
+    func selectTabbarItem(type: TATabbarItem) {
+        guard let tabbarController = tabBarController as? TATabbarController else { return }
+        tabbarController.selectItem(item: type)
     }
     
     // MARK: - Reachability Library
@@ -73,6 +96,7 @@ class ParentViewController: UIViewController {
     func stopLoading() {
         guard isLoading else { return }
         loadingBackgroudView.removeFromSuperview()
+        SVProgressHUD.showSuccess(withStatus: "完成")
         SVProgressHUD.dismiss(withDelay: 1)
         isLoading = false
     }
