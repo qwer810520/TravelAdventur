@@ -12,6 +12,12 @@ import SVProgressHUD
 
 enum NaviBarButtonType {
     case _Add
+    case Dismiss_
+}
+
+enum AlertType {
+    case check
+    case cancel_check
 }
 
 class ParentViewController: UIViewController {
@@ -35,6 +41,18 @@ class ParentViewController: UIViewController {
         super.viewWillAppear(animated)
         setUserInterface()
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -45,7 +63,6 @@ class ParentViewController: UIViewController {
     
     private func setUserInterface() {
         view.backgroundColor = #colorLiteral(red: 1, green: 0.8980392157, blue: 0.7058823529, alpha: 1)
-        
     }
     
     func setNavigation(title: String, barButtonType: NaviBarButtonType) {
@@ -56,14 +73,22 @@ class ParentViewController: UIViewController {
         switch barButtonType {
         case ._Add:
             navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
+        case .Dismiss_:
+            navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "cross", target: self, action: #selector(dismissButtonDidPressed))
         }
+    }
+    
+    // MARK: - Action Method
+    
+    @objc func dismissButtonDidPressed() {
+        
     }
     
     @objc func addButtonDidPressed() {
         
     }
     
-    func showAlert(title: String, message: String? = nil, checkAction: ((UIAlertAction) -> ())? = nil) {
+    func showAlert(type: AlertType, title: String, message: String? = nil, checkAction: ((UIAlertAction) -> ())? = nil) {
         let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "確定", style: .default, handler: checkAction))
         alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
@@ -79,6 +104,7 @@ class ParentViewController: UIViewController {
     
     func isNetworkConnected() -> Bool {
         guard let netWorkStatus = reachability?.connection, netWorkStatus != .none  else {
+            showAlert(type: .check, title: "網路無法連線，請確認網路是否開啟", message: nil, checkAction: nil)
             return false
         }
         return true

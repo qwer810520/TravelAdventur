@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BoringSSL.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FBSDKCoreKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FirebaseFirestore.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FirebaseStorage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -59,12 +69,37 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IGListKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>NSObject+Rx.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-miniProject.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Protobuf.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>ReachabilitySwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RxCocoa.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RxSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -80,6 +115,31 @@
 			<false/>
 		</dict>
 		<key>TRMosaicLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>gRPC-Core.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>gRPC-ProtoRPC.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>gRPC-RxLibrary.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>gRPC-gRPCCertificates.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>gRPC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

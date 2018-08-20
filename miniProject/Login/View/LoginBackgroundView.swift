@@ -124,7 +124,7 @@ class LoginBackgroundView: UIView {
         return imageView
     }()
     
-    lazy private var fbLoginButton: UIButton = {
+    lazy var fbLoginButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "login_FBImage"), for: .normal)
@@ -133,7 +133,7 @@ class LoginBackgroundView: UIView {
         return button
     }()
     
-    lazy private var googleLoginButton: UIButton = {
+    lazy var googleLoginButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "login_Google+Image"), for: .normal)

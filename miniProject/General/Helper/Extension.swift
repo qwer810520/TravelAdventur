@@ -7,9 +7,22 @@
 //
 
 import UIKit
+import SDWebImage
 
 extension UIView {
     func addSubviews(_ views: [UIView]) {
         views.forEach { self.addSubview($0) }
+    }
+}
+
+extension UICollectionViewCell {
+    static var identifier: String {
+        return String(describing: self)
+    }
+}
+
+extension UIImageView {
+    func downloadImage(urlStr: String) {
+        self.sd_setImage(with: URL(string: urlStr), placeholderImage: UIImage(named: "normalImage"))
     }
 }

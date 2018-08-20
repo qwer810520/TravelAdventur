@@ -12,6 +12,9 @@ import FBSDKLoginKit
 import GoogleSignIn
 import FirebaseDatabase
 import LocalAuthentication
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 class LoginViewController: ParentViewController {
     
@@ -45,23 +48,34 @@ class LoginViewController: ParentViewController {
             options: [],
             metrics: nil,
             views: ["view": backgroundView]))
+        
+        backgroundView.fbLoginButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.backgroundView.fbLoginButton.isEnabled = true
+                UserDefaults.standard.set(true, forKey: "loginSet")
+                self?.facebookLogin()
+            })
+            .disposed(by: rx.disposeBag)
+        
+        backgroundView.googleLoginButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.backgroundView.googleLoginButton.isEnabled = true
+                UserDefaults.standard.set(false, forKey: "loginSet")
+                self?.googleLogin()
+            })
+            .disposed(by: rx.disposeBag)
+        
     }
     
     // MARK: - FB and Google SignIn API Method
     
     fileprivate func googleLogin() {
-        guard isNetworkConnected() else {
-            showAlert(title: "網路無法連線，請確認網路是否開啟", message: nil, checkAction: nil)
-            return
-        }
+        guard isNetworkConnected() else { return }
         GIDSignIn.sharedInstance().signIn()
     }
     
     fileprivate func facebookLogin() {
-        guard isNetworkConnected() else {
-            showAlert(title: "網路無法連線，請確認網路是否開啟", message: nil, checkAction: nil)
-            return
-        }
+        guard isNetworkConnected() else { return }
         FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: self) { [weak self] (result:FBSDKLoginManagerLoginResult?, error:Error?) in
             guard error == nil, let accessToken = FBSDKAccessToken.current() else {
                 return
@@ -73,10 +87,11 @@ class LoginViewController: ParentViewController {
     }
     
     private func firebaseAuthSingin(credential: AuthCredential) {
+        startLoading()
         FirebaseManager.shared.signInForFirebase(credential: credential) { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(title: "Login Error", message: nil, checkAction: nil)
+                self?.showAlert(type: .check, title: "Login Error")
                 return
             }
             print("登入成功")
@@ -125,7 +140,7 @@ class LoginViewController: ParentViewController {
                     errorMessage = error.localizedDescription
                 }
                 OperationQueue.main.addOperation {
-                    self?.showAlert(title: errorMessage, message: nil, checkAction: nil)
+                    self?.showAlert(type: .check, title: errorMessage)
                 }
             }
         }
@@ -154,12 +169,12 @@ extension LoginViewController: GIDSignInUIDelegate {
 
 extension LoginViewController: LoginBackgroundViewDelegate {
     func fbButtonDidPressed() {
-        UserDefaults.standard.set(true, forKey: "loginSet")
-        facebookLogin()
+//        UserDefaults.standard.set(true, forKey: "loginSet")
+//        facebookLogin()
     }
     
     func googleButtonDidPressed() {
-        UserDefaults.standard.set(false, forKey: "loginSet")
-        googleLogin()
+//        UserDefaults.standard.set(false, forKey: "loginSet")
+//        googleLogin()
     }
 }

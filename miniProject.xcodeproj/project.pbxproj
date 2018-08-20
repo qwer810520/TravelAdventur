@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		391F99EA1EF764140017A62C /* UserMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391F99E91EF764140017A62C /* UserMenuTableViewController.swift */; };
-		393041291E9886480070CC98 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393041281E9886480070CC98 /* AddViewController.swift */; };
 		3930412D1E9902B00070CC98 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930412C1E9902B00070CC98 /* AddLocationViewController.swift */; };
 		3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF4D20FB777E00A39CAF /* LoginViewController.swift */; };
 		3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5120FC2F6B00A39CAF /* LoginUserModel.swift */; };
@@ -23,7 +22,10 @@
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
 		396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396C01741E89461300BF57F6 /* PhotoDataModel.swift */; };
 		397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */; };
-		397B35A21EDBED3200FAE3F2 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397B35A11EDBED3200FAE3F2 /* FirebaseManager.swift */; };
+		397E7DC3212893D400A2B07A /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397E7DC2212893D400A2B07A /* UserDefaultKey.swift */; };
+		397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397E7DC82128961E00A2B07A /* AddAlbumViewController.swift */; };
+		397E7DCC2128970F00A2B07A /* AddAlbumBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397E7DCB2128970F00A2B07A /* AddAlbumBackgroundView.swift */; };
+		397E7DCF2128972300A2B07A /* addAlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397E7DCE2128972300A2B07A /* addAlbumModel.swift */; };
 		39810FDF1ED4621900461313 /* Usermodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39810FDE1ED4621900461313 /* Usermodel.swift */; };
 		3988C41D1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */; };
 		3988C4471EF0E16300EFBAAB /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C4461EF0E16300EFBAAB /* AlbumCollectionViewCell.swift */; };
@@ -37,11 +39,13 @@
 		39A7056C1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */; };
 		39B7AFA82101DE4F0021E11B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFA72101DE4F0021E11B /* MainViewController.swift */; };
 		39B7AFAA2101DFBB0021E11B /* TABarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFA92101DFBB0021E11B /* TABarButtonItem.swift */; };
+		39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFAD2101F3720021E11B /* FirebaseManager.swift */; };
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
 		39ED9E3F1E9658B9002880DE /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */; };
 		39ED9E411E965DA7002880DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39ED9E401E965DA7002880DE /* GoogleService-Info.plist */; };
+		39FB7F57212ABFD000F79D2A /* AlbumPhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FB7F56212ABFD000F79D2A /* AlbumPhotoCollectionCell.swift */; };
 		39FCB27F20FC39BB001857AE /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCB27E20FC39BB001857AE /* Extension.swift */; };
 		50267EE80A0857429DE51776 /* Pods_miniProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 361112AB1DD1F483A23E5993 /* Pods_miniProject.framework */; };
 /* End PBXBuildFile section */
@@ -49,7 +53,6 @@
 /* Begin PBXFileReference section */
 		361112AB1DD1F483A23E5993 /* Pods_miniProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_miniProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		391F99E91EF764140017A62C /* UserMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMenuTableViewController.swift; sourceTree = "<group>"; };
-		393041281E9886480070CC98 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		3930412C1E9902B00070CC98 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		3930BF4D20FB777E00A39CAF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3930BF5120FC2F6B00A39CAF /* LoginUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserModel.swift; sourceTree = "<group>"; };
@@ -64,7 +67,10 @@
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
 		397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeTearderViewController.swift; sourceTree = "<group>"; };
-		397B35A11EDBED3200FAE3F2 /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		397E7DC2212893D400A2B07A /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
+		397E7DC82128961E00A2B07A /* AddAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAlbumViewController.swift; sourceTree = "<group>"; };
+		397E7DCB2128970F00A2B07A /* AddAlbumBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumBackgroundView.swift; sourceTree = "<group>"; };
+		397E7DCE2128972300A2B07A /* addAlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addAlbumModel.swift; sourceTree = "<group>"; };
 		39810FDE1ED4621900461313 /* Usermodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Usermodel.swift; sourceTree = "<group>"; };
 		3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoDetailCollectionViewController.swift; sourceTree = "<group>"; };
 		3988C4461EF0E16300EFBAAB /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -78,6 +84,8 @@
 		39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		39B7AFA72101DE4F0021E11B /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		39B7AFA92101DFBB0021E11B /* TABarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TABarButtonItem.swift; sourceTree = "<group>"; };
+		39B7AFAD2101F3720021E11B /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		39B7AFAF2101F39A0021E11B /* miniProject-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "miniProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		39B915F21E84127C0093E1AF /* miniProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39B915F51E84127C0093E1AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		39B915FC1E84127C0093E1AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +93,7 @@
 		39B916011E84127C0093E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionViewCell.swift; path = ../ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		39ED9E401E965DA7002880DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		39FB7F56212ABFD000F79D2A /* AlbumPhotoCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPhotoCollectionCell.swift; sourceTree = "<group>"; };
 		39FCB27E20FC39BB001857AE /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		94F70BCB8EA9207F1D38BE18 /* Pods-miniProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-miniProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-miniProject/Pods-miniProject.release.xcconfig"; sourceTree = "<group>"; };
 		9D7055D84320DDEF201613D4 /* Pods-miniProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-miniProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-miniProject/Pods-miniProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,7 +119,6 @@
 				39A180671E87562B002910E9 /* Album.swift */,
 				3988C4461EF0E16300EFBAAB /* AlbumCollectionViewCell.swift */,
 				3988C4481EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift */,
-				393041281E9886480070CC98 /* AddViewController.swift */,
 				3930412A1E9902210070CC98 /* MapView */,
 				3930412B1E99025D0070CC98 /* DetailImage */,
 			);
@@ -235,30 +243,58 @@
 			isa = PBXGroup;
 			children = (
 				39FCB27E20FC39BB001857AE /* Extension.swift */,
+				397E7DC2212893D400A2B07A /* UserDefaultKey.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		39A94DC520B5754400B668B1 /* Manager */ = {
+		397E7DC62128961E00A2B07A /* AddAlbum */ = {
 			isa = PBXGroup;
 			children = (
-				39A94DC720B5759300B668B1 /* FirebaseManager */,
+				397E7DCD2128971300A2B07A /* Model */,
+				397E7DCA212896AD00A2B07A /* VIew */,
+				397E7DC72128961E00A2B07A /* ViewController */,
 			);
-			name = Manager;
+			path = AddAlbum;
 			sourceTree = "<group>";
 		};
-		39A94DC720B5759300B668B1 /* FirebaseManager */ = {
+		397E7DC72128961E00A2B07A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				397B35A11EDBED3200FAE3F2 /* FirebaseManager.swift */,
+				397E7DC82128961E00A2B07A /* AddAlbumViewController.swift */,
 			);
-			name = FirebaseManager;
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		397E7DCA212896AD00A2B07A /* VIew */ = {
+			isa = PBXGroup;
+			children = (
+				397E7DCB2128970F00A2B07A /* AddAlbumBackgroundView.swift */,
+			);
+			path = VIew;
+			sourceTree = "<group>";
+		};
+		397E7DCD2128971300A2B07A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				397E7DCE2128972300A2B07A /* addAlbumModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		399040FB21038FD10001140F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				39FB7F56212ABFD000F79D2A /* AlbumPhotoCollectionCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		39B7AFA42101DE4F0021E11B /* Album */ = {
 			isa = PBXGroup;
 			children = (
 				39B7AFA52101DE4F0021E11B /* Main */,
+				397E7DC62128961E00A2B07A /* AddAlbum */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -266,6 +302,7 @@
 		39B7AFA52101DE4F0021E11B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				399040FB21038FD10001140F /* View */,
 				39B7AFA62101DE4F0021E11B /* ViewController */,
 			);
 			path = Main;
@@ -277,6 +314,22 @@
 				39B7AFA72101DE4F0021E11B /* MainViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		39B7AFAB2101F3720021E11B /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				39B7AFAC2101F3720021E11B /* FirebaseManager */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		39B7AFAC2101F3720021E11B /* FirebaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				39B7AFAD2101F3720021E11B /* FirebaseManager.swift */,
+			);
+			path = FirebaseManager;
 			sourceTree = "<group>";
 		};
 		39B915E91E84127C0093E1AF = {
@@ -301,8 +354,8 @@
 			isa = PBXGroup;
 			children = (
 				3930BF5720FC38F200A39CAF /* General */,
-				39A94DC520B5754400B668B1 /* Manager */,
 				3930BF4B20FB777E00A39CAF /* Login */,
+				39B7AFAB2101F3720021E11B /* Manager */,
 				39638B471ED7394A006A9615 /* Library.swift */,
 				39069E131E9880F9000B6DCC /* Album */,
 				39B7AFA42101DE4F0021E11B /* Album */,
@@ -312,6 +365,7 @@
 				39B915FC1E84127C0093E1AF /* Assets.xcassets */,
 				39B916011E84127C0093E1AF /* Info.plist */,
 				39ED9E401E965DA7002880DE /* GoogleService-Info.plist */,
+				39B7AFAF2101F39A0021E11B /* miniProject-Bridging-Header.h */,
 			);
 			path = miniProject;
 			sourceTree = "<group>";
@@ -439,32 +493,52 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-miniProject/Pods-miniProject-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
+				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -506,19 +580,20 @@
 				3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */,
 				399128AC1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift in Sources */,
 				39638B481ED7394A006A9615 /* Library.swift in Sources */,
+				397E7DCC2128970F00A2B07A /* AddAlbumBackgroundView.swift in Sources */,
 				3988C4491EF0E17500EFBAAB /* StickyCollectionViewFlowLayout.swift in Sources */,
 				39B7AFAA2101DFBB0021E11B /* TABarButtonItem.swift in Sources */,
-				393041291E9886480070CC98 /* AddViewController.swift in Sources */,
 				393570471EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
+				39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */,
 				3930BF5420FC316F00A39CAF /* LoginBackgroundView.swift in Sources */,
-				397B35A21EDBED3200FAE3F2 /* FirebaseManager.swift in Sources */,
 				3930BF6220FC38F200A39CAF /* ParentViewController.swift in Sources */,
 				39810FDF1ED4621900461313 /* Usermodel.swift in Sources */,
 				3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */,
 				3930412D1E9902B00070CC98 /* AddLocationViewController.swift in Sources */,
 				393570191EE009950026A1B0 /* GoogleMapViewController.swift in Sources */,
 				39ED9E3F1E9658B9002880DE /* ImageCollectionViewCell.swift in Sources */,
+				397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */,
 				39FCB27F20FC39BB001857AE /* Extension.swift in Sources */,
 				3988C41D1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift in Sources */,
 				39A180681E87562B002910E9 /* Album.swift in Sources */,
@@ -530,9 +605,12 @@
 				3930BF6020FC38F200A39CAF /* TAStyle.swift in Sources */,
 				39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */,
 				3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */,
+				397E7DCF2128972300A2B07A /* addAlbumModel.swift in Sources */,
+				397E7DC3212893D400A2B07A /* UserDefaultKey.swift in Sources */,
 				3988C4471EF0E16300EFBAAB /* AlbumCollectionViewCell.swift in Sources */,
 				399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */,
 				391F99EA1EF764140017A62C /* UserMenuTableViewController.swift in Sources */,
+				39FB7F57212ABFD000F79D2A /* AlbumPhotoCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

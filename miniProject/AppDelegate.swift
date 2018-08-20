@@ -20,8 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-       
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance()
+            .application( application,
+            didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
         GMSPlacesClient.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
@@ -29,10 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.statusBarStyle = .lightContent
         
         window = UIWindow(frame: UIScreen.main.bounds)
-//        window?.rootViewController = LoginViewController()
-        window?.rootViewController = TATabbarController()
+        window?.rootViewController = LoginViewController()
+//        window?.rootViewController = TATabbarController()
         window?.makeKeyAndVisible()
-        
         
         return true
     }
