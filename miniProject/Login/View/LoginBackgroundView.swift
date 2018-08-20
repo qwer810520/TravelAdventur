@@ -8,18 +8,15 @@
 
 import UIKit
 
-protocol LoginBackgroundViewDelegate: class {
-    func fbButtonDidPressed()
-    func googleButtonDidPressed()
-}
-
 class LoginBackgroundView: UIView {
-    weak var delegate: LoginBackgroundViewDelegate?
     
-    init(delegate: LoginBackgroundViewDelegate? = nil) {
-        self.delegate = delegate
+    init() {
         super.init(frame: .zero)
         setUserInterface()
+    }
+    
+    deinit {
+        print("LoginBackgroundView", #function)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -129,7 +126,6 @@ class LoginBackgroundView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "login_FBImage"), for: .normal)
         button.tintColor = .white
-        button.addTarget(self, action: #selector(fbLoginButtonDidPressed), for: .touchUpInside)
         return button
     }()
     
@@ -138,21 +134,6 @@ class LoginBackgroundView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "login_Google+Image"), for: .normal)
         button.tintColor = .white
-        button.addTarget(self, action: #selector(googleLoginButtonDidPressed), for: .touchUpInside)
         return button
     }()
-    
-    // MARK: - action Method
-    
-    @objc fileprivate func fbLoginButtonDidPressed() {
-//        fbLoginButton.isEnabled = false
-        guard let delegate = delegate else { return }
-        delegate.fbButtonDidPressed()
-    }
-    
-    @objc fileprivate func googleLoginButtonDidPressed() {
-//        googleLoginButton.isEnabled = false
-        guard let delegate = delegate else { return }
-        delegate.googleButtonDidPressed()
-    }
 }

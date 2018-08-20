@@ -14,6 +14,7 @@ class AddAlbunViewController: ParentViewController, UIImagePickerControllerDeleg
     
     private var addAlbum = AddAlbumModel()
     
+    
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var buttonImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -69,9 +70,6 @@ class AddAlbunViewController: ParentViewController, UIImagePickerControllerDeleg
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    
-    
     
     func inputDatePickerSet(textField: UITextField) {
         if textField.tag == 1 {

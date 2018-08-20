@@ -33,6 +33,7 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
         super.viewDidLoad()
         getUserProfile()
         UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
+        getUserProfile()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,9 +93,8 @@ extension MainViewController: UICollectionViewDelegate {
     // MARK: - UICollectionViewDataSource
 
 extension MainViewController: UICollectionViewDataSource {
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        <#code#>
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

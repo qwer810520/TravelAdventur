@@ -18,9 +18,7 @@ import NSObject_Rx
 
 class LoginViewController: ParentViewController {
     
-    lazy private var backgroundView: LoginBackgroundView = {
-        return LoginBackgroundView(delegate: self)
-    }()
+    lazy private var backgroundView = LoginBackgroundView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +35,7 @@ class LoginViewController: ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         view.addSubview(backgroundView)
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[view]|",
@@ -51,7 +50,7 @@ class LoginViewController: ParentViewController {
         
         backgroundView.fbLoginButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.backgroundView.fbLoginButton.isEnabled = true
+                self?.backgroundView?.fbLoginButton.isEnabled = true
                 UserDefaults.standard.set(true, forKey: "loginSet")
                 self?.facebookLogin()
             })
@@ -59,12 +58,11 @@ class LoginViewController: ParentViewController {
         
         backgroundView.googleLoginButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.backgroundView.googleLoginButton.isEnabled = true
+                self?.backgroundView?.googleLoginButton.isEnabled = true
                 UserDefaults.standard.set(false, forKey: "loginSet")
                 self?.googleLogin()
             })
             .disposed(by: rx.disposeBag)
-        
     }
     
     // MARK: - FB and Google SignIn API Method
@@ -163,18 +161,4 @@ extension LoginViewController: GIDSignInDelegate {
 
 extension LoginViewController: GIDSignInUIDelegate {
     
-}
-
-    // MARK: - LoginBackgroundViewDelegate
-
-extension LoginViewController: LoginBackgroundViewDelegate {
-    func fbButtonDidPressed() {
-//        UserDefaults.standard.set(true, forKey: "loginSet")
-//        facebookLogin()
-    }
-    
-    func googleButtonDidPressed() {
-//        UserDefaults.standard.set(false, forKey: "loginSet")
-//        googleLogin()
-    }
 }
