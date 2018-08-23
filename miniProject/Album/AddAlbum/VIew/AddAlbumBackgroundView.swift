@@ -33,9 +33,10 @@ class AddAlbumBackgroundView: UIView {
     
     private func setAutoLayout() {
         self.addSubview(backgroundImage)
-        backgroundImage.addSubviews([nameTitleLabel, nameTextField, startTiemTextField, timeSpaceLabel, endTimeTextField])
+        backgroundImage.addSubview(blurEffect)
+        blurEffect.addSubviews([nameTextField, startDateTitleLabel, startTiemTextField, dayTitleLabel, selectDayTextField])
         
-        let views: TAStyle.JSONDictionary = ["backgroundImage": backgroundImage,"nameTitleLabel": nameTitleLabel, "nameTextField": nameTextField, "startTiemTextField": startTiemTextField, "timeSpaceLabel": timeSpaceLabel, "endTimeTextField": endTimeTextField]
+        let views: TAStyle.JSONDictionary = ["backgroundImage": backgroundImage, "blurEffect": blurEffect, "nameTextField": nameTextField, "startTiemTextField": startTiemTextField, "startDateTitleLabel": startDateTitleLabel, "dayTitleLabel": dayTitleLabel, "selectDayTextField": selectDayTextField, "addButton": addButton]
         
         self.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[backgroundImage]|",
@@ -50,13 +51,61 @@ class AddAlbumBackgroundView: UIView {
             views: views))
         
         backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-15-[nameTitleLabel(40)]-5-[nameTextField]-15-|",
+            withVisualFormat: "H:|[blurEffect]|",
             options: [],
             metrics: nil,
             views: views))
         
         backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-15-[startTiemTextField(==endTimeTextField)]-2-[timeSpaceLabel(5)]-2-[endTimeTextField(==startTiemTextField)]-15-|",
+            withVisualFormat: "V:|[blurEffect]|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-20-[nameTextField]-20-|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-20-[startDateTitleLabel]-20-|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-20-[startTiemTextField]-20-|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-20-[dayTitleLabel]-20-|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-20-[selectDayTextField]-20-|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-100-[addButton]-100-|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-20-[nameTextField(40)]-20-[startDateTitleLabel(30)]-5-[startTiemTextField(==nameTextField)]-20-[dayTitleLabel(==startDateTitleLabel)]-5-[selectDayTextField(==nameTextField)]|",
+            options: [],
+            metrics: nil,
+            views: views))
+        
+        blurEffect.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V[addButton(40)]-50-|",
             options: [],
             metrics: nil,
             views: views))
@@ -68,21 +117,31 @@ class AddAlbumBackgroundView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
+        
         return imageView
     }()
     
-    lazy private var nameTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "相簿名稱："
-        return label
+    lazy var blurEffect: UIVisualEffectView = {
+        let view = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     lazy var nameTextField: UITextField = {
         let view = UITextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.borderStyle = .roundedRect
+        view.placeholder = "請輸入行程名稱"
         return view
+    }()
+    
+    lazy private var startDateTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "出發日期："
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 14.0)
+        return label
     }()
     
     lazy var startTiemTextField: UITextField = {
@@ -92,15 +151,16 @@ class AddAlbumBackgroundView: UIView {
         return view
     }()
     
-    lazy var timeSpaceLabel: UILabel = {
+    lazy private var dayTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = " ~ "
-        label.font = UIFont.systemFont(ofSize: 15.0)
+        label.text = "天數："
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 14.0)
         return label
     }()
     
-    lazy var endTimeTextField: UITextField = {
+    lazy var selectDayTextField: UITextField = {
         let view = UITextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.borderStyle = .roundedRect

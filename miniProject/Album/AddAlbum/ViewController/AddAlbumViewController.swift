@@ -14,7 +14,6 @@ class AddAlbunViewController: ParentViewController, UIImagePickerControllerDeleg
     
     private var addAlbum = AddAlbumModel()
     
-    
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var buttonImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!

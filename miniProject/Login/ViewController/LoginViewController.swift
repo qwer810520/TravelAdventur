@@ -50,7 +50,7 @@ class LoginViewController: ParentViewController {
         
         backgroundView.fbLoginButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.backgroundView?.fbLoginButton.isEnabled = true
+                self?.backgroundView.fbLoginButton.isEnabled = true
                 UserDefaults.standard.set(true, forKey: "loginSet")
                 self?.facebookLogin()
             })
@@ -58,7 +58,7 @@ class LoginViewController: ParentViewController {
         
         backgroundView.googleLoginButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.backgroundView?.googleLoginButton.isEnabled = true
+                self?.backgroundView.googleLoginButton.isEnabled = true
                 UserDefaults.standard.set(false, forKey: "loginSet")
                 self?.googleLogin()
             })
