@@ -8,107 +8,164 @@
 
 import UIKit
 
-class AddAlbunViewController: ParentViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    var imageView = UIImage()
+class AddAlbunViewController: ParentViewController {
     
     private var addAlbum = AddAlbumModel()
+    fileprivate var selectDay = 1
+    fileprivate var dayList = (1...30).map { $0 }
+    lazy private var addAlbumView: AddAlbumBackgroundView = {
+        return AddAlbumBackgroundView(delegate: self, textFieldDelegate: self)
+    }()
     
-    @IBOutlet weak var backgroundImage: UIImageView!
-    @IBOutlet weak var buttonImage: UIImageView!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var startDateTextField: UITextField!
-    @IBOutlet weak var endDateTextField: UITextField!
+    lazy private var datePickerView: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "Chinese")
+        return datePicker
+    }()
+    
+    lazy private var selectDayPickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        return pickerView
+    }()
     
     @IBAction func inputImageBotton(_ sender: UIButton) {
-        UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
-        let imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
+        
     }
-    
-    @IBAction func startDateBegin(_ sender: UITextField) {
-        inputDatePickerSet(textField: sender)
-    }
-    
-    @IBAction func endDateBegin(_ sender: UITextField) {
-        if startDateTextField.text == "" {
-            present(Library.alertSet(title: "錯誤", message: "請先輸入開始日期", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
-                self.startDateTextField.becomeFirstResponder()
-            }), animated: true, completion: nil)
-        } else {
-            inputDatePickerSet(textField: sender)
-        }
-    }
-    
-    @IBAction func saveItem(_ sender: UIBarButtonItem) {
-        checkInputValue(name: nameTextField.text!, startDate: startDate!, endDate: endDate!, image: imageView)
-    }
-    
-    var startDateDataPicker = UIDatePicker()
-    var endDateDatePicker = UIDatePicker()
-    var startDate:TimeInterval?
-    var endDate:TimeInterval?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let blurEffect = UIBlurEffect(style:.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.frame
-        blurEffectView.center = view.center
-        self.backgroundImage.addSubview(blurEffectView)
-        
-        nameTextField.becomeFirstResponder()
-        nameTextField.delegate = self
-        startDateTextField.delegate = self
-        endDateTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUserInterface()
     }
     
-    func inputDatePickerSet(textField: UITextField) {
-        if textField.tag == 1 {
-            startDateDataPicker.datePickerMode = .date
-            startDateDataPicker.locale = NSLocale(localeIdentifier: "Chinese") as Locale
-//            setToolBar(textField: textField)
-        } else if textField.tag == 2 {
-            endDateDatePicker.datePickerMode = .date
-            endDateDatePicker.locale = NSLocale(localeIdentifier: "Chinese") as Locale
-//            setToolBar(textField: textField)
-        }
-    }
+    // MARK: - private Method
     
-    func checkInputValue(name:String, startDate:TimeInterval, endDate:TimeInterval, image:UIImage?) {
+    private func setUserInterface() {
+        setNavigation(title: "Add Album", barButtonType: .Dismiss_)
+        view.addSubview(addAlbumView)
+        let naviHeight = (UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[addAlbumView]|",
+            options: [],
+            metrics: nil,
+            views: ["addAlbumView": addAlbumView]))
         
-        if name == "" || startDateTextField.text == "" || endDateTextField.text == "" {
-            present(Library.alertSet(title: "錯誤", message: "輸入框請勿空白", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
-        } else {
-            if image == nil {
-                present(Library.alertSet(title: "錯誤", message: "請設定封面相片", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: nil), animated: true, completion: nil)
-            } else {
-//                SVProgressHUD.show(withStatus: "新增中...")
-                FirebaseManager.shared.saveAlbumDataToFirebase(name: name, startDate: startDate, endDate: endDate, image: image!, completion: {
-//                    SVProgressHUD.dismiss()
-                    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
-                        NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "Album"])
-                        self.navigationController?.popViewController(animated: true)
-                    })
-                })
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-\(naviHeight)-[addAlbumView]|",
+            options: [],
+            metrics: nil,
+            views: ["addAlbumView": addAlbumView]))
+        
+        setTextField()
+    }
+    
+    private func setTextField() {
+        selectDay = dayList[0]
+        addAlbum.day = dayList[0]
+        addAlbumView.selectDayTextField.text = "\(dayList[0])"
+        addAlbumView.selectDayTextField.inputView = selectDayPickerView
+        addAlbumView.selectDayTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
+                self?.addAlbumView.selectDayTextField
+                    .resignFirstResponder()
+            },  checkAction: { [weak self] in
+                self?.addAlbum.day = (self?.selectDay)!
+                self?.addAlbumView.selectDayTextField.text = "\((self?.addAlbum.day)!)"
+                self?.addAlbumView.selectDayTextField
+                    .resignFirstResponder()
+            })
+        addAlbumView.startTiemTextField.text = TAStyle.dateToShowString(date: Date().timeIntervalSince1970)
+        addAlbumView.startTiemTextField.inputView = datePickerView
+        addAlbumView.startTiemTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
+                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToShowString(date: Date().timeIntervalSince1970)
+            }, checkAction: { [weak self] in
+                self?.addAlbum.startTime = (self?.datePickerView.date.timeIntervalSince1970)!
+                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToShowString(date: (self?.datePickerView.date.timeIntervalSince1970)!)
+                self?.addAlbumView.startTiemTextField
+                    .resignFirstResponder()
+            })
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+}
+
+    // MARK: - UIPickerViewDelegate
+
+extension AddAlbunViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectDay = dayList[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(describing: dayList[row])
+    }
+}
+
+    // MARK: - UIPickerViewDataSource
+
+extension AddAlbunViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return dayList.count
+    }
+}
+
+    // MARK: - AddAlbumDelegate
+
+extension AddAlbunViewController: AddAlbumDelegate {
+    func addAlbumCoverButtonDidPressed() {
+        checkPermission { [weak self] in
+            DispatchQueue.main.async {
+            UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
+                let imagePicker = UIImagePickerController()
+                imagePicker.allowsEditing = false
+                imagePicker.sourceType = .photoLibrary
+                imagePicker.delegate = self
+                self?.present(imagePicker, animated: true, completion: nil)
             }
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func addAlbumButtonDidPressed() {
+        guard let name = addAlbumView.nameTextField.text, !name.isEmpty else {
+            showAlert(type: .check, title: "請輸入相簿名稱")
+            return
+        }
+        
+        guard addAlbum.titlePhoto != nil else {
+            showAlert(type: .check, title: "請選擇封面相片")
+            return
+        }
+        addAlbum.title = name
+        startLoading()
+        FirebaseManager.shared.addNewAlbumData(model: addAlbum) { [weak self] (error) in
+            self?.stopLoading()
+            guard error == nil else {
+                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                return
+            }
+            self?.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+    // MARK: - UIImagePickerControllerDelegate
+
+extension AddAlbunViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let picture = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            buttonImage.image = picture
-            backgroundImage.image = picture
-            buttonImage.clipsToBounds = true
-            imageView = picture
-            
+            addAlbumView.albumCoverPhotoImageView.image = picture
+            addAlbum.titlePhoto = picture
         }
         dismiss(animated: true, completion: nil)
     }
@@ -119,72 +176,11 @@ class AddAlbunViewController: ParentViewController, UIImagePickerControllerDeleg
 extension AddAlbunViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
-        case nameTextField:
-            startDateTextField.becomeFirstResponder()
-            return false
-        case startDateTextField:
-            endDateTextField.becomeFirstResponder()
-            return false
-        case endDateTextField:
-            endDateTextField.resignFirstResponder()
+        case addAlbumView.nameTextField:
+            addAlbumView.nameTextField.resignFirstResponder()
             return false
         default:
             return true
         }
     }
 }
-
-/*
-extension AddViewController {
-    func setToolBar(textField: UITextField) {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        
-        toolBar.isTranslucent = true
-        toolBar.sizeToFit()
-        
-        if textField.tag == 1 {
-            let checkButton = UIBarButtonItem(title: "check", style: .plain, target: self, action: #selector(startDateCheckButtonSet))
-            let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-            let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(startDateCancelButtonSet))
-            
-            toolBar.setItems([cancelButton, spaceButton, checkButton], animated: true)
-            toolBar.isUserInteractionEnabled = true
-            
-            startDateTextField.inputView = startDateDataPicker
-            startDateTextField.inputAccessoryView = toolBar
-        } else if textField.tag == 2 {
-            let checkButton = UIBarButtonItem(title: "check", style: .plain, target: self, action: #selector(endDateCheckButtonSet))
-            let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-            let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(endDateCancelButtonSet))
-            
-            toolBar.setItems([cancelButton, spaceButton, checkButton], animated: true)
-            toolBar.isUserInteractionEnabled = true
-            
-            endDateTextField.inputView = endDateDatePicker
-            endDateTextField.inputAccessoryView = toolBar
-        }
-    }
-    
-    @objc func startDateCheckButtonSet() {
-        startDateTextField.text = Library.dateToShowString(date: startDateDataPicker.date.timeIntervalSince1970)
-        endDateDatePicker.minimumDate = startDateDataPicker.date
-        startDate = startDateDataPicker.date.timeIntervalSince1970
-        endDateTextField.becomeFirstResponder()
-    }
-    
-    @objc func startDateCancelButtonSet() {
-        startDateTextField.resignFirstResponder()
-    }
-    
-    @objc func endDateCheckButtonSet() {
-        endDateTextField.text = Library.dateToShowString(date: endDateDatePicker.date.timeIntervalSince1970)
-        endDate = endDateDatePicker.date.timeIntervalSince1970
-        endDateTextField.resignFirstResponder()
-    }
-    
-    @objc func endDateCancelButtonSet() {
-        endDateTextField.resignFirstResponder()
-    }
-}
-*/

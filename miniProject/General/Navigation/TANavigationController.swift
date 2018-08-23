@@ -26,6 +26,6 @@ class TANavigationController: UINavigationController {
         navigationBar.barTintColor = TAStyle.orange
         navigationBar.backgroundColor = TAStyle.orange
         
-        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: TAStyle.navigationTitleFont, size: 24.0)!]
     }
 }

@@ -48,6 +48,7 @@ class FirebaseManager: NSObject {
             switch responseData.exists {
             case true:
                 self?.loginUserModel = LoginUserModel(json: (responseData.data())!)
+                complectionHandler(nil)
             case false:
                 self?.addUserDataForFirebase(user: (self?.loginUserModel)!, complectionHandler: { (error) in
                     guard error == nil else {
@@ -71,6 +72,67 @@ class FirebaseManager: NSObject {
         }
     }
     
+    func addAlbumIdToUserData(id: String, complectionHandler: @escaping  (_ error: Error?) -> ()) {
+        userManager.document((loginUserModel?.uid)!)
+            .updateData(["participateAlbum": FieldValue.arrayUnion([id])]) { (error) in
+                guard error == nil else {
+                    complectionHandler(error)
+                    return
+                }
+                complectionHandler(nil)
+        }
+    }
+    
+    // MARK: - Album Method
+    
+    func addNewAlbumData(model: AddAlbumModel,  complectionHandler: @escaping (_ error: Error?) -> ()) {
+        var addAlbumModel = model
+        addAlbumModel.id = albumManager.document().documentID
+        saveAlbumPhotoData(model: addAlbumModel) { [weak self] (fileURL, error) in
+            guard error == nil else {
+                complectionHandler(error)
+                return
+            }
+             let parameters = ["id": addAlbumModel.id, "title": addAlbumModel.title, "startTiem": addAlbumModel.startTime, "day": addAlbumModel.day, "coverPhotoURL": fileURL] as TAStyle.JSONDictionary
+            self?.albumManager.document(addAlbumModel.id)
+                .setData(parameters, completion: { (error) in
+                    guard error == nil else {
+                        complectionHandler(error)
+                        return
+                    }
+                    self?.addAlbumIdToUserData(id: addAlbumModel.id, complectionHandler: { (error) in
+                        guard error == nil else {
+                            complectionHandler(error)
+                            return
+                        }
+                        complectionHandler(nil)
+                    })
+            })
+        }
+    }
+    
+    // MARK: - Storage Method
+    
+    func saveAlbumPhotoData(model: AddAlbumModel, complectionHandler: @escaping (_ fileURL: String, _ error: Error?) -> ()) {
+        let filePath = "Album/\(model.id)/\(Date.timeIntervalSinceReferenceDate).jpg"
+        let data = UIImageJPEGRepresentation(model.titlePhoto!, 0.05)
+        
+        Storage.storage().reference().child(filePath)
+            .putData(data!, metadata: nil) { (metaData, error) in
+                guard error == nil else {
+                    complectionHandler("", error)
+                    return
+                }
+                Storage.storage().reference().child(filePath)
+                    .downloadURL(completion: { (url, error) in
+                        guard error == nil else {
+                            complectionHandler("", error)
+                            return
+                        }
+                        complectionHandler((url?.absoluteString)!, nil)
+                })
+        }
+    }
     // MARK: -----------------------------------------------------------------------
     
     private override init() {

@@ -54,6 +54,5 @@ class TATabbarController: UITabBarController {
 
 extension TATabbarController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        
     }
 }

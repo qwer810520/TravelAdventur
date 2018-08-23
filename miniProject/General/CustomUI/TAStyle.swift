@@ -19,4 +19,16 @@ class TAStyle {
     class var backgroundColor: UIColor {
         return #colorLiteral(red: 1, green: 0.8980392157, blue: 0.7058823529, alpha: 1)
     }
+    
+    class var navigationTitleFont: String {
+        return "Avenir-Light"
+    }
+    
+    class func dateToShowString(date:TimeInterval) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = "yyyy年MM月dd日"
+        
+        return dateFormatter.string(from: Date(timeIntervalSince1970: date))
+    }
 }

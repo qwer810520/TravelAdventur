@@ -9,6 +9,7 @@
 import UIKit
 import Reachability
 import SVProgressHUD
+import Photos
 
 enum NaviBarButtonType {
     case _Add
@@ -25,7 +26,6 @@ class ParentViewController: UIViewController {
     private let reachability = Reachability()
     private(set) var isLoading = false
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     
     private let loadingBackgroudView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -63,6 +63,7 @@ class ParentViewController: UIViewController {
     
     private func setUserInterface() {
         view.backgroundColor = #colorLiteral(red: 1, green: 0.8980392157, blue: 0.7058823529, alpha: 1)
+        navigationItem.hidesBackButton = true
     }
     
     func setNavigation(title: String, barButtonType: NaviBarButtonType) {
@@ -78,26 +79,52 @@ class ParentViewController: UIViewController {
         }
     }
     
-    // MARK: - Action Method
-    
-    @objc func dismissButtonDidPressed() {
-        
-    }
-    
-    @objc func addButtonDidPressed() {
-        
-    }
-    
     func showAlert(type: AlertType, title: String, message: String? = nil, checkAction: ((UIAlertAction) -> ())? = nil) {
         let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        if type == .cancel_check {
+            alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        }
         alertVC.addAction(UIAlertAction(title: "確定", style: .default, handler: checkAction))
-        alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
         present(alertVC, animated: true, completion: nil)
     }
     
     func selectTabbarItem(type: TATabbarItem) {
         guard let tabbarController = tabBarController as? TATabbarController else { return }
         tabbarController.selectItem(item: type)
+    }
+    
+    //相簿認證
+    func checkPermission(handler: @escaping () -> ()) {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch photoAuthorizationStatus {
+        case .authorized:
+            print("Access is granted by user")
+            handler()
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { (newStatus) in
+                print("status is \(newStatus)")
+                guard newStatus == PHAuthorizationStatus.authorized else { return }
+                handler()
+            }
+        case .denied:
+            print("User has denied the permission.")
+        case .restricted:
+             print("User do not have access to photo album.")
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
+    // MARK: - Action Method
+    
+    @objc private func dismissButtonDidPressed() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func addButtonDidPressed() {
+        
     }
     
     // MARK: - Reachability Library

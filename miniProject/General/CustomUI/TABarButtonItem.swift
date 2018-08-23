@@ -18,7 +18,7 @@ class TABarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .add, target: target, action: action)
     }
     
-    class func titleBarButtonItem(title: String, target: Any, action: Selector) -> UIBarButtonItem {
+    class func setTitleBarButtonItem(title: String, target: Any, action: Selector) -> UIBarButtonItem {
         return UIBarButtonItem(title: title, style: .plain, target: target, action: action)
     }
 }

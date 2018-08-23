@@ -33,7 +33,6 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
         super.viewDidLoad()
         getUserProfile()
         UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
-        getUserProfile()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +44,7 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
     // MARK: - private Method
     
     private func setUserInterface() {
-        setNavigation(title: "首頁", barButtonType: ._Add)
+        setNavigation(title: "Travel Adventur", barButtonType: ._Add)
         view.addSubview(collectionView)
         
         view.addConstraints(NSLayoutConstraint.constraints(
@@ -75,10 +74,16 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    
+    private func getAlbumList() {
+        
+    }
+    
     // MARK: - Action Method
     
     override func addButtonDidPressed() {
-        
+        let vc = TANavigationController(rootViewController: AddAlbunViewController()) 
+        present(vc, animated: true, completion: nil)
     }
 }
 
@@ -102,8 +107,6 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AlbumCollectionViewCell
-        
-        return cell
+        return UICollectionViewCell()
     }
 }

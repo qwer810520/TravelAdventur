@@ -9,15 +9,17 @@
 import UIKit
 
 struct AddAlbumModel {
+    var id: String
     var title: String
     var startTime: Double
-    var endTime: Double
-    var titlePhoto: UIImage
+    var day: Int
+    var titlePhoto: UIImage?
     
     init() {
+        self.id = ""
         self.title = ""
         self.startTime = 0.0
-        self.endTime = 0.0
-        self.titlePhoto = UIImage()
+        self.day = 0
+        self.titlePhoto = nil
     }
 }
