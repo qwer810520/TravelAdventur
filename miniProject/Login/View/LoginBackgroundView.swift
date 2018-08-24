@@ -51,43 +51,50 @@ class LoginBackgroundView: UIView {
             metrics: nil,
             views: views))
         
-        backgroundImageView.addConstraints(NSLayoutConstraint.constraints(
+        backgroundImageView.addConstraints(NSLayoutConstraint
+            .constraints(
             withVisualFormat: "H:|-25-[orImageView]-25-|",
             options: [],
             metrics: nil,
             views: views))
         
-        backgroundImageView.addConstraints(NSLayoutConstraint.constraints(
+        backgroundImageView.addConstraints(NSLayoutConstraint
+            .constraints(
             withVisualFormat: "H:|-70-[buttonBackgroundView]-70-|",
             options: [],
             metrics: nil,
             views: views))
         
-        backgroundImageView.addConstraints(NSLayoutConstraint.constraints(
+        backgroundImageView.addConstraints(NSLayoutConstraint
+            .constraints(
             withVisualFormat: "V:[orImageView(15)]-20-[buttonBackgroundView(60)]-60-|",
             options: [],
             metrics: nil,
             views: views))
         
-        buttonBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+        buttonBackgroundView.addConstraints(NSLayoutConstraint
+            .constraints(
             withVisualFormat: "V:|[fbLoginButton]|",
             options: [],
             metrics: nil,
             views: views))
         
-        buttonBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+        buttonBackgroundView.addConstraints(NSLayoutConstraint
+            .constraints(
             withVisualFormat: "V:|[googleLoginButton]|",
             options: [],
             metrics: nil,
             views: views))
         
-        buttonBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+        buttonBackgroundView.addConstraints(NSLayoutConstraint
+            .constraints(
             withVisualFormat: "H:[googleLoginButton(60)]|",
             options: [],
             metrics: nil,
             views: views))
         
-        buttonBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+        buttonBackgroundView.addConstraints(NSLayoutConstraint
+            .constraints(
             withVisualFormat: "H:|[fbLoginButton(==googleLoginButton)]",
             options: [],
             metrics: nil,

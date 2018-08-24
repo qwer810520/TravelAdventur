@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import FirebaseDatabase
 import FirebaseAuth
 import GoogleMaps
 import LocalAuthentication
@@ -24,7 +25,7 @@ class FirebaseManager: NSObject {
     private let albumManager = Firestore.firestore().collection("Album")
     private let photoManager = Firestore.firestore().collection("Photo")
     
-    // MARK: - userManager Method
+    // MARK: - User API Method
     
     func signInForFirebase(credential: AuthCredential, complectionHandler: @escaping (_ error: Error?) -> ()) {
         Auth.auth().signInAndRetrieveData(with: credential) { [weak self] (user, error) in
@@ -74,7 +75,7 @@ class FirebaseManager: NSObject {
     
     func addAlbumIdToUserData(id: String, complectionHandler: @escaping  (_ error: Error?) -> ()) {
         userManager.document((loginUserModel?.uid)!)
-            .updateData(["participateAlbum": FieldValue.arrayUnion([id])]) { (error) in
+            .updateData(["albumIdList": FieldValue.arrayUnion([id])]) { (error) in
                 guard error == nil else {
                     complectionHandler(error)
                     return
@@ -83,7 +84,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    // MARK: - Album Method
+    // MARK: - Album API Method
     
     func addNewAlbumData(model: AddAlbumModel,  complectionHandler: @escaping (_ error: Error?) -> ()) {
         var addAlbumModel = model
@@ -93,7 +94,7 @@ class FirebaseManager: NSObject {
                 complectionHandler(error)
                 return
             }
-             let parameters = ["id": addAlbumModel.id, "title": addAlbumModel.title, "startTiem": addAlbumModel.startTime, "day": addAlbumModel.day, "coverPhotoURL": fileURL] as TAStyle.JSONDictionary
+             let parameters = ["id": addAlbumModel.id, "title": addAlbumModel.title, "startTime": addAlbumModel.startTime, "day": addAlbumModel.day, "coverPhotoURL": fileURL] as TAStyle.JSONDictionary
             self?.albumManager.document(addAlbumModel.id)
                 .setData(parameters, completion: { (error) in
                     guard error == nil else {
@@ -106,16 +107,43 @@ class FirebaseManager: NSObject {
                             return
                         }
                         complectionHandler(nil)
+                        self?.loginUserModel?.albumIdList
+                            .append(addAlbumModel.id)
                     })
             })
         }
     }
     
-    // MARK: - Storage Method
+    func getAlbumData(complectionHandler: @escaping (_ album: [AlbumModel], _ error: Error?) -> ()) {
+        albumManager.getDocuments { (albumList, error) in
+            guard error == nil, let responseData = albumList  else {
+                complectionHandler([AlbumModel](), error)
+                return
+            }
+            
+            var albumList = [AlbumModel]()
+            
+            guard !(self.loginUserModel?.albumIdList.isEmpty)! else {
+                complectionHandler(albumList, nil)
+                return
+            }
+            
+            responseData.documents.forEach {
+                let albumData = AlbumModel(json: $0.data())
+                guard (self.loginUserModel?.albumIdList.contains(where: { $0 == albumData.id}))! else {
+                    return
+                }
+                albumList.append(albumData)
+            }
+            complectionHandler(albumList, nil)
+        }
+    }
     
-    func saveAlbumPhotoData(model: AddAlbumModel, complectionHandler: @escaping (_ fileURL: String, _ error: Error?) -> ()) {
+    // MARK: - Storage API Method
+    
+    private func saveAlbumPhotoData(model: AddAlbumModel, complectionHandler: @escaping (_ fileURL: String, _ error: Error?) -> ()) {
         let filePath = "Album/\(model.id)/\(Date.timeIntervalSinceReferenceDate).jpg"
-        let data = UIImageJPEGRepresentation(model.titlePhoto!, 0.05)
+        let data = UIImageJPEGRepresentation(model.coverPhoto!, 0.05)
         
         Storage.storage().reference().child(filePath)
             .putData(data!, metadata: nil) { (metaData, error) in

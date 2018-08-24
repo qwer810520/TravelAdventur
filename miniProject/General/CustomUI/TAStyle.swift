@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum DataToStringType {
+    case all
+    case day
+}
+
 class TAStyle {
     
     typealias JSONDictionary = [String: Any]
@@ -24,11 +29,20 @@ class TAStyle {
         return "Avenir-Light"
     }
     
-    class func dateToShowString(date:TimeInterval) -> String {
+    class func dateToString(date: TimeInterval, type: DataToStringType) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = "yyyy年MM月dd日"
-        
+        switch type {
+        case .all:
+            dateFormatter.dateFormat = "yyyy年MM月dd日"
+        case .day:
+            dateFormatter.dateFormat = "dd日"
+        }
         return dateFormatter.string(from: Date(timeIntervalSince1970: date))
+    }
+    
+    class func getEndDate(start: Double, day: Int) -> TimeInterval {
+        let endDouble = start + Double((24 * 60 * 60) * day)
+        return TimeInterval(exactly: endDouble)!
     }
 }

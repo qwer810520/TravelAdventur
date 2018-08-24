@@ -87,11 +87,24 @@ class LoginViewController: ParentViewController {
     private func firebaseAuthSingin(credential: AuthCredential) {
         startLoading()
         FirebaseManager.shared.signInForFirebase(credential: credential) { [weak self] (error) in
-            self?.stopLoading()
             guard error == nil else {
                 self?.showAlert(type: .check, title: "Login Error")
                 return
             }
+            self?.getUserProfile()
+        }
+    }
+    
+    private func getUserProfile() {
+        guard isNetworkConnected() else { return }
+        startLoading()
+        FirebaseManager.shared.getUserProfile { [weak self] (error) in
+            self?.stopLoading()
+            guard error == nil else {
+                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                return
+            }
+            
             print("登入成功")
             self?.present(TATabbarController(), animated: true, completion: nil)
         }

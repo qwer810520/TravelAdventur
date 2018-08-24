@@ -17,7 +17,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var placeView: UIView!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var qrcodeView: UIImageView!
-    @IBOutlet weak var segmentedSet: UISegmentedControl!
+    @IBOutlet weak var segmented: UISegmentedControl!
     
     @IBAction func cheangeValue(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -51,11 +51,11 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         mapView.clear()
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        /*
         if segmentedSet.selectedSegmentIndex == 1 {
             segmentedSet.selectedSegmentIndex = 0
             mapView.isHidden = false
@@ -63,6 +63,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
             qrcodeView.isHidden = true
             UIScreen.main.brightness = CGFloat(FirebaseManager.shared.getScreenbrightness())
         }
+         */
         
         NotificationCenter.default.addObserver(self, selector: #selector(showSVP(Not:)), name: Notification.Name("placeSVP"), object: nil)
     }
@@ -90,8 +91,6 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(newChangeColor(Not:)), name: Notification.Name("changColor"), object: nil)
     }
-    
-    
     
     @objc func newChangeColor(Not:Notification) {
         if let changeColor = Not.userInfo?["changSwitch"] as? Bool {

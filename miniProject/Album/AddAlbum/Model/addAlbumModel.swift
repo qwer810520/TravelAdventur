@@ -13,13 +13,13 @@ struct AddAlbumModel {
     var title: String
     var startTime: Double
     var day: Int
-    var titlePhoto: UIImage?
+    var coverPhoto: UIImage?
     
     init() {
         self.id = ""
         self.title = ""
         self.startTime = 0.0
         self.day = 0
-        self.titlePhoto = nil
+        self.coverPhoto = nil
     }
 }

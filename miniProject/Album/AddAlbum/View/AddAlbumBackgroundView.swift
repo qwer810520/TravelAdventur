@@ -131,10 +131,12 @@ class AddAlbumBackgroundView: UIView {
     
     // MARK: - init Element
     
-    lazy private var addAlbumCoverPhotoButton: UIButton = {
+    lazy var addAlbumCoverPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(addCoverPhotoButtonDidPressed), for: .touchUpInside)
+        button.setImage(UIImage(named: "AddAlbum_NormalAlbumPhoto"), for: .normal)
+        button.tintColor = TAStyle.orange
         return button
     }()
     
@@ -143,7 +145,6 @@ class AddAlbumBackgroundView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
-        imageView.image = UIImage(named: "AddAlbum_NormalAlbumPhoto")
         return imageView
     }()
     

@@ -7,11 +7,14 @@
 //
 
 import UIKit
-import SDWebImage
-import RxSwift
-import RxCocoa
 
-class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayout {
+class MainViewController: ParentViewController {
+    
+    fileprivate var albumList = [AlbumModel]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     lazy fileprivate var collectionView: UICollectionView = {
         let layout = StickyCollectionViewFlowLayout()
@@ -22,7 +25,7 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
         layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.register(AlbumPhotoCollectionCell.self, forCellWithReuseIdentifier: AlbumPhotoCollectionCell.identifier)
+        view.register(ShowAlbumDetailCollectionViewCell.self, forCellWithReuseIdentifier: ShowAlbumDetailCollectionViewCell.identifier)
         view.backgroundColor = .clear
         view.delegate = self
         view.dataSource = self
@@ -31,12 +34,12 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getUserProfile()
         UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getAlbumList()
         UIScreen.main.brightness = UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as! CGFloat
         setUserInterface()
     }
@@ -47,8 +50,10 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
         setNavigation(title: "Travel Adventur", barButtonType: ._Add)
         view.addSubview(collectionView)
         
+        let naviHeight = (UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
+        
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[collectionView]|",
+            withVisualFormat: "V:|-\(naviHeight)-[collectionView]|",
             options: [],
             metrics: nil,
             views: ["collectionView": collectionView]))
@@ -62,21 +67,15 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
     
     // MARK: - API Method
     
-    private func getUserProfile() {
-        guard isNetworkConnected() else { return }
-        startLoading()
-        FirebaseManager.shared.getUserProfile { [weak self] (error) in
+    private func getAlbumList() {
+        guard isNetworkConnected()  else { return }
+        FirebaseManager.shared.getAlbumData { [weak self] (albumList, error) in
             guard error == nil else {
                 self?.showAlert(type: .check, title: (error?.localizedDescription)!)
                 return
             }
-            self?.stopLoading()
+            self?.albumList = albumList
         }
-    }
-    
-    
-    private func getAlbumList() {
-        
     }
     
     // MARK: - Action Method
@@ -91,7 +90,9 @@ class MainViewController: ParentViewController, UICollectionViewDelegateFlowLayo
 
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let vc = LocationViewController()
+        vc.selectAlnum = albumList[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -99,14 +100,17 @@ extension MainViewController: UICollectionViewDelegate {
 
 extension MainViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 0
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return albumList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let detailCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowAlbumDetailCollectionViewCell.identifier, for: indexPath) as! ShowAlbumDetailCollectionViewCell
+        detailCell.imageView.image = nil
+        detailCell.albumModel = albumList[indexPath.row]
+        return detailCell
     }
 }

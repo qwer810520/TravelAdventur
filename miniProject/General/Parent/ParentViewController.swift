@@ -14,6 +14,7 @@ import Photos
 enum NaviBarButtonType {
     case _Add
     case Dismiss_
+    case Back_Add
 }
 
 enum AlertType {
@@ -66,7 +67,7 @@ class ParentViewController: UIViewController {
         navigationItem.hidesBackButton = true
     }
     
-    func setNavigation(title: String, barButtonType: NaviBarButtonType) {
+    func setNavigation(title: String?, barButtonType: NaviBarButtonType) {
         navigationItem.title = title
         navigationItem.rightBarButtonItem = nil
         navigationItem.leftBarButtonItem = nil
@@ -75,7 +76,10 @@ class ParentViewController: UIViewController {
         case ._Add:
             navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
         case .Dismiss_:
-            navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "cross", target: self, action: #selector(dismissButtonDidPressed))
+            navigationItem.leftBarButtonItem = TABarButtonItem.setDismissButton(target: self, action: #selector(dismissButtonDidPressed))
+        case .Back_Add:
+            navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
+            navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
         }
     }
     
@@ -125,6 +129,10 @@ class ParentViewController: UIViewController {
     
     @objc func addButtonDidPressed() {
         
+    }
+    
+    @objc private func popButtonDidPressed() {
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Reachability Library

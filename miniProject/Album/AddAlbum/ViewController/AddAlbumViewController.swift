@@ -79,13 +79,14 @@ class AddAlbunViewController: ParentViewController {
                 self?.addAlbumView.selectDayTextField
                     .resignFirstResponder()
             })
-        addAlbumView.startTiemTextField.text = TAStyle.dateToShowString(date: Date().timeIntervalSince1970)
+        addAlbum.startTime = Date().timeIntervalSince1970
+        addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: Date().timeIntervalSince1970, type: .all)
         addAlbumView.startTiemTextField.inputView = datePickerView
         addAlbumView.startTiemTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
-                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToShowString(date: Date().timeIntervalSince1970)
+                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: Date().timeIntervalSince1970, type: .all)
             }, checkAction: { [weak self] in
                 self?.addAlbum.startTime = (self?.datePickerView.date.timeIntervalSince1970)!
-                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToShowString(date: (self?.datePickerView.date.timeIntervalSince1970)!)
+                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: (self?.datePickerView.date.timeIntervalSince1970)!, type: .all)
                 self?.addAlbumView.startTiemTextField
                     .resignFirstResponder()
             })
@@ -124,6 +125,7 @@ extension AddAlbunViewController: UIPickerViewDataSource {
 
 extension AddAlbunViewController: AddAlbumDelegate {
     func addAlbumCoverButtonDidPressed() {
+        view.endEditing(true)
         checkPermission { [weak self] in
             DispatchQueue.main.async {
             UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
@@ -137,12 +139,13 @@ extension AddAlbunViewController: AddAlbumDelegate {
     }
     
     func addAlbumButtonDidPressed() {
+        guard isNetworkConnected() else { return }
         guard let name = addAlbumView.nameTextField.text, !name.isEmpty else {
             showAlert(type: .check, title: "請輸入相簿名稱")
             return
         }
         
-        guard addAlbum.titlePhoto != nil else {
+        guard addAlbum.coverPhoto != nil else {
             showAlert(type: .check, title: "請選擇封面相片")
             return
         }
@@ -164,8 +167,9 @@ extension AddAlbunViewController: AddAlbumDelegate {
 extension AddAlbunViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let picture = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            addAlbumView.addAlbumCoverPhotoButton.setImage(nil, for: .normal)
             addAlbumView.albumCoverPhotoImageView.image = picture
-            addAlbum.titlePhoto = picture
+            addAlbum.coverPhoto = picture
         }
         dismiss(animated: true, completion: nil)
     }
