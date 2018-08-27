@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = TAStyle.orange
         UINavigationBar.appearance().tintColor = .white
         
+        UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = LoginViewController()
         window?.makeKeyAndVisible()

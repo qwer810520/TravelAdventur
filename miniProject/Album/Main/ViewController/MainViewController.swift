@@ -34,7 +34,6 @@ class MainViewController: ParentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {

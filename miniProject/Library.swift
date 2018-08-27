@@ -114,8 +114,8 @@ class Library {
         }
     }
     
-    static func qrcodeImage(str:String, image:UIImageView) -> UIImage {
-        var qrcodeImage:CIImage?
+    static func qrcodeImage(str:String, image:UIImageView) -> CIImage {
+        var qrcodeImage: CIImage?
         let data = str.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
         let fileter = CIFilter(name: "CIQRCodeGenerator")
         fileter?.setValue(data, forKey: "inputMessage")
@@ -123,9 +123,11 @@ class Library {
         qrcodeImage = fileter?.outputImage
         let scaleX = image.frame.size.width / (qrcodeImage?.extent.size.width)!
         let scaleY = image.frame.size.height / (qrcodeImage?.extent.size.height)!
-//        let transFormedImage = qrcodeImage?.applying(CGAffineTransform(scaleX: scaleX, y: scaleY))
-//        return UIImage(ciImage: transFormedImage!)
-        return UIImage()
+        
+        let transFormedImage = qrcodeImage?.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
+//        return UIImage(ciImage: transFormedImage)
+        
+        return CIImage()
     }
     
 }

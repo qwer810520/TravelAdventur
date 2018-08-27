@@ -15,6 +15,7 @@ enum NaviBarButtonType {
     case _Add
     case Dismiss_
     case Back_Add
+    case Back_
 }
 
 enum AlertType {
@@ -88,6 +89,8 @@ class ParentViewController: UIViewController {
         case .Back_Add:
             navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
             navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
+        case .Back_:
+            navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
         }
     }
     

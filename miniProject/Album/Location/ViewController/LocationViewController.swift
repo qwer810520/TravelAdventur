@@ -12,15 +12,7 @@ import GoogleMaps
 class LocationViewController: ParentViewController {
     
     var selectAlbum: AlbumModel?
-    fileprivate var placeList = [PlaceModel]() {
-        didSet {
-            guard !placeList.isEmpty else { return }
-            print("開始做事")
-            setPlaceMarker()
-//            locationMapView?.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
-            locationMapView?.collectionView.reloadData()
-        }
-    }
+    fileprivate var placeList = [PlaceModel]()
     
     lazy var segmented: UISegmentedControl = {
         let view = UISegmentedControl(items: ["Place", "Shared Album"])
@@ -32,7 +24,8 @@ class LocationViewController: ParentViewController {
     }()
     
     fileprivate var locationMapView: LocationMapView?
-    fileprivate var willDisplayIndex = 0
+    fileprivate var qrcodeView: AddAlbumQRCodeView?
+    fileprivate var willDisplayIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +35,12 @@ class LocationViewController: ParentViewController {
         super.viewWillAppear(animated)
         getPlaceList()
         setUserInterFace()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationMapView?.removeFromSuperview()
+        locationMapView = nil
     }
     
     // MARK: - private Method
@@ -54,6 +53,7 @@ class LocationViewController: ParentViewController {
     
     private func setLocationMapView() {
         locationMapView = LocationMapView(delegate: self, dataSource: self)
+        segmented.selectedSegmentIndex = 0
         guard let mapView = locationMapView else { return }
         view.addSubview(mapView)
         view.addConstraints(NSLayoutConstraint.constraints(
@@ -67,30 +67,35 @@ class LocationViewController: ParentViewController {
             options: [],
             metrics: nil,
             views: ["mapView": mapView]))
-        
-//        setCamera(complection: nil)
     }
     
-    /*
-    private func setCamera(complection: (() -> ())?) {
-        let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
-        guard let mapView = locationMapView?.mapView else { return }
-        mapView.camera = camera
-        mapView.mapType = .normal
-        mapView.clear()
-        guard let complection = complection else { return }
-        complection()
+    private func setQRCodeView() {
+        qrcodeView = AddAlbumQRCodeView(id: (selectAlbum?.id)!)
+        guard let qrView = qrcodeView else { return }
+        view.addSubview(qrView)
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[qrView]|",
+            options: [],
+            metrics: nil,
+            views: ["qrView": qrView]))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-\(getNaviHeight())-[qrView]|",
+            options: [],
+            metrics: nil,
+            views: ["qrView": qrView]))
+        
+        qrView.layoutIfNeeded()
+        
+        qrView.QRImageView.image = TAStyle.setQRImage(str: (selectAlbum?.id)!, image: qrView.QRImageView)
     }
-     */
     
     private func setPlaceMarker() {
         guard let mapView = locationMapView?.mapView else { return }
         mapView.clear()
         mapView.camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
-        print("開始插圖標")
         placeList.forEach {
-            print($0.latitude)
-            print($0.longitude)
             let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude))
             marker.icon = $0.isMark ? UIImage(named: "orangeIcon") : UIImage(named: "redIcon")
             marker.map = mapView
@@ -114,13 +119,34 @@ class LocationViewController: ParentViewController {
             var placeList = responsePlaceList
             placeList[0].isMark = true
             self?.placeList = placeList
+            
+            self?.setPlaceMarker()
+            //            locationMapView?.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
+            self?.locationMapView?.collectionView.reloadData()
         }
     }
     
     // MARK: - Action Method
     
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
-        print(sender.selectedSegmentIndex)
+        switch sender.selectedSegmentIndex {
+        case 0:
+            UIScreen.main.brightness = UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as! CGFloat
+            setNavigation(title: nil, barButtonType: .Back_Add)
+            qrcodeView?.removeFromSuperview()
+            qrcodeView = nil
+            setLocationMapView()
+            setPlaceMarker()
+        case 1:
+             UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
+             UIScreen.main.brightness = 1.0
+            setNavigation(title: nil, barButtonType: .Back_)
+            locationMapView?.removeFromSuperview()
+            locationMapView = nil
+            setQRCodeView()
+        default:
+            break
+        }
     }
     
     override func addButtonDidPressed() {
@@ -139,12 +165,15 @@ extension LocationViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("willDisplay", indexPath.row)
+        willDisplayIndex = indexPath.row
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("didEndDisplaying", indexPath.row)
+        guard let willDisplayIndex = willDisplayIndex,  willDisplayIndex != indexPath.row else { return }
+        placeList[willDisplayIndex].isMark = true
+        placeList[indexPath.row].isMark = false
+        setPlaceMarker()
     }
 }
 

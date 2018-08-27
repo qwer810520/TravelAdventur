@@ -21,6 +21,7 @@
 		393570471EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393570461EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift */; };
 		39359963212E994600D305DC /* TAToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39359962212E994600D305DC /* TAToolBar.swift */; };
 		393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */; };
+		393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */; };
 		39638B481ED7394A006A9615 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39638B471ED7394A006A9615 /* Library.swift */; };
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
 		396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396C01741E89461300BF57F6 /* PhotoDataModel.swift */; };
@@ -74,6 +75,7 @@
 		393570461EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		39359962212E994600D305DC /* TAToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAToolBar.swift; sourceTree = "<group>"; };
 		393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
+		393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumQRCodeView.swift; sourceTree = "<group>"; };
 		39638B471ED7394A006A9615 /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			children = (
 				397932FD213083B1000BB774 /* LocationMapView.swift */,
 				393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */,
+				393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -736,6 +739,7 @@
 				397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */,
 				3930BF6020FC38F200A39CAF /* TAStyle.swift in Sources */,
 				39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */,
+				393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */,
 				3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */,
 				397E7DCF2128972300A2B07A /* addAlbumModel.swift in Sources */,
 				397E7DC3212893D400A2B07A /* UserDefaultKey.swift in Sources */,

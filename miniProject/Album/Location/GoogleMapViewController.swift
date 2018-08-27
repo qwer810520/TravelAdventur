@@ -43,7 +43,7 @@ class GoogleMapViewController: UIViewController, GMSMapViewDelegate {
         super.viewDidLoad()
         qrcodeView.isHidden = true
         
-        qrcodeView.image = Library.qrcodeImage(str: FirebaseManager.shared.getSelectAlbumData().albumID, image: qrcodeView)
+//        qrcodeView.image = Library.qrcodeImage(str: FirebaseManager.shared.getSelectAlbumData().albumID, image: qrcodeView)
     
         let camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
         mapView.camera = camera

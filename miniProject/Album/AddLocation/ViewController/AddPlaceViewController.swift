@@ -28,7 +28,6 @@ class AddPlaceViewController: ParentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UIScreen.main.brightness = CGFloat(FirebaseManager.shared.getScreenbrightness())
         setUserInterface()
     }
     
