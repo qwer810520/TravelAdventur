@@ -27,9 +27,7 @@
 		393D6FD02134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FCF2134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift */; };
 		393D6FD221344A6E003C79A4 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FD121344A6E003C79A4 /* AddPhotoButton.swift */; };
 		393D6FD521345216003C79A4 /* MobilePhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FD421345216003C79A4 /* MobilePhotoModel.swift */; };
-		39638B481ED7394A006A9615 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39638B471ED7394A006A9615 /* Library.swift */; };
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
-		396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396C01741E89461300BF57F6 /* PhotoDataModel.swift */; };
 		397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */; };
 		397932FA2130787D000BB774 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932F92130787D000BB774 /* LocationViewController.swift */; };
 		397932FE213083B1000BB774 /* LocationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932FD213083B1000BB774 /* LocationMapView.swift */; };
@@ -42,11 +40,7 @@
 		39810FDF1ED4621900461313 /* Usermodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39810FDE1ED4621900461313 /* Usermodel.swift */; };
 		3988C41D1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */; };
 		3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3989C0A921008F7C00E8BE56 /* TATabbarController.swift */; };
-		399128AC1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */; };
-		399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */; };
 		39A7054A1EF7AFF500EE2881 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39A705491EF7AFF500EE2881 /* LocalAuthentication.framework */; };
-		39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A705691EF7F04100EE2881 /* PhotoCollectionViewController.swift */; };
-		39A7056C1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */; };
 		39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887721329F7A0081B356 /* AddPlaceModel.swift */; };
 		39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */; };
 		39AF888121339BE00081B356 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF888021339BE00081B356 /* PlaceModel.swift */; };
@@ -55,7 +49,6 @@
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
-		39ED9E3F1E9658B9002880DE /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */; };
 		39ED9E411E965DA7002880DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39ED9E401E965DA7002880DE /* GoogleService-Info.plist */; };
 		39EFD4DF213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EFD4DE213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift */; };
 		39FCB27F20FC39BB001857AE /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCB27E20FC39BB001857AE /* Extension.swift */; };
@@ -84,9 +77,7 @@
 		393D6FCF2134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMobilePhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		393D6FD121344A6E003C79A4 /* AddPhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoButton.swift; sourceTree = "<group>"; };
 		393D6FD421345216003C79A4 /* MobilePhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePhotoModel.swift; sourceTree = "<group>"; };
-		39638B471ED7394A006A9615 /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
 		397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeTearderViewController.swift; sourceTree = "<group>"; };
 		397932F92130787D000BB774 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		397932FD213083B1000BB774 /* LocationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapView.swift; sourceTree = "<group>"; };
@@ -99,11 +90,7 @@
 		39810FDE1ED4621900461313 /* Usermodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Usermodel.swift; sourceTree = "<group>"; };
 		3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoDetailCollectionViewController.swift; sourceTree = "<group>"; };
 		3989C0A921008F7C00E8BE56 /* TATabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TATabbarController.swift; sourceTree = "<group>"; };
-		399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileAlbumCollectionViewController.swift; sourceTree = "<group>"; };
-		399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		39A705491EF7AFF500EE2881 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
-		39A705691EF7F04100EE2881 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
-		39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		39AF887721329F7A0081B356 /* AddPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceModel.swift; sourceTree = "<group>"; };
 		39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaceViewController.swift; sourceTree = "<group>"; };
 		39AF888021339BE00081B356 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
@@ -115,7 +102,6 @@
 		39B915FC1E84127C0093E1AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39B915FF1E84127C0093E1AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39B916011E84127C0093E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionViewCell.swift; path = ../ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		39ED9E401E965DA7002880DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		39EFD4DE213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAlbumDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		39FCB27E20FC39BB001857AE /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -137,15 +123,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		39069E131E9880F9000B6DCC /* Album */ = {
-			isa = PBXGroup;
-			children = (
-				3930412A1E9902210070CC98 /* MapView */,
-				3930412B1E99025D0070CC98 /* DetailImage */,
-			);
-			name = Album;
-			sourceTree = "<group>";
-		};
 		391264EF212FAA96001E3EB7 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,26 +175,6 @@
 				397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */,
 			);
 			name = User;
-			sourceTree = "<group>";
-		};
-		3930412A1E9902210070CC98 /* MapView */ = {
-			isa = PBXGroup;
-			children = (
-				396C01741E89461300BF57F6 /* PhotoDataModel.swift */,
-			);
-			name = MapView;
-			sourceTree = "<group>";
-		};
-		3930412B1E99025D0070CC98 /* DetailImage */ = {
-			isa = PBXGroup;
-			children = (
-				39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */,
-				39A705691EF7F04100EE2881 /* PhotoCollectionViewController.swift */,
-				39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */,
-				399128AB1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift */,
-				399128AD1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift */,
-			);
-			name = DetailImage;
 			sourceTree = "<group>";
 		};
 		3930BF4B20FB777E00A39CAF /* Login */ = {
@@ -544,8 +501,6 @@
 				3930BF5720FC38F200A39CAF /* General */,
 				3930BF4B20FB777E00A39CAF /* Login */,
 				39B7AFAB2101F3720021E11B /* Manager */,
-				39638B471ED7394A006A9615 /* Library.swift */,
-				39069E131E9880F9000B6DCC /* Album */,
 				39B7AFA42101DE4F0021E11B /* Album */,
 				391F99C01EF674F40017A62C /* User */,
 				39B915F51E84127C0093E1AF /* AppDelegate.swift */,
@@ -769,12 +724,10 @@
 				3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */,
 				3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */,
 				393D6FD521345216003C79A4 /* MobilePhotoModel.swift in Sources */,
-				399128AC1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift in Sources */,
 				3979330521314E2D000BB774 /* AddPlaceView.swift in Sources */,
 				39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */,
 				397932FE213083B1000BB774 /* LocationMapView.swift in Sources */,
 				391264F8212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift in Sources */,
-				39638B481ED7394A006A9615 /* Library.swift in Sources */,
 				397E7DCC2128970F00A2B07A /* AddAlbumBackgroundView.swift in Sources */,
 				393D6FCD21344777003C79A4 /* AddMobilePhotosViewController.swift in Sources */,
 				39B7AFAA2101DFBB0021E11B /* TABarButtonItem.swift in Sources */,
@@ -793,25 +746,20 @@
 				3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */,
 				39AF888121339BE00081B356 /* PlaceModel.swift in Sources */,
 				393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */,
-				39ED9E3F1E9658B9002880DE /* ImageCollectionViewCell.swift in Sources */,
 				39EFD4DF213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift in Sources */,
 				397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */,
 				391264F9212FAA96001E3EB7 /* Album.swift in Sources */,
 				393D6FD221344A6E003C79A4 /* AddPhotoButton.swift in Sources */,
 				39FCB27F20FC39BB001857AE /* Extension.swift in Sources */,
 				3988C41D1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift in Sources */,
-				396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */,
-				39A7056C1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift in Sources */,
 				397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */,
 				3930BF6020FC38F200A39CAF /* TAStyle.swift in Sources */,
 				393D6FC621344079003C79A4 /* ShowPhotoListViewController.swift in Sources */,
-				39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */,
 				393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */,
 				3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */,
 				397E7DCF2128972300A2B07A /* addAlbumModel.swift in Sources */,
 				393D6FD02134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift in Sources */,
 				397E7DC3212893D400A2B07A /* UserDefaultKey.swift in Sources */,
-				399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */,
 				391F99EA1EF764140017A62C /* UserMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
