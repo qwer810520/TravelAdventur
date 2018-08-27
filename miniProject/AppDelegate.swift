@@ -24,14 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .application( application,
             didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
-        GMSServices.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
-        GMSPlacesClient.provideAPIKey("AIzaSyD_WWZk2WAMr9PNnrRp35Lzqw-_l3iFlCQ")
+        GMSServices.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
+        GMSPlacesClient.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
         
         UIApplication.shared.statusBarStyle = .lightContent
+        UINavigationBar.appearance().barTintColor = TAStyle.orange
+        UINavigationBar.appearance().tintColor = .white
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = LoginViewController()
-//        window?.rootViewController = TATabbarController()
         window?.makeKeyAndVisible()
         
         return true

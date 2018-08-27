@@ -33,7 +33,16 @@ class ParentViewController: UIViewController {
         view.backgroundColor = .clear
         return view
     }()
-
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        navigationItem.hidesBackButton = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -64,7 +73,6 @@ class ParentViewController: UIViewController {
     
     private func setUserInterface() {
         view.backgroundColor = #colorLiteral(red: 1, green: 0.8980392157, blue: 0.7058823529, alpha: 1)
-        navigationItem.hidesBackButton = true
     }
     
     func setNavigation(title: String?, barButtonType: NaviBarButtonType) {
@@ -97,8 +105,11 @@ class ParentViewController: UIViewController {
         tabbarController.selectItem(item: type)
     }
     
-    //相簿認證
-    func checkPermission(handler: @escaping () -> ()) {
+    func getNaviHeight() -> CGFloat {
+        return (UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
+    }
+    
+    func checkPermission(handler: @escaping () -> ()) {     //相簿認證
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         switch photoAuthorizationStatus {
         case .authorized:
@@ -113,12 +124,8 @@ class ParentViewController: UIViewController {
         case .denied:
             print("User has denied the permission.")
         case .restricted:
-             print("User do not have access to photo album.")
+            print("User do not have access to photo album.")
         }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
     }
     
     // MARK: - Action Method
@@ -133,6 +140,10 @@ class ParentViewController: UIViewController {
     
     @objc private func popButtonDidPressed() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
     }
     
     // MARK: - Reachability Library

@@ -37,11 +37,11 @@ class AddAlbunViewController: ParentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUserInterface()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUserInterface()
     }
     
     // MARK: - private Method
@@ -49,7 +49,7 @@ class AddAlbunViewController: ParentViewController {
     private func setUserInterface() {
         setNavigation(title: "Add Album", barButtonType: .Dismiss_)
         view.addSubview(addAlbumView)
-        let naviHeight = (UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
+        
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[addAlbumView]|",
             options: [],
@@ -57,7 +57,7 @@ class AddAlbunViewController: ParentViewController {
             views: ["addAlbumView": addAlbumView]))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(naviHeight)-[addAlbumView]|",
+            withVisualFormat: "V:|-\(getNaviHeight())-[addAlbumView]|",
             options: [],
             metrics: nil,
             views: ["addAlbumView": addAlbumView]))

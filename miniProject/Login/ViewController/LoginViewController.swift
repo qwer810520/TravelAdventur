@@ -26,7 +26,7 @@ class LoginViewController: ParentViewController {
         if UserDefaults.standard.bool(forKey: "touchIDSwitch") {
             authenticateWithTouchID()
         }
-        //        google登入要加入以下步驟
+        //  google登入要加入以下步驟
         GIDSignIn.sharedInstance().clientID = "1085221770368-a3aejta4qgsqrip293u660mh0q9dhbas.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
@@ -35,6 +35,7 @@ class LoginViewController: ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UserDefaults.standard.set(true, forKey: "touchIDSwitch")
         
         view.addSubview(backgroundView)
         view.addConstraints(NSLayoutConstraint.constraints(
@@ -97,7 +98,6 @@ class LoginViewController: ParentViewController {
     
     private func getUserProfile() {
         guard isNetworkConnected() else { return }
-        startLoading()
         FirebaseManager.shared.getUserProfile { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
@@ -121,6 +121,7 @@ class LoginViewController: ParentViewController {
         localAuthContent.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "請使用TouchID認證身份") { [weak self] (success, error) in
             switch success {
             case true:
+                self?.startLoading()
                 switch UserDefaults.standard.bool(forKey: "loginSet") {
                 case true:
                     let credential = FacebookAuthProvider.credential(withAccessToken: UserDefaults.standard.string(forKey: "FBTokenString")!)

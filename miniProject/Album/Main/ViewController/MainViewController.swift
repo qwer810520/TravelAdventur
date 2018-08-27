@@ -50,10 +50,8 @@ class MainViewController: ParentViewController {
         setNavigation(title: "Travel Adventur", barButtonType: ._Add)
         view.addSubview(collectionView)
         
-        let naviHeight = (UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
-        
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(naviHeight)-[collectionView]|",
+            withVisualFormat: "V:|-\(getNaviHeight())-[collectionView]|",
             options: [],
             metrics: nil,
             views: ["collectionView": collectionView]))
@@ -68,7 +66,7 @@ class MainViewController: ParentViewController {
     // MARK: - API Method
     
     private func getAlbumList() {
-        guard isNetworkConnected()  else { return }
+        guard isNetworkConnected() else { return }
         FirebaseManager.shared.getAlbumData { [weak self] (albumList, error) in
             guard error == nil else {
                 self?.showAlert(type: .check, title: (error?.localizedDescription)!)
@@ -91,7 +89,7 @@ class MainViewController: ParentViewController {
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = LocationViewController()
-        vc.selectAlnum = albumList[indexPath.row]
+        vc.selectAlbum = albumList[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 }

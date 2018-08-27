@@ -20,10 +20,12 @@ class FirebaseManager: NSObject {
     static let shared = FirebaseManager()
     
     private(set) var loginUserModel: LoginUserModel?
+    private(set) var albumList = [AlbumModel]()
+//    private(set) var placeList =
     
     private let userManager = Firestore.firestore().collection("User")
     private let albumManager = Firestore.firestore().collection("Album")
-    private let photoManager = Firestore.firestore().collection("Photo")
+    private let placeManager = Firestore.firestore().collection("Place")
     
     // MARK: - User API Method
     
@@ -136,6 +138,33 @@ class FirebaseManager: NSObject {
                 albumList.append(albumData)
             }
             complectionHandler(albumList, nil)
+        }
+    }
+    
+    // MARK: - Place API Method
+    
+    func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (_ error: Error?) -> ()) {
+        let id = placeManager.document().documentID
+        let parameters = ["albumID": albumid, "placeID": id, "name": placeData.placeName, "latitude": placeData.latitude, "longitude": placeData.longitude, "time": placeData.time] as TAStyle.JSONDictionary
+        placeManager.document(id).setData(parameters) { (error) in
+            guard error == nil else {
+                complectionHandler(error)
+                return
+            }
+            complectionHandler(nil)
+        }
+    }
+    
+    func getPlaceList(albumID: String, complectionHandler: @escaping (_ placeList: [PlaceModel], _ error: Error?) -> ()) {
+        placeManager.getDocuments { (response, error) in
+            guard error == nil, let responseData = response else {
+                complectionHandler([PlaceModel](), error)
+                return
+            }
+            
+            var placeList = [PlaceModel]()
+            responseData.documents.forEach { placeList.append(PlaceModel(json: $0.data())) }
+            complectionHandler( placeList.filter { $0.albumID == albumID }.sorted(by: { $0.time < $1.time }), nil)
         }
     }
     
