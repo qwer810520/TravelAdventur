@@ -18,6 +18,17 @@ struct PlaceModel {
     var isMark: Bool
     var photoList: [String]
     
+    init() {
+        self.albumID = ""
+        self.placeID = ""
+        self.name = ""
+        self.time = 0.0
+        self.latitude = 0.0
+        self.longitude = 0.0
+        self.isMark = false
+        self.photoList = [String]()
+    }
+    
     init(json: TAStyle.JSONDictionary) {
         self.albumID = (json["albumID"] as? String) ?? ""
         self.placeID = (json["placeID"] as? String) ?? ""

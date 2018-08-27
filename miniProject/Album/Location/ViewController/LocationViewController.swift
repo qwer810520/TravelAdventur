@@ -161,7 +161,9 @@ class LocationViewController: ParentViewController {
 
 extension LocationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let vc = ShowPhotoListViewController()
+        vc.placeData = placeList[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

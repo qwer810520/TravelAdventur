@@ -17,7 +17,7 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
     var imageArrayCount = 0
     var selectImageArray = [modelPhotosData]()
     
-
+    
     @IBAction func addImageButton(_ sender: UIBarButtonItem) {
         print(selectImageArray.count)
         if selectImageArray.count != 0 {
@@ -37,9 +37,9 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       grabPhotos()
-       collectionView?.allowsMultipleSelection = true
-       print(FirebaseManager.shared.getPhotoId())
+        grabPhotos()
+        collectionView?.allowsMultipleSelection = true
+        print(FirebaseManager.shared.getPhotoId())
         
     }
     
@@ -62,12 +62,12 @@ class MobileAlbumCollectionViewController: UICollectionViewController, UICollect
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         if let fetchResult:PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions) {
-        if fetchResult.count > 0 {
-            
+            if fetchResult.count > 0 {
+                
                 for i in 0..<fetchResult.count {
                     imageManager.requestImage(for: fetchResult.object(at: i), targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions, resultHandler: { [weak self] (image, error) in
                         let photoData = modelPhotosData(image: image!, bool: false)
-                      self?.modelImageArray.append(photoData)
+                        self?.modelImageArray.append(photoData)
                         self?.imageArrayCount += 1
                     })
                 }

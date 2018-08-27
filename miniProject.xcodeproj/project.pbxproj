@@ -18,16 +18,19 @@
 		3930BF6020FC38F200A39CAF /* TAStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5920FC38F200A39CAF /* TAStyle.swift */; };
 		3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5B20FC38F200A39CAF /* TANavigationController.swift */; };
 		3930BF6220FC38F200A39CAF /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5E20FC38F200A39CAF /* ParentViewController.swift */; };
-		393570471EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393570461EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift */; };
 		39359963212E994600D305DC /* TAToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39359962212E994600D305DC /* TAToolBar.swift */; };
 		393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */; };
 		393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */; };
+		393D6FC621344079003C79A4 /* ShowPhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FC521344079003C79A4 /* ShowPhotoListViewController.swift */; };
+		393D6FC9213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FC8213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift */; };
+		393D6FCD21344777003C79A4 /* AddMobilePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FCC21344777003C79A4 /* AddMobilePhotosViewController.swift */; };
+		393D6FD02134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FCF2134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift */; };
+		393D6FD221344A6E003C79A4 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FD121344A6E003C79A4 /* AddPhotoButton.swift */; };
+		393D6FD521345216003C79A4 /* MobilePhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FD421345216003C79A4 /* MobilePhotoModel.swift */; };
 		39638B481ED7394A006A9615 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39638B471ED7394A006A9615 /* Library.swift */; };
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
 		396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396C01741E89461300BF57F6 /* PhotoDataModel.swift */; };
 		397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */; };
-		397932F721307835000BB774 /* ShowPhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932F321307835000BB774 /* ShowPhotoCollectionViewController.swift */; };
-		397932F821307835000BB774 /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932F521307835000BB774 /* GoogleMapViewController.swift */; };
 		397932FA2130787D000BB774 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932F92130787D000BB774 /* LocationViewController.swift */; };
 		397932FE213083B1000BB774 /* LocationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932FD213083B1000BB774 /* LocationMapView.swift */; };
 		3979330221314D91000BB774 /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3979330121314D91000BB774 /* AddPlaceViewController.swift */; };
@@ -72,16 +75,19 @@
 		3930BF5920FC38F200A39CAF /* TAStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAStyle.swift; sourceTree = "<group>"; };
 		3930BF5B20FC38F200A39CAF /* TANavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TANavigationController.swift; sourceTree = "<group>"; };
 		3930BF5E20FC38F200A39CAF /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
-		393570461EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		39359962212E994600D305DC /* TAToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAToolBar.swift; sourceTree = "<group>"; };
 		393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
 		393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumQRCodeView.swift; sourceTree = "<group>"; };
+		393D6FC521344079003C79A4 /* ShowPhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoListViewController.swift; sourceTree = "<group>"; };
+		393D6FC8213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotosCollectionViewCell.swift; sourceTree = "<group>"; };
+		393D6FCC21344777003C79A4 /* AddMobilePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMobilePhotosViewController.swift; sourceTree = "<group>"; };
+		393D6FCF2134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMobilePhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		393D6FD121344A6E003C79A4 /* AddPhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoButton.swift; sourceTree = "<group>"; };
+		393D6FD421345216003C79A4 /* MobilePhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePhotoModel.swift; sourceTree = "<group>"; };
 		39638B471ED7394A006A9615 /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		396C01741E89461300BF57F6 /* PhotoDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
 		397128C21EF905BA00B18B62 /* QRCodeTearderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeTearderViewController.swift; sourceTree = "<group>"; };
-		397932F321307835000BB774 /* ShowPhotoCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowPhotoCollectionViewController.swift; sourceTree = "<group>"; };
-		397932F521307835000BB774 /* GoogleMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
 		397932F92130787D000BB774 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		397932FD213083B1000BB774 /* LocationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapView.swift; sourceTree = "<group>"; };
 		3979330121314D91000BB774 /* AddPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
@@ -198,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				396C01741E89461300BF57F6 /* PhotoDataModel.swift */,
-				393570461EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift */,
 			);
 			name = MapView;
 			sourceTree = "<group>";
@@ -206,7 +211,6 @@
 		3930412B1E99025D0070CC98 /* DetailImage */ = {
 			isa = PBXGroup;
 			children = (
-				3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */,
 				39ED9E3E1E9658B9002880DE /* ImageCollectionViewCell.swift */,
 				39A705691EF7F04100EE2881 /* PhotoCollectionViewController.swift */,
 				39A7056B1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift */,
@@ -305,12 +309,71 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		393D6FC321343FCE003C79A4 /* ShowPhotoList */ = {
+			isa = PBXGroup;
+			children = (
+				393D6FC721344297003C79A4 /* View */,
+				393D6FC421343FEF003C79A4 /* ViewController */,
+			);
+			path = ShowPhotoList;
+			sourceTree = "<group>";
+		};
+		393D6FC421343FEF003C79A4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3988C41C1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift */,
+				393D6FC521344079003C79A4 /* ShowPhotoListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		393D6FC721344297003C79A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				393D6FC8213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		393D6FCA213446BC003C79A4 /* AddPhotoList */ = {
+			isa = PBXGroup;
+			children = (
+				393D6FD3213451E6003C79A4 /* Model */,
+				393D6FCE21344826003C79A4 /* View */,
+				393D6FCB213446E2003C79A4 /* ViewController */,
+			);
+			path = AddPhotoList;
+			sourceTree = "<group>";
+		};
+		393D6FCB213446E2003C79A4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				393D6FCC21344777003C79A4 /* AddMobilePhotosViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		393D6FCE21344826003C79A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				393D6FCF2134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift */,
+				393D6FD121344A6E003C79A4 /* AddPhotoButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		393D6FD3213451E6003C79A4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				393D6FD421345216003C79A4 /* MobilePhotoModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		397932F221307835000BB774 /* Location */ = {
 			isa = PBXGroup;
 			children = (
 				39AF887F21339BBE0081B356 /* Model */,
-				397932F321307835000BB774 /* ShowPhotoCollectionViewController.swift */,
-				397932F521307835000BB774 /* GoogleMapViewController.swift */,
 				397932F421307835000BB774 /* View */,
 				397932F621307835000BB774 /* ViewController */,
 			);
@@ -435,6 +498,8 @@
 				397932F221307835000BB774 /* Location */,
 				397932FF21314D91000BB774 /* AddLocation */,
 				39AF887B213304AB0081B356 /* SearchPlace */,
+				393D6FC321343FCE003C79A4 /* ShowPhotoList */,
+				393D6FCA213446BC003C79A4 /* AddPhotoList */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -703,7 +768,7 @@
 			files = (
 				3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */,
 				3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */,
-				397932F721307835000BB774 /* ShowPhotoCollectionViewController.swift in Sources */,
+				393D6FD521345216003C79A4 /* MobilePhotoModel.swift in Sources */,
 				399128AC1E9DC8DE00E3CEE1 /* MobileAlbumCollectionViewController.swift in Sources */,
 				3979330521314E2D000BB774 /* AddPlaceView.swift in Sources */,
 				39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */,
@@ -711,16 +776,16 @@
 				391264F8212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift in Sources */,
 				39638B481ED7394A006A9615 /* Library.swift in Sources */,
 				397E7DCC2128970F00A2B07A /* AddAlbumBackgroundView.swift in Sources */,
+				393D6FCD21344777003C79A4 /* AddMobilePhotosViewController.swift in Sources */,
 				39B7AFAA2101DFBB0021E11B /* TABarButtonItem.swift in Sources */,
-				393570471EE12C620026A1B0 /* ShowPhotoCollectionViewCell.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
 				39359963212E994600D305DC /* TAToolBar.swift in Sources */,
 				39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */,
 				3930BF5420FC316F00A39CAF /* LoginBackgroundView.swift in Sources */,
 				391264FD212FABD9001E3EB7 /* AlbumModel.swift in Sources */,
 				39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */,
-				397932F821307835000BB774 /* GoogleMapViewController.swift in Sources */,
 				397932FA2130787D000BB774 /* LocationViewController.swift in Sources */,
+				393D6FC9213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift in Sources */,
 				3979330221314D91000BB774 /* AddPlaceViewController.swift in Sources */,
 				3930BF6220FC38F200A39CAF /* ParentViewController.swift in Sources */,
 				391264FB212FAA96001E3EB7 /* MainViewController.swift in Sources */,
@@ -732,16 +797,19 @@
 				39EFD4DF213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift in Sources */,
 				397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */,
 				391264F9212FAA96001E3EB7 /* Album.swift in Sources */,
+				393D6FD221344A6E003C79A4 /* AddPhotoButton.swift in Sources */,
 				39FCB27F20FC39BB001857AE /* Extension.swift in Sources */,
 				3988C41D1EEF824900EFBAAB /* ShowPhotoDetailCollectionViewController.swift in Sources */,
 				396C01751E89461300BF57F6 /* PhotoDataModel.swift in Sources */,
 				39A7056C1EF7F2AB00EE2881 /* PhotoCollectionViewCell.swift in Sources */,
 				397128C31EF905BA00B18B62 /* QRCodeTearderViewController.swift in Sources */,
 				3930BF6020FC38F200A39CAF /* TAStyle.swift in Sources */,
+				393D6FC621344079003C79A4 /* ShowPhotoListViewController.swift in Sources */,
 				39A7056A1EF7F04100EE2881 /* PhotoCollectionViewController.swift in Sources */,
 				393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */,
 				3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */,
 				397E7DCF2128972300A2B07A /* addAlbumModel.swift in Sources */,
+				393D6FD02134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift in Sources */,
 				397E7DC3212893D400A2B07A /* UserDefaultKey.swift in Sources */,
 				399128AE1E9DD29800E3CEE1 /* MobilePhotosCollectionViewCell.swift in Sources */,
 				391F99EA1EF764140017A62C /* UserMenuTableViewController.swift in Sources */,
