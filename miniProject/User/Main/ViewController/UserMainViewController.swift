@@ -42,6 +42,7 @@ class UserMainViewController: ParentViewController {
     
     private func setUserInterface() {
         setNavigation(title: "Profile", barButtonType: .none)
+         UIScreen.main.brightness = UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as! CGFloat
         setAutoLayout()
     }
     
