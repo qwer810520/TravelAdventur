@@ -66,7 +66,9 @@ class MainViewController: ParentViewController {
     
     private func getAlbumList() {
         guard isNetworkConnected() else { return }
+        startLoading()
         FirebaseManager.shared.getAlbumData { [weak self] (albumList, error) in
+            self?.stopLoading()
             guard error == nil else {
                 self?.showAlert(type: .check, title: (error?.localizedDescription)!)
                 return

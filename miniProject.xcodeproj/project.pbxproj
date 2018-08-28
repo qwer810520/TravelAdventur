@@ -25,6 +25,7 @@
 		393D6FD02134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FCF2134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift */; };
 		393D6FD221344A6E003C79A4 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FD121344A6E003C79A4 /* AddPhotoButton.swift */; };
 		393D6FD521345216003C79A4 /* MobilePhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FD421345216003C79A4 /* MobilePhotoModel.swift */; };
+		3949955521351D0E00853992 /* QRCodeTearderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3949955421351D0E00853992 /* QRCodeTearderViewController.swift */; };
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
 		397932FA2130787D000BB774 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932F92130787D000BB774 /* LocationViewController.swift */; };
 		397932FE213083B1000BB774 /* LocationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932FD213083B1000BB774 /* LocationMapView.swift */; };
@@ -44,7 +45,6 @@
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
-		39CEC1F22134DF1200E0A5B6 /* UserMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F12134DF1200E0A5B6 /* UserMenuTableViewController.swift */; };
 		39CEC1F52134DF7600E0A5B6 /* UserMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F42134DF7600E0A5B6 /* UserMainViewController.swift */; };
 		39CEC1F72134E27F00E0A5B6 /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F62134E27F00E0A5B6 /* ShowProfileTableViewCell.swift */; };
 		39CEC1F92134E5B300E0A5B6 /* BlankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F82134E5B300E0A5B6 /* BlankTableViewCell.swift */; };
@@ -76,6 +76,7 @@
 		393D6FCF2134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMobilePhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		393D6FD121344A6E003C79A4 /* AddPhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoButton.swift; sourceTree = "<group>"; };
 		393D6FD421345216003C79A4 /* MobilePhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePhotoModel.swift; sourceTree = "<group>"; };
+		3949955421351D0E00853992 /* QRCodeTearderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeTearderViewController.swift; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		397932F92130787D000BB774 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		397932FD213083B1000BB774 /* LocationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapView.swift; sourceTree = "<group>"; };
@@ -98,7 +99,6 @@
 		39B915FC1E84127C0093E1AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39B915FF1E84127C0093E1AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39B916011E84127C0093E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		39CEC1F12134DF1200E0A5B6 /* UserMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMenuTableViewController.swift; sourceTree = "<group>"; };
 		39CEC1F42134DF7600E0A5B6 /* UserMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMainViewController.swift; sourceTree = "<group>"; };
 		39CEC1F62134E27F00E0A5B6 /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		39CEC1F82134E5B300E0A5B6 /* BlankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankTableViewCell.swift; sourceTree = "<group>"; };
@@ -317,6 +317,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		3949955221351D0E00853992 /* QRCodeTearder */ = {
+			isa = PBXGroup;
+			children = (
+				3949955321351D0E00853992 /* VIewController */,
+			);
+			path = QRCodeTearder;
+			sourceTree = "<group>";
+		};
+		3949955321351D0E00853992 /* VIewController */ = {
+			isa = PBXGroup;
+			children = (
+				3949955421351D0E00853992 /* QRCodeTearderViewController.swift */,
+			);
+			path = VIewController;
+			sourceTree = "<group>";
+		};
 		397932F221307835000BB774 /* Location */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				39CEC1EE2134DF1200E0A5B6 /* Main */,
+				3949955221351D0E00853992 /* QRCodeTearder */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -534,7 +551,6 @@
 		39CEC1F02134DF1200E0A5B6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				39CEC1F12134DF1200E0A5B6 /* UserMenuTableViewController.swift */,
 				39CEC1F42134DF7600E0A5B6 /* UserMainViewController.swift */,
 			);
 			path = ViewController;
@@ -750,7 +766,6 @@
 			files = (
 				3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */,
 				39CEC1F52134DF7600E0A5B6 /* UserMainViewController.swift in Sources */,
-				39CEC1F22134DF1200E0A5B6 /* UserMenuTableViewController.swift in Sources */,
 				3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */,
 				393D6FD521345216003C79A4 /* MobilePhotoModel.swift in Sources */,
 				3979330521314E2D000BB774 /* AddPlaceView.swift in Sources */,
@@ -778,6 +793,7 @@
 				39AF888121339BE00081B356 /* PlaceModel.swift in Sources */,
 				393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */,
 				39CEC1F72134E27F00E0A5B6 /* ShowProfileTableViewCell.swift in Sources */,
+				3949955521351D0E00853992 /* QRCodeTearderViewController.swift in Sources */,
 				39EFD4DF213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift in Sources */,
 				397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */,
 				393D6FD221344A6E003C79A4 /* AddPhotoButton.swift in Sources */,

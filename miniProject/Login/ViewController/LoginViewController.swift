@@ -22,6 +22,10 @@ class LoginViewController: ParentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         if UserDefaults.standard.bool(forKey: "touchIDSwitch") {
             authenticateWithTouchID()
@@ -30,11 +34,6 @@ class LoginViewController: ParentViewController {
         GIDSignIn.sharedInstance().clientID = "1085221770368-a3aejta4qgsqrip293u660mh0q9dhbas.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         view.addSubview(backgroundView)
         view.addConstraints(NSLayoutConstraint.constraints(

@@ -34,6 +34,7 @@ class UserMainViewController: ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getUserProfile()
         setUserInterface()
     }
     
@@ -59,6 +60,15 @@ class UserMainViewController: ParentViewController {
             metrics: nil,
             views: ["tableView": tableView]))
     }
+    
+    private func getUserProfile() {
+        FirebaseManager.shared.getUserProfile { [weak self] (error) in
+            guard error == nil else {
+                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                return
+            }
+        }
+    }
 }
 
     // MARK: - UITableViewDelegate
@@ -83,7 +93,8 @@ extension UserMainViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 1:
-            print("跳轉到掃QRCode畫面")
+            let vc = TANavigationController(rootViewController: QRCodeTearderViewController())
+            present(vc, animated: true, completion: nil)
         case 4:
             if let providerData = Auth.auth().currentUser?.providerData {
                 let userInfo = providerData[0]
@@ -97,8 +108,7 @@ extension UserMainViewController: UITableViewDelegate {
                 }
                 do {
                     try Auth.auth().signOut()
-                    view.window?.rootViewController?
-                        .dismiss(animated: true, completion: nil)
+                    view.window?.rootViewController?.dismiss(animated: true, completion: nil)
                 } catch {
                     
                 }

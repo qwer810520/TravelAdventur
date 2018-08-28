@@ -139,6 +139,32 @@ class FirebaseManager: NSObject {
         }
     }
     
+    func checkAlbumStatus(id: String, complectionHandler: @escaping (_ status: Bool, _ error: Error?) -> ()) {
+        albumManager.document(id).getDocument { [weak self] (response, error) in
+            guard error == nil, let responseData = response else {
+                complectionHandler(false, error)
+                return
+            }
+            
+            switch responseData.exists {
+            case true:
+                guard !(self?.loginUserModel?.albumIdList.contains(where: { $0 == id }))! else {
+                        complectionHandler(false, error)
+                        return
+                    }
+                self?.addAlbumIdToUserData(id: id, complectionHandler: { (error) in
+                    guard error == nil else {
+                        complectionHandler(false, nil)
+                        return
+                    }
+                    complectionHandler(true, error)
+                })
+            case false:
+                complectionHandler(responseData.exists, nil)
+            }
+        }
+    }
+    
     // MARK: - Place API Method
     
     func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (_ error: Error?) -> ()) {
@@ -181,6 +207,10 @@ class FirebaseManager: NSObject {
         placeManager.document(placeID).updateData(["photoList": FieldValue.arrayUnion([photoURL])]) { (error) in
             complectionHandler(error)
         }
+    }
+    
+    func checkAlbumStatus() {
+        
     }
     
     // MARK: - Storage API Method
