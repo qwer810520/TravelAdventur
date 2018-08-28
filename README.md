@@ -39,7 +39,13 @@
 
 * 使用的第三方: <https://github.com/vinnyoodles/mosaic-layout>
 
-## 目前應用功能有
+## 近期更新
+* 採MVC為架構下去實作。
+* UI更新: 所有UI改採用純Code去生成。
+* 優化記憶體使用效能以及VC的邏輯處理。
+* 資料存部分取改採用FireBase的Cloud Firestore來做存取。
+
+## 應用功能有
 * 以Singleton模式來做撰寫。
 * 使用Reachability來做簡單的網路連線判斷。
 * Google、Facebook登入、使用TouchID來簡化登入流程。
@@ -48,4 +54,5 @@
 * 匯入使用者手機相簿來做新增相片動作。
 * 將相簿ID製作成QRcode，讓使用者要分享相簿時只需讓朋友掃瞄QRCode就能加入相簿。
 * 以上有關資料存取部分皆以FirebaseAuth、database、storage來做存取。
-* 此作品持續更新中.... 
+
+ 

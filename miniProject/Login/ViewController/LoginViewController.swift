@@ -19,6 +19,7 @@ import NSObject_Rx
 class LoginViewController: ParentViewController {
     
     lazy private var backgroundView = LoginBackgroundView()
+    private var selectLoginStatus = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +28,10 @@ class LoginViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if UserDefaults.standard.bool(forKey: "touchIDSwitch") {
-            authenticateWithTouchID()
+        if !selectLoginStatus {
+            if UserDefaults.standard.bool(forKey: "touchIDSwitch") {
+                authenticateWithTouchID()
+            }
         }
         //  google登入要加入以下步驟
         GIDSignIn.sharedInstance().clientID = "1085221770368-a3aejta4qgsqrip293u660mh0q9dhbas.apps.googleusercontent.com"
@@ -50,6 +53,7 @@ class LoginViewController: ParentViewController {
         backgroundView.fbLoginButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.backgroundView.fbLoginButton.isEnabled = true
+                self?.selectLoginStatus = true
                 UserDefaults.standard.set(true, forKey: "loginSet")
                 self?.facebookLogin()
             })
@@ -58,6 +62,7 @@ class LoginViewController: ParentViewController {
         backgroundView.googleLoginButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.backgroundView.googleLoginButton.isEnabled = true
+                self?.selectLoginStatus = true
                 UserDefaults.standard.set(false, forKey: "loginSet")
                 self?.googleLogin()
             })
