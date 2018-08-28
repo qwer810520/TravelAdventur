@@ -35,7 +35,6 @@ class LoginViewController: ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UserDefaults.standard.set(true, forKey: "touchIDSwitch")
         
         view.addSubview(backgroundView)
         view.addConstraints(NSLayoutConstraint.constraints(
@@ -105,7 +104,6 @@ class LoginViewController: ParentViewController {
                 return
             }
             
-            print("登入成功")
             self?.present(TATabbarController(), animated: true, completion: nil)
         }
     }

@@ -29,14 +29,15 @@ class UserMenuTableViewController: UITableViewController {
         super.viewDidLoad()
         userPhoto.layer.cornerRadius = userPhoto.frame.width / 2
         userPhoto.clipsToBounds = true
-        
+        /*
         Library.downloadImage(imageViewSet: userPhoto, URLString: FirebaseManager.shared.getUserData().userPhoto!) { (photo, loading, view) in
             self.userPhoto.image = photo
             loading?.stopAnimating()
             view?.removeFromSuperview()
         }
+         */
         
-        userName.text = FirebaseManager.shared.getUserData().userName
+//        userName.text = FirebaseManager.shared.getUserData().userName
         
         if UserDefaults.standard.bool(forKey: "touchIDSwitch") == true {
             touchIDSwitch.isOn = true
@@ -78,6 +79,4 @@ class UserMenuTableViewController: UITableViewController {
             break
         }
     }
-    
-    
 }

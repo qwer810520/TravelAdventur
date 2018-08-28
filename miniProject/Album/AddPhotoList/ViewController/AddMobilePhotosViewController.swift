@@ -107,6 +107,9 @@ class AddMobilePhotosViewController: ParentViewController {
     
     @objc private func addPhotoButtonDidPressed() {
         let addPhotosList = mobilePhotoList.filter { $0.isSelect }
+        
+        guard isNetworkConnected() else { return }
+        
         guard !addPhotosList.isEmpty else {
             showAlert(type: .check, title: "請選擇要上傳的相片")
             return
@@ -140,6 +143,7 @@ extension AddMobilePhotosViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mobilePhotoList.count
     }

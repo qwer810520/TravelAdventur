@@ -12,6 +12,7 @@ import SVProgressHUD
 import Photos
 
 enum NaviBarButtonType {
+    case none
     case _Add
     case Dismiss_
     case Back_Add
@@ -91,6 +92,8 @@ class ParentViewController: UIViewController {
             navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
         case .Back_:
             navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
+        case .none:
+            break
         }
     }
     

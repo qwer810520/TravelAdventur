@@ -21,6 +21,12 @@ extension UICollectionViewCell {
     }
 }
 
+extension UITableViewCell {
+    static var identitier: String {
+        return String(describing: self)
+    }
+}
+
 extension UIImageView {
     func downloadImage(urlStr: String) {
         self.sd_setImage(with: URL(string: urlStr), placeholderImage: UIImage(named: "normalImage"))

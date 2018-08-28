@@ -75,6 +75,7 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
         if metadataObj.stringValue != nil {
             captureSession?.stopRunning()
             if metadataObj.stringValue?.characters.count == 20 {
+                /*
                 if let newAlbumID = metadataObj.stringValue {
                     print(newAlbumID)
                     SVProgressHUD.show(withStatus: "搜尋中...")
@@ -87,6 +88,7 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
                             Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
                                 NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "joinNewAlbum"])
                             })
+                            
                         } else {
                             SVProgressHUD.dismiss()
                             self.present(Library.alertSet(title: "錯誤", message:"請掃描正確的QRcode", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
@@ -95,10 +97,13 @@ class QRCodeTearderViewController: UIViewController, AVCaptureMetadataOutputObje
                         }
                     })
                 }
+                 */
             } else {
+                /*
                 self.present(Library.alertSet(title: "錯誤", message:"請掃描正確的QRcode", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
                     self.captureSession?.startRunning()
                 }), animated: true, completion: nil)
+                 */
             }
         }
     }

@@ -10,6 +10,7 @@ import UIKit
 
 enum TATabbarItem {
     case Album
+    case User
 }
 
 class TATabbarController: UITabBarController {
@@ -39,13 +40,18 @@ class TATabbarController: UITabBarController {
         let albumVC = TANavigationController(rootViewController: MainViewController())
         albumVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "photoalbum"), tag: TATabbarItem.Album.hashValue)
         
-        self.viewControllers = [albumVC]
+        let userVC = TANavigationController(rootViewController: UserMainViewController())
+        userVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "tabbarIcon_User"), tag: TATabbarItem.User.hashValue)
+        
+        self.viewControllers = [albumVC, userVC]
     }
     
     func selectItem(item: TATabbarItem) {
         switch item {
         case .Album:
-            self.selectedIndex = item.hashValue
+            selectedIndex = item.hashValue
+        case .User:
+            selectedIndex = item.hashValue
         }
     }
 }
