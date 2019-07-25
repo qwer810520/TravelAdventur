@@ -16,8 +16,6 @@
 
 #include "Firestore/core/src/firebase/firestore/util/status.h"
 
-#if !defined(_WIN32)
-
 #include <cerrno>
 
 #include "Firestore/core/src/firebase/firestore/util/strerror.h"
@@ -186,6 +184,10 @@ static FirestoreErrorCode CodeForErrno(int errno_code) {
 }
 
 Status Status::FromErrno(int errno_code, absl::string_view msg) {
+  if (errno_code == 0) {
+    return Status::OK();
+  }
+
   FirestoreErrorCode canonical_code = CodeForErrno(errno_code);
   return Status{canonical_code,
                 util::StringFormat("%s (errno %s: %s)", msg, errno_code,
@@ -195,5 +197,3 @@ Status Status::FromErrno(int errno_code, absl::string_view msg) {
 }  // namespace util
 }  // namespace firestore
 }  // namespace firebase
-
-#endif  // !defined(_WIN32)

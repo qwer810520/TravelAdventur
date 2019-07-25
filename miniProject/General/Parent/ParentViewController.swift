@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Reachability
 import SVProgressHUD
 import Photos
 
@@ -26,7 +25,6 @@ enum AlertType {
 
 class ParentViewController: UIViewController {
     
-    private let reachability = Reachability()
     private(set) var isLoading = false
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -155,10 +153,6 @@ class ParentViewController: UIViewController {
     // MARK: - Reachability Library
     
     func isNetworkConnected() -> Bool {
-        guard let netWorkStatus = reachability?.connection, netWorkStatus != .none  else {
-            showAlert(type: .check, title: "網路無法連線，請確認網路是否開啟", message: nil, checkAction: nil)
-            return false
-        }
         return true
     }
     

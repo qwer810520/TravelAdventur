@@ -18,15 +18,19 @@
 
 #include <utility>
 
-#import "Firestore/Source/Core/FSTViewSnapshot.h"
 #import "Firestore/Source/Model/FSTDocument.h"
 
+#include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
+
+using firebase::firestore::core::DocumentViewChange;
+using firebase::firestore::core::ViewSnapshot;
 using firebase::firestore::model::DocumentKeySet;
+using firebase::firestore::model::TargetId;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FSTLocalViewChanges ()
-- (instancetype)initWithTarget:(FSTTargetID)targetID
+- (instancetype)initWithTarget:(TargetId)targetID
                      addedKeys:(DocumentKeySet)addedKeys
                    removedKeys:(DocumentKeySet)removedKeys NS_DESIGNATED_INITIALIZER;
 @end
@@ -36,19 +40,19 @@ NS_ASSUME_NONNULL_BEGIN
   DocumentKeySet _removedKeys;
 }
 
-+ (instancetype)changesForViewSnapshot:(FSTViewSnapshot *)viewSnapshot
-                          withTargetID:(FSTTargetID)targetID {
++ (instancetype)changesForViewSnapshot:(const ViewSnapshot &)viewSnapshot
+                          withTargetID:(TargetId)targetID {
   DocumentKeySet addedKeys;
   DocumentKeySet removedKeys;
 
-  for (FSTDocumentViewChange *docChange in viewSnapshot.documentChanges) {
-    switch (docChange.type) {
-      case FSTDocumentViewChangeTypeAdded:
-        addedKeys = addedKeys.insert(docChange.document.key);
+  for (const DocumentViewChange &docChange : viewSnapshot.document_changes()) {
+    switch (docChange.type()) {
+      case DocumentViewChange::Type::kAdded:
+        addedKeys = addedKeys.insert(docChange.document().key);
         break;
 
-      case FSTDocumentViewChangeTypeRemoved:
-        removedKeys = removedKeys.insert(docChange.document.key);
+      case DocumentViewChange::Type::kRemoved:
+        removedKeys = removedKeys.insert(docChange.document().key);
         break;
 
       default:
@@ -62,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
                     removedKeys:std::move(removedKeys)];
 }
 
-+ (instancetype)changesForTarget:(FSTTargetID)targetID
++ (instancetype)changesForTarget:(TargetId)targetID
                        addedKeys:(DocumentKeySet)addedKeys
                      removedKeys:(DocumentKeySet)removedKeys {
   return [[FSTLocalViewChanges alloc] initWithTarget:targetID
@@ -70,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
                                          removedKeys:std::move(removedKeys)];
 }
 
-- (instancetype)initWithTarget:(FSTTargetID)targetID
+- (instancetype)initWithTarget:(TargetId)targetID
                      addedKeys:(DocumentKeySet)addedKeys
                    removedKeys:(DocumentKeySet)removedKeys {
   self = [super init];

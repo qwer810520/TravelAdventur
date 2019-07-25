@@ -11,15 +11,9 @@ import AVFoundation
 
 class QRCodeTearderViewController: ParentViewController {
     
-    @IBAction func goBackButton(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let albumCollectionViewController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-        navigationController?.pushViewController(albumCollectionViewController, animated: true)
-    }
-    
-    var captureSession = AVCaptureSession()
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    var qrcodeFrameView: UIView?
+    fileprivate var captureSession = AVCaptureSession()
+    fileprivate var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    fileprivate var qrcodeFrameView: UIView?
     
     private let supportedCodeType = [
         AVMetadataObject.ObjectType.upce,
@@ -86,7 +80,7 @@ class QRCodeTearderViewController: ParentViewController {
     }
 }
 
-// MARK: - AVCaptureMetadataOutputObjectsDelegate
+    // MARK: - AVCaptureMetadataOutputObjectsDelegate
 
 extension QRCodeTearderViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -121,43 +115,5 @@ extension QRCodeTearderViewController: AVCaptureMetadataOutputObjectsDelegate {
                 })
             }
         }
-        
-        /*
-         if metadataObj.stringValue != nil {
-         captureSession.stopRunning()
-         if metadataObj.stringValue?.count == 20 {
-         /*
-         if let newAlbumID = metadataObj.stringValue {
-         print(newAlbumID)
-         SVProgressHUD.show(withStatus: "搜尋中...")
-         FirebaseManager.shared.checkJoinNewAlbumID(str: newAlbumID, completion: { (check) in
-         if check == true {
-         SVProgressHUD.dismiss()
-         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-         let albumCollectionViewController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-         self.navigationController?.pushViewController(albumCollectionViewController, animated: true)
-         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { (_) in
-         NotificationCenter.default.post(name: Notification.Name("updata"), object: nil, userInfo: ["switch": "joinNewAlbum"])
-         })
-         
-         } else {
-         SVProgressHUD.dismiss()
-         self.present(Library.alertSet(title: "錯誤", message:"請掃描正確的QRcode", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
-         self.captureSession?.startRunning()
-         }), animated: true, completion: nil)
-         }
-         })
-         }
-         */
-         } else {
-         /*
-         self.present(Library.alertSet(title: "錯誤", message:"請掃描正確的QRcode", controllerType: .alert, checkButton1: "OK", checkButton1Type: .default, handler: { (_) in
-         self.captureSession?.startRunning()
-         }), animated: true, completion: nil)
-         */
-         }
-         
-         }
-         */
     }
 }

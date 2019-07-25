@@ -8,9 +8,20 @@
 
 import UIKit
 
+enum loginType {
+    case facebook
+    case google
+}
+
+protocol LoginDelegate: class {
+    func loginButtonDidPressed(type: loginType)
+}
+
 class LoginBackgroundView: UIView {
+    weak var delegate: LoginDelegate?
     
-    init() {
+    init(delegate: LoginDelegate? = nil) {
+        self.delegate = delegate
         super.init(frame: .zero)
         setUserInterface()
     }
@@ -39,13 +50,13 @@ class LoginBackgroundView: UIView {
         buttonBackgroundView.addSubviews([fbLoginButton, googleLoginButton])
         let views: [String: Any] = ["backgroundImageView": backgroundImageView, "orImageView": orImageView,"buttonBackgroundView": buttonBackgroundView,  "fbLoginButton": fbLoginButton, "googleLoginButton": googleLoginButton]
         
-        self.addConstraints(NSLayoutConstraint.constraints(
+        addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[backgroundImageView]|",
             options: [],
             metrics: nil,
             views: views))
         
-        self.addConstraints(NSLayoutConstraint.constraints(
+        addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:|[backgroundImageView]|",
             options: [],
             metrics: nil,
@@ -133,6 +144,8 @@ class LoginBackgroundView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "login_FBImage"), for: .normal)
         button.tintColor = .white
+        button.tag = 0
+        button.addTarget(self, action: #selector(loginButtonDidPressed(btn:)), for: .touchUpInside)
         return button
     }()
     
@@ -141,6 +154,14 @@ class LoginBackgroundView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "login_Google+Image"), for: .normal)
         button.tintColor = .white
+        button.tag = 1
+        button.addTarget(self, action: #selector(loginButtonDidPressed(btn:)), for: .touchUpInside)
         return button
     }()
+    
+    // MARK: - action Method
+    
+    @objc private func loginButtonDidPressed(btn: UIButton) {
+        delegate?.loginButtonDidPressed(type: btn.tag == 0 ? .facebook : .google)
+    }
 }

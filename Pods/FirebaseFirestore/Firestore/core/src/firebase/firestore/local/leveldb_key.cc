@@ -45,6 +45,7 @@ const char* kQueryTargetsTable = "query_target";
 const char* kTargetDocumentsTable = "target_document";
 const char* kDocumentTargetsTable = "document_target";
 const char* kRemoteDocumentsTable = "remote_document";
+const char* kCollectionParentsTable = "collection_parent";
 
 /**
  * Labels for the components of keys. These serve to make keys self-describing.
@@ -90,6 +91,12 @@ enum ComponentLabel {
   UserId = 13,
 
   /**
+   * A component containing a standalone collection ID (e.g. as used by the
+   * collection_parent table, but not for collection IDs within paths).
+   */
+  CollectionId = 14,
+
+  /**
    * A path segment describes just a single segment in a resource path. Path
    * segments that occur sequentially in a key represent successive segments in
    * a single path.
@@ -116,6 +123,9 @@ enum ComponentLabel {
 class Reader {
  public:
   explicit Reader(leveldb::Slice src) : src_(src), ok_(true) {
+  }
+
+  explicit Reader(absl::string_view src) : Reader{MakeSlice(src)} {
   }
 
   /** Returns true if the Reader has encountered no errors. */
@@ -155,6 +165,17 @@ class Reader {
   std::string ReadUserId() {
     return ReadLabeledString(ComponentLabel::UserId);
   }
+
+  std::string ReadCollectionId() {
+    return ReadLabeledString(ComponentLabel::CollectionId);
+  }
+
+  /**
+   * Reads component labels and strings from the key until it finds a component
+   * label other than ComponentLabel::PathSegment (or the key is exhausted).
+   * All matched path segments are assembled into a ResourcePath.
+   */
+  ResourcePath ReadResourcePath();
 
   /**
    * Reads component labels and strings from the key until it finds a component
@@ -355,7 +376,7 @@ class Reader {
   bool ok_;
 };
 
-DocumentKey Reader::ReadDocumentKey() {
+ResourcePath Reader::ReadResourcePath() {
   std::vector<std::string> path_segments;
   while (!empty()) {
     // Advance a temporary slice to avoid advancing contents into the next key
@@ -372,7 +393,13 @@ DocumentKey Reader::ReadDocumentKey() {
     path_segments.push_back(std::move(segment));
   }
 
-  ResourcePath path{std::move(path_segments)};
+  return ResourcePath{std::move(path_segments)};
+}
+
+DocumentKey Reader::ReadDocumentKey() {
+  ResourcePath path = ReadResourcePath();
+
+  // Avoid assertion failures in DocumentKey if path is invalid.
   if (ok_ && !path.empty() && DocumentKey::IsDocumentKey(path)) {
     return DocumentKey{std::move(path)};
   }
@@ -416,10 +443,10 @@ std::string Reader::Describe() {
     src_ = saved_source;
 
     if (label == ComponentLabel::PathSegment) {
-      DocumentKey document_key = ReadDocumentKey();
+      ResourcePath resource_path = ReadResourcePath();
       if (ok_) {
         absl::StrAppend(&description,
-                        " key=", document_key.path().CanonicalString());
+                        " path=", resource_path.CanonicalString());
       }
 
     } else if (label == ComponentLabel::TableName) {
@@ -450,6 +477,12 @@ std::string Reader::Describe() {
       std::string user_id = ReadUserId();
       if (ok_) {
         absl::StrAppend(&description, " user_id=", user_id);
+      }
+
+    } else if (label == ComponentLabel::CollectionId) {
+      std::string collection_id = ReadCollectionId();
+      if (ok_) {
+        absl::StrAppend(&description, " collection_id=", collection_id);
       }
 
     } else {
@@ -497,6 +530,10 @@ class Writer {
 
   void WriteUserId(absl::string_view user_id) {
     WriteLabeledString(ComponentLabel::UserId, user_id);
+  }
+
+  void WriteCollectionId(absl::string_view collection_id) {
+    WriteLabeledString(ComponentLabel::CollectionId, collection_id);
   }
 
   /**
@@ -586,7 +623,7 @@ std::string LevelDbMutationKey::Key(absl::string_view user_id,
   return writer.result();
 }
 
-bool LevelDbMutationKey::Decode(leveldb::Slice key) {
+bool LevelDbMutationKey::Decode(absl::string_view key) {
   Reader reader{key};
   reader.ReadTableNameMatching(kMutationsTable);
   user_id_ = reader.ReadUserId();
@@ -629,7 +666,7 @@ std::string LevelDbDocumentMutationKey::Key(absl::string_view user_id,
   return writer.result();
 }
 
-bool LevelDbDocumentMutationKey::Decode(leveldb::Slice key) {
+bool LevelDbDocumentMutationKey::Decode(absl::string_view key) {
   Reader reader{key};
   reader.ReadTableNameMatching(kDocumentMutationsTable);
   user_id_ = reader.ReadUserId();
@@ -653,7 +690,7 @@ std::string LevelDbMutationQueueKey::Key(absl::string_view user_id) {
   return writer.result();
 }
 
-bool LevelDbMutationQueueKey::Decode(leveldb::Slice key) {
+bool LevelDbMutationQueueKey::Decode(absl::string_view key) {
   Reader reader{key};
   reader.ReadTableNameMatching(kMutationQueuesTable);
   user_id_ = reader.ReadUserId();
@@ -720,7 +757,7 @@ std::string LevelDbQueryTargetKey::Key(absl::string_view canonical_id,
   return writer.result();
 }
 
-bool LevelDbQueryTargetKey::Decode(leveldb::Slice key) {
+bool LevelDbQueryTargetKey::Decode(absl::string_view key) {
   Reader reader{key};
   reader.ReadTableNameMatching(kQueryTargetsTable);
   canonical_id_ = reader.ReadCanonicalId();
@@ -752,7 +789,7 @@ std::string LevelDbTargetDocumentKey::Key(model::TargetId target_id,
   return writer.result();
 }
 
-bool LevelDbTargetDocumentKey::Decode(leveldb::Slice key) {
+bool LevelDbTargetDocumentKey::Decode(absl::string_view key) {
   Reader reader{key};
   reader.ReadTableNameMatching(kTargetDocumentsTable);
   target_id_ = reader.ReadTargetId();
@@ -785,7 +822,28 @@ std::string LevelDbDocumentTargetKey::Key(const DocumentKey& document_key,
   return writer.result();
 }
 
-bool LevelDbDocumentTargetKey::Decode(leveldb::Slice key) {
+std::string LevelDbDocumentTargetKey::SentinelKey(
+    const DocumentKey& document_key) {
+  return Key(document_key, kInvalidTargetId);
+}
+
+std::string LevelDbDocumentTargetKey::EncodeSentinelValue(
+    model::ListenSequenceNumber sequence_number) {
+  std::string encoded;
+  OrderedCode::WriteSignedNumIncreasing(&encoded, sequence_number);
+  return encoded;
+}
+
+model::ListenSequenceNumber LevelDbDocumentTargetKey::DecodeSentinelValue(
+    absl::string_view slice) {
+  model::ListenSequenceNumber decoded;
+  if (!OrderedCode::ReadSignedNumIncreasing(&slice, &decoded)) {
+    HARD_FAIL("Failed to read sequence number from a sentinel row");
+  }
+  return decoded;
+}
+
+bool LevelDbDocumentTargetKey::Decode(absl::string_view key) {
   Reader reader{key};
   reader.ReadTableNameMatching(kDocumentTargetsTable);
   document_key_ = reader.ReadDocumentKey();
@@ -816,10 +874,43 @@ std::string LevelDbRemoteDocumentKey::Key(const DocumentKey& key) {
   return writer.result();
 }
 
-bool LevelDbRemoteDocumentKey::Decode(leveldb::Slice key) {
+bool LevelDbRemoteDocumentKey::Decode(absl::string_view key) {
   Reader reader{key};
   reader.ReadTableNameMatching(kRemoteDocumentsTable);
   document_key_ = reader.ReadDocumentKey();
+  reader.ReadTerminator();
+  return reader.ok();
+}
+
+std::string LevelDbCollectionParentKey::KeyPrefix() {
+  Writer writer;
+  writer.WriteTableName(kCollectionParentsTable);
+  return writer.result();
+}
+
+std::string LevelDbCollectionParentKey::KeyPrefix(
+    absl::string_view collection_id) {
+  Writer writer;
+  writer.WriteTableName(kCollectionParentsTable);
+  writer.WriteCollectionId(collection_id);
+  return writer.result();
+}
+
+std::string LevelDbCollectionParentKey::Key(absl::string_view collection_id,
+                                            const ResourcePath& parent) {
+  Writer writer;
+  writer.WriteTableName(kCollectionParentsTable);
+  writer.WriteCollectionId(collection_id);
+  writer.WriteResourcePath(parent);
+  writer.WriteTerminator();
+  return writer.result();
+}
+
+bool LevelDbCollectionParentKey::Decode(absl::string_view key) {
+  Reader reader{key};
+  reader.ReadTableNameMatching(kCollectionParentsTable);
+  collection_id_ = reader.ReadCollectionId();
+  parent_ = reader.ReadResourcePath();
   reader.ReadTerminator();
   return reader.ok();
 }

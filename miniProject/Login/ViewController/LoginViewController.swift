@@ -8,17 +8,18 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import FBSDKLoginKit
 import GoogleSignIn
 import FirebaseDatabase
 import LocalAuthentication
-import RxSwift
-import RxCocoa
-import NSObject_Rx
 
 class LoginViewController: ParentViewController {
     
-    lazy private var backgroundView = LoginBackgroundView()
+    lazy private var backgroundView: LoginBackgroundView = {
+        return LoginBackgroundView(delegate: self)
+    }()
+    
     private var selectLoginStatus = false
     
     override func viewDidLoad() {
@@ -49,24 +50,6 @@ class LoginViewController: ParentViewController {
             options: [],
             metrics: nil,
             views: ["view": backgroundView]))
-        
-        backgroundView.fbLoginButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.backgroundView.fbLoginButton.isEnabled = true
-                self?.selectLoginStatus = true
-                UserDefaults.standard.set(true, forKey: "loginSet")
-                self?.facebookLogin()
-            })
-            .disposed(by: rx.disposeBag)
-        
-        backgroundView.googleLoginButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.backgroundView.googleLoginButton.isEnabled = true
-                self?.selectLoginStatus = true
-                UserDefaults.standard.set(false, forKey: "loginSet")
-                self?.googleLogin()
-            })
-            .disposed(by: rx.disposeBag)
     }
     
     // MARK: - FB and Google SignIn API Method
@@ -78,8 +61,8 @@ class LoginViewController: ParentViewController {
     
     fileprivate func facebookLogin() {
         guard isNetworkConnected() else { return }
-        FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: self) { [weak self] (result:FBSDKLoginManagerLoginResult?, error:Error?) in
-            guard error == nil, let accessToken = FBSDKAccessToken.current() else {
+        LoginManager().logIn(permissions: ["email", "public_profile"], from: self) { [weak self] (result: LoginManagerLoginResult?, error:Error?) in
+            guard error == nil, let accessToken = AccessToken.current else {
                 return
             }
             UserDefaults.standard.set(accessToken.tokenString, forKey: "FBTokenString")
@@ -177,4 +160,23 @@ extension LoginViewController: GIDSignInDelegate {
 
 extension LoginViewController: GIDSignInUIDelegate {
     
+}
+
+    // MARK: - LoginDelegate
+
+extension LoginViewController: LoginDelegate {
+    func loginButtonDidPressed(type: loginType) {
+        switch type {
+        case .facebook:
+            backgroundView.fbLoginButton.isEnabled = true
+            selectLoginStatus = true
+            UserDefaults.standard.set(true, forKey: "loginSet")
+            facebookLogin()
+        case .google:
+            backgroundView.googleLoginButton.isEnabled = true
+            selectLoginStatus = true
+            UserDefaults.standard.set(false, forKey: "loginSet")
+            googleLogin()
+        }
+    }
 }

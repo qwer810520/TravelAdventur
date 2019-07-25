@@ -116,7 +116,7 @@ extension AddPlaceViewController: AddPlaceDelegate {
 extension AddPlaceViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         addPlaceView.selectLocationTextField.text = place.name
-        addPlaceData.placeName = place.name
+        addPlaceData.placeName = place.name ?? ""
         addPlaceData.longitude = place.coordinate.longitude
         addPlaceData.latitude = place.coordinate.latitude
     

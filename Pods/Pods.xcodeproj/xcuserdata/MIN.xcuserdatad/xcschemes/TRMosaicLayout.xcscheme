@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B3C1EE276CA9F9DECA14DAFC8C820E04"
+               BlueprintIdentifier = "40BF12025F6842E68C65EEFC166519A2"
                BlueprintName = "TRMosaicLayout"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "TRMosaicLayout.framework">

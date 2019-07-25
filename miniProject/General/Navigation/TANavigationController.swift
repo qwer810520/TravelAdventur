@@ -19,6 +19,10 @@ class TANavigationController: UINavigationController {
         setUserInterface()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - private Method
     
     private func setUserInterface() {

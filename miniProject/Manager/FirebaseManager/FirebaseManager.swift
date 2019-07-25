@@ -25,10 +25,11 @@ class FirebaseManager: NSObject {
     private let albumManager = Firestore.firestore().collection("Album")
     private let placeManager = Firestore.firestore().collection("Place")
     
+    
     // MARK: - User API Method
     
     func signInForFirebase(credential: AuthCredential, complectionHandler: @escaping (_ error: Error?) -> ()) {
-        Auth.auth().signInAndRetrieveData(with: credential) { [weak self] (user, error) in
+        Auth.auth().signIn(with: credential) { [weak self] (user, error) in
             guard error == nil, let userData = user else {
                 complectionHandler(error!)
                 return

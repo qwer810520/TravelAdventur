@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 import GoogleSignIn
+import FirebaseAuth
 import Firebase
 
 class UserMainViewController: ParentViewController {
@@ -103,7 +104,7 @@ extension UserMainViewController: UITableViewDelegate {
                 case "google.com":
                     GIDSignIn.sharedInstance().signOut()
                 case "facebook.com":
-                    FBSDKLoginManager().logOut()
+                    LoginManager().logOut()
                 default:
                     break
                 }

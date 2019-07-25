@@ -20,14 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        FBSDKApplicationDelegate.sharedInstance()
+        ApplicationDelegate.shared
             .application( application,
             didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
         GMSPlacesClient.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
         
-        UIApplication.shared.statusBarStyle = .lightContent
         UINavigationBar.appearance().barTintColor = TAStyle.orange
         UINavigationBar.appearance().tintColor = .white
         
@@ -42,10 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // googleLogin
-        GIDSignIn.sharedInstance().handle(url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: [UIApplicationOpenURLOptionsKey.annotation])
+        GIDSignIn.sharedInstance().handle(url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: [UIApplicationOpenURLOptionsKey.annotation])
         
         // FBLogin
-        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        let handled = ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
         return handled
     }
