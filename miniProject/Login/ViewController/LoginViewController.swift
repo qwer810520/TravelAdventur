@@ -29,6 +29,10 @@ class LoginViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        InstanceID.instanceID().instanceID { instanceIDResult, error in
+            print("instanceIDResult: \(instanceIDResult?.token)")
+        }
+        
         if !selectLoginStatus {
             if UserDefaults.standard.bool(forKey: "touchIDSwitch") {
                 authenticateWithTouchID()
