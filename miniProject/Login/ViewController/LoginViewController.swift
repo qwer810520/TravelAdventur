@@ -40,7 +40,6 @@ class LoginViewController: ParentViewController {
         }
         //  google登入要加入以下步驟
         GIDSignIn.sharedInstance().clientID = "1085221770368-a3aejta4qgsqrip293u660mh0q9dhbas.apps.googleusercontent.com"
-        GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
         
         view.addSubview(backgroundView)
@@ -158,12 +157,6 @@ extension LoginViewController: GIDSignInDelegate {
         let credential = GoogleAuthProvider.credential(withIDToken: user.authentication.idToken, accessToken: user.authentication.accessToken)
         firebaseAuthSingin(credential: credential)
     }
-}
-
-    // MARK: - GIDSignInUIDelegate
-
-extension LoginViewController: GIDSignInUIDelegate {
-    
 }
 
     // MARK: - LoginDelegate
