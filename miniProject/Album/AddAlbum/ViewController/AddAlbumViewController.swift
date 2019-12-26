@@ -165,8 +165,8 @@ extension AddAlbunViewController: AddAlbumDelegate {
     // MARK: - UIImagePickerControllerDelegate
 
 extension AddAlbunViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let picture = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let picture = info[.originalImage] as? UIImage {
             addAlbumView.addAlbumCoverPhotoButton.setImage(nil, for: .normal)
             addAlbumView.albumCoverPhotoImageView.image = picture
             addAlbum.coverPhoto = picture

@@ -217,8 +217,12 @@ class FirebaseManager: NSObject {
     // MARK: - Storage API Method
     
     private func saveAlbumPhotoData(model: AddAlbumModel, complectionHandler: @escaping (_ fileURL: String, _ error: Error?) -> ()) {
+        guard let image = model.coverPhoto else {
+            complectionHandler("", nil)
+            return
+        }
         let filePath = "Album/\(model.id)/\(Date.timeIntervalSinceReferenceDate).jpg"
-        let data = UIImageJPEGRepresentation(model.coverPhoto!, 1)
+        let data = image.jpegData(compressionQuality: 1)
         
         Storage.storage().reference().child(filePath)
             .putData(data!, metadata: nil) { (metaData, error) in
@@ -240,7 +244,7 @@ class FirebaseManager: NSObject {
     func savePhotoListData(placeID: String, photoList: [MobilePhotoModel], complectionHandler: @escaping (_ error: Error?) -> ()) {
         for i in 0..<photoList.count {
             let filePath = "Photos/\(placeID)/\(Date.timeIntervalSinceReferenceDate).jpg"
-            let data = UIImageJPEGRepresentation(photoList[i].image, 1)
+            let data = photoList[i].image.jpegData(compressionQuality: 1) 
         Storage.storage().reference()
             .child(filePath)
             .putData(data!, metadata: nil) { [weak self] (metaData, error) in

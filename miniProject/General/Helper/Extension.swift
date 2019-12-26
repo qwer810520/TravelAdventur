@@ -9,11 +9,15 @@
 import UIKit
 import SDWebImage
 
+    // MARK: - UIView Extension
+
 extension UIView {
     func addSubviews(_ views: [UIView]) {
         views.forEach { self.addSubview($0) }
     }
 }
+
+    // MARK: - UICollectionViewCell Extension
 
 extension UICollectionViewCell {
     static var identifier: String {
@@ -21,11 +25,15 @@ extension UICollectionViewCell {
     }
 }
 
+    // MARK: - UITableViewCell Extension
+
 extension UITableViewCell {
     static var identitier: String {
         return String(describing: self)
     }
 }
+
+    // MARK: - UIImageView Extension
 
 extension UIImageView {
     func downloadImage(urlStr: String) {

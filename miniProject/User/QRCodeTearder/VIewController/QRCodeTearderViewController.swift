@@ -75,7 +75,7 @@ class QRCodeTearderViewController: ParentViewController {
             qrCodeFrameView.layer.borderColor = TAStyle.orange.cgColor
             qrCodeFrameView.layer.borderWidth = 2
             view.addSubview(qrCodeFrameView)
-            view.bringSubview(toFront: qrCodeFrameView)
+            view.bringSubviewToFront(qrCodeFrameView)
         }
     }
 }
