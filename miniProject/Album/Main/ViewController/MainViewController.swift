@@ -39,7 +39,7 @@ class MainViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getAlbumList()
-        UIScreen.main.brightness = UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as! CGFloat
+        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as? CGFloat) ?? 0.5
         setUserInterface()
     }
     
@@ -50,7 +50,7 @@ class MainViewController: ParentViewController {
         view.addSubview(collectionView)
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[collectionView]|",
+            withVisualFormat: "V:|-\(navigationHeight)-[collectionView]|",
             options: [],
             metrics: nil,
             views: ["collectionView": collectionView]))
@@ -70,7 +70,7 @@ class MainViewController: ParentViewController {
         FirebaseManager.shared.getAlbumData { [weak self] (albumList, error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             self?.albumList = albumList
@@ -107,7 +107,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let detailCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowAlbumDetailCollectionViewCell.identifier, for: indexPath) as! ShowAlbumDetailCollectionViewCell
+        let detailCell = collectionView.dequeueReusableCell(with: ShowAlbumDetailCollectionViewCell.self, for: indexPath)
         detailCell.imageView.image = nil
         detailCell.albumModel = albumList[indexPath.row]
         return detailCell

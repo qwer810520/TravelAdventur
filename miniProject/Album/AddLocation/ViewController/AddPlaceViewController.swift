@@ -50,7 +50,7 @@ class AddPlaceViewController: ParentViewController {
             views: ["addPlaceView": addPlaceView]))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[addPlaceView]|",
+            withVisualFormat: "V:|-\(navigationHeight)-[addPlaceView]|",
             options: [],
             metrics: nil,
             views: ["addPlaceView": addPlaceView]))
@@ -61,19 +61,20 @@ class AddPlaceViewController: ParentViewController {
     private func setTextField() {
         addPlaceView.selectLocationTextField.addTarget(self, action: #selector(setSearchPlaceVC), for: .editingDidBegin)
         addPlaceView.selectLocationTextField.inputView = nil
-        datePickerView.minimumDate = Date(timeIntervalSince1970: TimeInterval((album?.startTime)!))
-        datePickerView.maximumDate = Date(timeIntervalSince1970: TimeInterval(TAStyle.getEndDate(start: (album?.startTime)!, day: (album?.day)!)))
-        addPlaceData.time = (album?.startTime)!
-        datePickerView.date = Date(timeIntervalSince1970: TimeInterval((album?.startTime)!))
-        addPlaceView.selectPhotoDayTextField.text = TAStyle.dateToString(date: TimeInterval((album?.startTime)!), type: .all)
+        guard let album = album else { return }
+        datePickerView.minimumDate = Date(timeIntervalSince1970: album.startTime)
+        datePickerView.maximumDate = Date(timeIntervalSince1970: album.startTime.calculationEndTimeInterval(with: album.day))
+        addPlaceData.time = album.startTime
+        datePickerView.date = Date(timeIntervalSince1970: album.startTime)
+        addPlaceView.selectPhotoDayTextField.text = TAStyle.dateToString(date: album.startTime, type: .all)
         addPlaceView.selectPhotoDayTextField.inputView = datePickerView
         addPlaceView.selectPhotoDayTextField.tintColor = .clear
         addPlaceView.selectPhotoDayTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
                 self?.addPlaceView.selectPhotoDayTextField
                     .resignFirstResponder()
             }, checkAction: { [weak self] in
-                self?.addPlaceData.time = (self?.datePickerView.date.timeIntervalSince1970)!
-                self?.addPlaceView.selectPhotoDayTextField.text = TAStyle.dateToString(date: (self?.addPlaceData.time)!, type: .all)
+                self?.addPlaceData.time = self?.datePickerView.date.timeIntervalSince1970 ?? 0.0
+                self?.addPlaceView.selectPhotoDayTextField.text = TAStyle.dateToString(date: self?.addPlaceData.time ?? 0.0, type: .all)
                 self?.addPlaceView.selectPhotoDayTextField
                     .resignFirstResponder()
             })
@@ -87,23 +88,21 @@ class AddPlaceViewController: ParentViewController {
         searchPlaceVC.delegate = self
         present(searchPlaceVC, animated: true, completion: nil)
     }
-    
-   
 }
 
     // MARK: - AddPlaceDelegate
 
 extension AddPlaceViewController: AddPlaceDelegate {
     func addPlaceButtonDidPressed() {
-        guard !addPlaceData.placeName.isEmpty else {
+        guard !addPlaceData.placeName.isEmpty, let album = album else {
             showAlert(type: .check, title: "請選擇拍照地點")
             return
         }
         startLoading()
-        FirebaseManager.shared.addNewPlaceData(albumid: (album?.id)!, placeData: addPlaceData) { [weak self] (error) in
+        FirebaseManager.shared.addNewPlaceData(albumid: album.id, placeData: addPlaceData) { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             self?.dismiss(animated: true, completion: nil)

@@ -15,7 +15,8 @@ class ShowAlbumDetailCollectionViewCell: UICollectionViewCell {
             guard let albumModel = albumModel else { return }
             imageView.downloadImage(urlStr: albumModel.coverPhotoURL)
             titleLabel.text = albumModel.title
-            timeLabel.text = TAStyle.dateToString(date: TimeInterval(exactly: albumModel.startTime)!, type: .all) + " ~ " + TAStyle.dateToString(date: TAStyle.getEndDate(start: albumModel.startTime, day: albumModel.day), type: .day)
+            timeLabel.text = TAStyle.dateToString(date: albumModel.startTime, type: .all) + " ~ " + TAStyle.dateToString(date: albumModel.startTime.calculationEndTimeInterval(with: albumModel.day), type: .day)
+
         }
     }
     

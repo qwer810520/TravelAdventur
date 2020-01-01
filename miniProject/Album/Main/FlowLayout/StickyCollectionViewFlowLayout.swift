@@ -13,24 +13,25 @@ class StickyCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var firstItemTransform: CGFloat?
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let items = NSArray (array: super.layoutAttributesForElements(in: rect)!, copyItems: true)
+        guard let elements = super.layoutAttributesForElements(in: rect) else { return nil }
+        let items = NSArray (array: elements, copyItems: true)
         var headerAttributes: UICollectionViewLayoutAttributes?
         
-        items.enumerateObjects(using: { (object, idex, stop) -> Void in
-            let attributes = object as! UICollectionViewLayoutAttributes
-            
-            if attributes.representedElementKind == UICollectionView.elementKindSectionHeader {
-                headerAttributes = attributes
-            }
-            else {
-                self.updateCellAttributes(attributes, headerAttributes: headerAttributes)
+        items.enumerateObjects(using: { (object, _, _) -> Void in
+            if let attributes = object as? UICollectionViewLayoutAttributes {
+                if attributes.representedElementKind == UICollectionView.elementKindSectionHeader {
+                    headerAttributes = attributes
+                } else {
+                    self.updateCellAttributes(attributes, headerAttributes: headerAttributes)
+                }
             }
         })
         return items as? [UICollectionViewLayoutAttributes]
     }
     
     func updateCellAttributes(_ attributes: UICollectionViewLayoutAttributes, headerAttributes: UICollectionViewLayoutAttributes?) {
-        let minY = collectionView!.bounds.minY + collectionView!.contentInset.top
+        guard let collectionView = collectionView else { return }
+        let minY = collectionView.bounds.minY + collectionView.contentInset.top
         var maxY = attributes.frame.origin.y
         
         if let headerAttributes = headerAttributes {

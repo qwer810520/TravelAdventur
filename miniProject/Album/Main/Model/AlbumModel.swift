@@ -11,7 +11,7 @@ import UIKit
 struct AlbumModel {
     var id: String
     var title: String
-    var startTime: Double
+    var startTime: TimeInterval
     var day: Int
     var coverPhotoURL: String
     
@@ -26,7 +26,7 @@ struct AlbumModel {
     init(json: TAStyle.JSONDictionary) {
         self.id = (json["id"] as? String) ?? ""
         self.title = (json["title"] as? String) ?? ""
-        self.startTime = (json["startTime"] as? Double) ?? 0.0
+        self.startTime = (json["startTime"] as? TimeInterval) ?? 0.0
         self.day = (json["day"] as? Int) ?? 0
         self.coverPhotoURL = (json["coverPhotoURL"] as? String) ?? ""
     }

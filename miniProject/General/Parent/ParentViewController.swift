@@ -24,9 +24,13 @@ enum AlertType {
 }
 
 class ParentViewController: UIViewController {
+
+    var navigationHeight: CGFloat {
+        return getNavigationAndStatusBarHeight()
+    }
     
     private(set) var isLoading = false
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     private let loadingBackgroudView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -74,6 +78,17 @@ class ParentViewController: UIViewController {
     private func setUserInterface() {
         view.backgroundColor = #colorLiteral(red: 1, green: 0.8980392157, blue: 0.7058823529, alpha: 1)
     }
+
+    private func getNavigationAndStatusBarHeight() -> CGFloat {
+        var statbarHeight: CGFloat = 0
+        let naviHeight = navigationController?.navigationBar.frame.height ?? 0
+        if #available(iOS 13, *) {
+            statbarHeight = UIApplication.shared.windows.first { $0.isKeyWindow }?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        } else {
+            statbarHeight = UIApplication.shared.statusBarFrame.height
+        }
+        return statbarHeight + naviHeight
+    }
     
     func setNavigation(title: String?, barButtonType: NaviBarButtonType) {
         navigationItem.title = title
@@ -95,7 +110,7 @@ class ParentViewController: UIViewController {
         }
     }
     
-    func showAlert(type: AlertType, title: String, message: String? = nil, checkAction: ((UIAlertAction) -> ())? = nil) {
+    func showAlert(type: AlertType, title: String, message: String? = nil, checkAction: ((UIAlertAction) -> Void)? = nil) {
         let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         if type == .cancel_check {
             alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
@@ -109,11 +124,7 @@ class ParentViewController: UIViewController {
         tabbarController.selectItem(item: type)
     }
     
-    func getNaviHeight() -> CGFloat {
-        return (UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
-    }
-    
-    func checkPermission(handler: @escaping () -> ()) {     //相簿認證
+    func checkPermission(handler: @escaping () -> Void) {     //相簿認證
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         switch photoAuthorizationStatus {
         case .authorized:
@@ -129,6 +140,8 @@ class ParentViewController: UIViewController {
             print("User has denied the permission.")
         case .restricted:
             print("User do not have access to photo album.")
+        default:
+            break
         }
     }
     

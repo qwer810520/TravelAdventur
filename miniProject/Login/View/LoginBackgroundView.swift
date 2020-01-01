@@ -8,13 +8,13 @@
 
 import UIKit
 
-enum loginType {
+enum LoginType {
     case facebook
     case google
 }
 
 protocol LoginDelegate: class {
-    func loginButtonDidPressed(type: loginType)
+    func loginButtonDidPressed(type: LoginType)
 }
 
 class LoginBackgroundView: UIView {

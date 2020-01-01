@@ -40,24 +40,4 @@ class TAStyle {
         }
         return dateFormatter.string(from: Date(timeIntervalSince1970: date))
     }
-    
-    class func getEndDate(start: Double, day: Int) -> TimeInterval {
-        let endDouble = start + Double((24 * 60 * 60) * day)
-        return TimeInterval(exactly: endDouble)!
-    }
-    
-    class func setQRImage(str:String, image: UIImageView) -> UIImage {
-        var qrcodeImage = CIImage()
-        let data = str.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
-        guard let fileter = CIFilter(name: "CIQRCodeGenerator") else { return UIImage() }
-        
-        fileter.setValue(data, forKey: "inputMessage")
-        fileter.setValue("Q", forKey: "inputCorrectionLevel")
-        qrcodeImage = fileter.outputImage!
-        let scaleX = image.frame.size.width / qrcodeImage.extent.size.width
-        let scaleY = image.frame.size.height / qrcodeImage.extent.size.height
-        
-        let transFormedImage = qrcodeImage.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
-        return UIImage(ciImage: transFormedImage)
-    }
 }

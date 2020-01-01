@@ -29,7 +29,7 @@ class LoginViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        InstanceID.instanceID().instanceID { instanceIDResult, error in
+        InstanceID.instanceID().instanceID { instanceIDResult, _ in
             print("instanceIDResult: \(instanceIDResult?.token)")
         }
         
@@ -64,7 +64,7 @@ class LoginViewController: ParentViewController {
     
     fileprivate func facebookLogin() {
         guard isNetworkConnected() else { return }
-        LoginManager().logIn(permissions: ["email", "public_profile"], from: self) { [weak self] (result: LoginManagerLoginResult?, error:Error?) in
+        LoginManager().logIn(permissions: ["email", "public_profile"], from: self) { [weak self] (_, error: Error?) in
             guard error == nil, let accessToken = AccessToken.current else {
                 return
             }
@@ -90,7 +90,7 @@ class LoginViewController: ParentViewController {
         FirebaseManager.shared.getUserProfile { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             
@@ -102,7 +102,7 @@ class LoginViewController: ParentViewController {
     
     private func authenticateWithTouchID() {
         let localAuthContent = LAContext()
-        var error:NSError?
+        var error: NSError?
         guard isNetworkConnected(), localAuthContent.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
             return
         }
@@ -112,10 +112,10 @@ class LoginViewController: ParentViewController {
                 self?.startLoading()
                 switch UserDefaults.standard.bool(forKey: "loginSet") {
                 case true:
-                    let credential = FacebookAuthProvider.credential(withAccessToken: UserDefaults.standard.string(forKey: "FBTokenString")!)
+                    let credential = FacebookAuthProvider.credential(withAccessToken: UserDefaults.standard.string(forKey: "FBTokenString") ?? "")
                     self?.firebaseAuthSingin(credential: credential)
                 case false:
-                    let credential = GoogleAuthProvider.credential(withIDToken: UserDefaults.standard.string(forKey: "withIDToken")!, accessToken: UserDefaults.standard.string(forKey: "accessToken")!)
+                    let credential = GoogleAuthProvider.credential(withIDToken: UserDefaults.standard.string(forKey: "withIDToken") ?? "", accessToken: UserDefaults.standard.string(forKey: "accessToken") ?? "")
                     self?.firebaseAuthSingin(credential: credential)
                 }
             case false:
@@ -150,7 +150,7 @@ class LoginViewController: ParentViewController {
     // MARK: - GIDSignInDelegate
 
 extension LoginViewController: GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+    func sign(_ signIn: GIDSignIn, didSignInFor user: GIDGoogleUser, withError error: Error?) {
         guard error == nil else { return }
         UserDefaults.standard.set(user.authentication.idToken, forKey: "withIDToken")
         UserDefaults.standard.set(user.authentication.accessToken, forKey: "accessToken")
@@ -162,7 +162,7 @@ extension LoginViewController: GIDSignInDelegate {
     // MARK: - LoginDelegate
 
 extension LoginViewController: LoginDelegate {
-    func loginButtonDidPressed(type: loginType) {
+    func loginButtonDidPressed(type: LoginType) {
         switch type {
         case .facebook:
             backgroundView.fbLoginButton.isEnabled = true

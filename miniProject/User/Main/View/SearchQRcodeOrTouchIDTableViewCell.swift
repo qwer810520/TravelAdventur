@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum searchQRcodeOrTouchIDCellType {
+enum QRCodeOrTouchIDCellType {
     case touchID
     case QRcode
 }
@@ -19,7 +19,7 @@ protocol searchQRcodeOrTouchIDCellDelegate: class {
 
 class SearchQRcodeOrTouchIDTableViewCell: UITableViewCell {
     
-    var cellType: searchQRcodeOrTouchIDCellType = .touchID {
+    var cellType: QRCodeOrTouchIDCellType = .touchID {
         didSet {
             switch cellType {
             case .QRcode:

@@ -56,7 +56,7 @@ class ShowPhotoListViewController: ParentViewController {
             views: ["collectionView": showPhotosCollectionView]))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[collectionView]-50-|",
+            withVisualFormat: "V:|-\(navigationHeight)-[collectionView]-50-|",
             options: [],
             metrics: nil,
             views: ["collectionView": showPhotosCollectionView]))
@@ -65,10 +65,10 @@ class ShowPhotoListViewController: ParentViewController {
     // MARK: - API Method
     
     private func getPhotoList() {
-        guard isNetworkConnected() else { return }
-        FirebaseManager.shared.getPlaceData(id: (placeData?.placeID)!) { [weak self] (placeData, error) in
+        guard isNetworkConnected(), let placeInfo = placeData else { return }
+        FirebaseManager.shared.getPlaceData(id: placeInfo.placeID) { [weak self] (placeData, error) in
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             
@@ -99,7 +99,7 @@ extension ShowPhotoListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowPhotosCollectionViewCell.identifier, for: indexPath) as! ShowPhotosCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(with: ShowPhotosCollectionViewCell.self, for: indexPath)
         cell.imageURL = photoURLList[indexPath.row]
         return cell
     }

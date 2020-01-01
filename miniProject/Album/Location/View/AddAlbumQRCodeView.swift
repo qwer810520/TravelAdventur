@@ -24,32 +24,34 @@ class AddAlbumQRCodeView: UIView {
     // MARK: - private Method
     
     private func setUserInterface() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .white
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .white
         setAutoLayout()
     }
     
     private func setAutoLayout() {
-        self.addSubview(QRImageView)
+        addSubview(qrcodeImageView)
         
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-80-[QRImageView]-80-|",
+        addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-80-[qrcodeImageView]-80-|",
             options: [],
             metrics: nil,
-            views: ["QRImageView": QRImageView]))
+            views: ["qrcodeImageView": qrcodeImageView]))
         
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-150-[QRImageView]",
+        addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-150-[qrcodeImageView]",
             options: [],
             metrics: nil,
-            views: ["QRImageView": QRImageView]))
+            views: ["qrcodeImageView": qrcodeImageView]))
         
-        NSLayoutConstraint(item: QRImageView, attribute: .height, relatedBy: .equal, toItem: QRImageView, attribute: .width, multiplier: 1.0, constant: 0.0).isActive = true
+        NSLayoutConstraint(item: qrcodeImageView, attribute: .height, relatedBy: .equal, toItem: qrcodeImageView, attribute: .width, multiplier: 1.0, constant: 0.0).isActive = true
+
+        qrcodeImageView.image = id.toQRCode(with: qrcodeImageView)
     }
     
     // MARK: - init Element
     
-    lazy var QRImageView: UIImageView = {
+    lazy var qrcodeImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

@@ -9,7 +9,7 @@ source 'https://github.com/CocoaPods/Specs.git'
    
   # Pods for miniProject
       pod 'FBSDKCoreKit'
-    	pod 'FBSDKShareKit'
+      pod 'FBSDKShareKit'
       pod 'FBSDKLoginKit'
       pod 'Firebase'
       pod 'Firebase/Core'
@@ -27,4 +27,5 @@ source 'https://github.com/CocoaPods/Specs.git'
       pod 'GooglePlaces'
       pod 'GoogleSignIn'
       pod 'SDWebImage'
+      pod 'SwiftLint'
 end

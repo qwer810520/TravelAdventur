@@ -22,10 +22,7 @@ class UserMainViewController: ParentViewController {
         view.backgroundColor = .white
         view.separatorStyle = .singleLine
         view.tableFooterView = UIView(frame: .zero)
-        view.register(ShowProfileTableViewCell.self, forCellReuseIdentifier: ShowProfileTableViewCell.identitier)
-        view.register(BlankTableViewCell.self, forCellReuseIdentifier: BlankTableViewCell.identitier)
-        view.register(SearchQRcodeOrTouchIDTableViewCell.self, forCellReuseIdentifier: SearchQRcodeOrTouchIDTableViewCell.identitier)
-        view.register(SignOutTableViewCell.self, forCellReuseIdentifier: SignOutTableViewCell.identitier)
+        view.register(with: [ShowProfileTableViewCell.self, BlankTableViewCell.self, SearchQRcodeOrTouchIDTableViewCell.self, SignOutTableViewCell.self])
         return view
     }()
     
@@ -43,7 +40,7 @@ class UserMainViewController: ParentViewController {
     
     private func setUserInterface() {
         setNavigation(title: "Profile", barButtonType: .none)
-         UIScreen.main.brightness = UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as! CGFloat
+        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as? CGFloat) ?? 0.5
         setAutoLayout()
     }
     
@@ -57,7 +54,7 @@ class UserMainViewController: ParentViewController {
             views: ["tableView": tableView]))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[tableView]|",
+            withVisualFormat: "V:|-\(navigationHeight)-[tableView]|",
             options: [],
             metrics: nil,
             views: ["tableView": tableView]))
@@ -66,7 +63,7 @@ class UserMainViewController: ParentViewController {
     private func getUserProfile() {
         FirebaseManager.shared.getUserProfile { [weak self] (error) in
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
         }
@@ -135,23 +132,23 @@ extension UserMainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            let userProfileCell = tableView.dequeueReusableCell(withIdentifier: ShowProfileTableViewCell.identitier, for: indexPath) as! ShowProfileTableViewCell
-            userProfileCell.userModel = FirebaseManager.shared.loginUserModel
-            return userProfileCell
+            let cell = tableView.dequeueReusableCell(with: ShowProfileTableViewCell.self, for: indexPath)
+            cell.userModel = FirebaseManager.shared.loginUserModel
+            return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: SearchQRcodeOrTouchIDTableViewCell.identitier, for: indexPath) as! SearchQRcodeOrTouchIDTableViewCell
+            let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
             cell.cellType = .QRcode
             return cell
         case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: SearchQRcodeOrTouchIDTableViewCell.identitier, for: indexPath) as! SearchQRcodeOrTouchIDTableViewCell
+            let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
             cell.cellType = .touchID
             cell.isOn = UserDefaults.standard.bool(forKey: "touchIDSwitch")
             cell.delegate = self
             return cell
         case 4:
-            return tableView.dequeueReusableCell(withIdentifier: SignOutTableViewCell.identitier, for: indexPath)
+            return tableView.dequeueReusableCell(with: SignOutTableViewCell.self, for: indexPath)
         default:
-            return tableView.dequeueReusableCell(withIdentifier: BlankTableViewCell.identitier, for: indexPath)
+            return tableView.dequeueReusableCell(with: BlankTableViewCell.self, for: indexPath)
         }
     }
 }

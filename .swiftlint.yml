@@ -1,0 +1,100 @@
+whitelist_rules:
+  - closure_spacing
+  - colon
+  - empty_enum_arguments
+  - fatal_error_message
+  - force_cast
+  - force_try
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - legacy_cggeometry_functions
+  - legacy_constant
+  - legacy_constructor
+  - legacy_nsgeometry_functions
+  - operator_usage_whitespace
+  - redundant_string_enum_value
+  - redundant_void_return
+  - return_arrow_whitespace
+  - trailing_newline
+  - type_name
+  - unused_closure_parameter
+  - unused_optional_binding
+  - vertical_whitespace
+  - void_return
+  - custom_rules
+
+excluded:
+  - Carthage
+  - Pods
+
+indentation: 2
+
+force_cast:
+  severity: error
+
+force_try:
+  severity: warning
+
+force_unwrapping:
+  severity: warning 
+
+closure_spacing: 
+  severity: error
+
+colon:
+  severity: error
+
+empty_enum_arguments:
+  severity: error
+
+fatal_error_message:
+  severity: error
+
+implicitly_unwrapped_optional:
+  severity: warning
+
+legacy_cggeometry_functions:
+  severity: error
+
+legacy_constant:
+  severity: error
+
+legacy_constructor:
+  severity: error
+
+legacy_nsgeometry_functions:
+  severity: error
+
+operator_usage_whitespace:
+  severity: error
+
+redundant_string_enum_value:
+  severity: error
+
+redundant_void_return:
+  severity: error
+
+return_arrow_whitespace:
+  severity: error
+
+trailing_newline:
+  severity: error
+
+type_name:
+  severity: error
+
+unused_closure_parameter:
+  severity: error
+
+unused_optional_binding:
+  severity: error
+
+vertical_whitespace:
+  severity: error
+
+void_return:
+  severity: error
+
+custom_rules:
+  severity: error
+

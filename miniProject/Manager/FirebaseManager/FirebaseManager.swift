@@ -24,35 +24,35 @@ class FirebaseManager: NSObject {
     private let userManager = Firestore.firestore().collection("User")
     private let albumManager = Firestore.firestore().collection("Album")
     private let placeManager = Firestore.firestore().collection("Place")
-    
-    
+
     // MARK: - User API Method
     
-    func signInForFirebase(credential: AuthCredential, complectionHandler: @escaping (_ error: Error?) -> ()) {
+    func signInForFirebase(credential: AuthCredential, complectionHandler: @escaping (_ error: Error?) -> Void) {
         Auth.auth().signIn(with: credential) { [weak self] (user, error) in
             guard error == nil, let userData = user else {
-                complectionHandler(error!)
+                complectionHandler(error)
                 return
             }
             
-            self?.loginUserModel = LoginUserModel(uid: userData.user.uid, name: userData.user.displayName!, photoURL: userData.user.photoURL?.absoluteString ?? "")
+            self?.loginUserModel = LoginUserModel(uid: userData.user.uid, name: userData.user.displayName ?? "", photoURL: userData.user.photoURL?.absoluteString ?? "")
             
             complectionHandler(nil)
         }
     }
     
-    func getUserProfile(complectionHandler: @escaping (_ error: Error?) -> ()) {
-        userManager.document((loginUserModel?.uid)!).getDocument { [weak self] (userData, error) in
-            guard error == nil, let responseData = userData else {
+    func getUserProfile(complectionHandler: @escaping (_ error: Error?) -> Void) {
+        guard let user = loginUserModel else { return }
+        userManager.document(user.uid).getDocument { [weak self] (response, error) in
+            guard error == nil, let result = response?.exists, let data = response?.data() else {
                 complectionHandler(error)
                 return
             }
-            switch responseData.exists {
+            switch result {
             case true:
-                self?.loginUserModel = LoginUserModel(json: (responseData.data())!)
+                self?.loginUserModel = LoginUserModel(json: data)
                 complectionHandler(nil)
             case false:
-                self?.addUserDataForFirebase(user: (self?.loginUserModel)!, complectionHandler: { (error) in
+                self?.addUserDataForFirebase(user: user, complectionHandler: { (error) in
                     guard error == nil else {
                         complectionHandler(error)
                         return
@@ -63,7 +63,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    func addUserDataForFirebase(user: LoginUserModel, complectionHandler: @escaping (_ error: Error?) -> ()) {
+    func addUserDataForFirebase(user: LoginUserModel, complectionHandler: @escaping (_ error: Error?) -> Void) {
         let parameters = ["uid": user.uid, "userName": user.name, "userPhoto": user.photoURL] as TAStyle.JSONDictionary
         userManager.document(user.uid).setData(parameters) { (error) in
             guard error == nil else {
@@ -74,8 +74,9 @@ class FirebaseManager: NSObject {
         }
     }
     
-    func addAlbumIdToUserData(id: String, complectionHandler: @escaping  (_ error: Error?) -> ()) {
-        userManager.document((loginUserModel?.uid)!)
+    func addAlbumIdToUserData(id: String, complectionHandler: @escaping  (_ error: Error?) -> Void) {
+        guard let user = loginUserModel else { return }
+        userManager.document(user.uid)
             .updateData(["albumIdList": FieldValue.arrayUnion([id])]) { (error) in
                 guard error == nil else {
                     complectionHandler(error)
@@ -87,7 +88,7 @@ class FirebaseManager: NSObject {
     
     // MARK: - Album API Method
     
-    func addNewAlbumData(model: AddAlbumModel,  complectionHandler: @escaping (_ error: Error?) -> ()) {
+    func addNewAlbumData(model: AddAlbumModel,  complectionHandler: @escaping (_ error: Error?) -> Void) {
         var addAlbumModel = model
         addAlbumModel.id = albumManager.document().documentID
         saveAlbumPhotoData(model: addAlbumModel) { [weak self] (fileURL, error) in
@@ -115,8 +116,8 @@ class FirebaseManager: NSObject {
         }
     }
     
-    func getAlbumData(complectionHandler: @escaping (_ album: [AlbumModel], _ error: Error?) -> ()) {
-        albumManager.getDocuments { (albumList, error) in
+    func getAlbumData(complectionHandler: @escaping (_ album: [AlbumModel], _ error: Error?) -> Void) {
+        albumManager.getDocuments { [weak self] (albumList, error) in
             guard error == nil, let responseData = albumList  else {
                 complectionHandler([AlbumModel](), error)
                 return
@@ -124,23 +125,22 @@ class FirebaseManager: NSObject {
             
             var albumList = [AlbumModel]()
             
-            guard !(self.loginUserModel?.albumIdList.isEmpty)! else {
+            guard let userAlbumList = self?.loginUserModel?.albumIdList, !userAlbumList.isEmpty else {
                 complectionHandler(albumList, nil)
                 return
             }
             
             responseData.documents.forEach {
                 let albumData = AlbumModel(json: $0.data())
-                guard (self.loginUserModel?.albumIdList.contains(where: { $0 == albumData.id}))! else {
-                    return
-                }
+                guard userAlbumList.contains(albumData.id) else { return }
                 albumList.append(albumData)
             }
             complectionHandler(albumList, nil)
         }
     }
     
-    func checkAlbumStatus(id: String, complectionHandler: @escaping (_ status: Bool, _ error: Error?) -> ()) {
+    func checkAlbumStatus(id: String, complectionHandler: @escaping (_ status: Bool, _ error: Error?) -> Void) {
+        guard let user = loginUserModel else { return }
         albumManager.document(id).getDocument { [weak self] (response, error) in
             guard error == nil, let responseData = response else {
                 complectionHandler(false, error)
@@ -149,10 +149,11 @@ class FirebaseManager: NSObject {
             
             switch responseData.exists {
             case true:
-                guard !(self?.loginUserModel?.albumIdList.contains(where: { $0 == id }))! else {
-                        complectionHandler(false, error)
-                        return
-                    }
+                guard !user.albumIdList.contains(id) else {
+                    complectionHandler(false, error)
+                    return
+                }
+
                 self?.addAlbumIdToUserData(id: id, complectionHandler: { (error) in
                     guard error == nil else {
                         complectionHandler(false, nil)
@@ -168,7 +169,7 @@ class FirebaseManager: NSObject {
     
     // MARK: - Place API Method
     
-    func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (_ error: Error?) -> ()) {
+    func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (_ error: Error?) -> Void) {
         let id = placeManager.document().documentID
         let parameters = ["albumID": albumid, "placeID": id, "name": placeData.placeName, "latitude": placeData.latitude, "longitude": placeData.longitude, "time": placeData.time] as TAStyle.JSONDictionary
         placeManager.document(id).setData(parameters) { (error) in
@@ -180,7 +181,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    func getPlaceList(albumID: String, complectionHandler: @escaping (_ placeList: [PlaceModel], _ error: Error?) -> ()) {
+    func getPlaceList(albumID: String, complectionHandler: @escaping (_ placeList: [PlaceModel], _ error: Error?) -> Void) {
         placeManager.getDocuments { (response, error) in
             guard error == nil, let responseData = response else {
                 complectionHandler([PlaceModel](), error)
@@ -193,7 +194,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    func getPlaceData(id: String, complectionHandler: @escaping (_ placeData: PlaceModel, _ error: Error?) -> ()) {
+    func getPlaceData(id: String, complectionHandler: @escaping (_ placeData: PlaceModel, _ error: Error?) -> Void) {
         placeManager.document(id).getDocument { (response, error) in
             guard error == nil, let responseData = response?.data() else {
                 complectionHandler(PlaceModel(), error)
@@ -204,7 +205,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    func updatePhotoToPlaceData(placeID: String, photoURL: String,  complectionHandler: @escaping (_ error: Error?) -> ()) {
+    func updatePhotoToPlaceData(placeID: String, photoURL: String,  complectionHandler: @escaping (_ error: Error?) -> Void) {
         placeManager.document(placeID).updateData(["photoList": FieldValue.arrayUnion([photoURL])]) { (error) in
             complectionHandler(error)
         }
@@ -216,38 +217,38 @@ class FirebaseManager: NSObject {
     
     // MARK: - Storage API Method
     
-    private func saveAlbumPhotoData(model: AddAlbumModel, complectionHandler: @escaping (_ fileURL: String, _ error: Error?) -> ()) {
+    private func saveAlbumPhotoData(model: AddAlbumModel, complectionHandler: @escaping (_ fileURL: String, _ error: Error?) -> Void) {
         guard let image = model.coverPhoto else {
             complectionHandler("", nil)
             return
         }
         let filePath = "Album/\(model.id)/\(Date.timeIntervalSinceReferenceDate).jpg"
-        let data = image.jpegData(compressionQuality: 1)
+        guard let imageData = image.jpegData(compressionQuality: 1) else { return }
         
         Storage.storage().reference().child(filePath)
-            .putData(data!, metadata: nil) { (metaData, error) in
+            .putData(imageData, metadata: nil) { (_, error) in
                 guard error == nil else {
                     complectionHandler("", error)
                     return
                 }
                 Storage.storage().reference().child(filePath)
                     .downloadURL(completion: { (url, error) in
-                        guard error == nil else {
+                        guard error == nil, let url = url?.absoluteString else {
                             complectionHandler("", error)
                             return
                         }
-                        complectionHandler((url?.absoluteString)!, nil)
+                        complectionHandler(url, nil)
                 })
         }
     }
     
-    func savePhotoListData(placeID: String, photoList: [MobilePhotoModel], complectionHandler: @escaping (_ error: Error?) -> ()) {
+    func savePhotoListData(placeID: String, photoList: [MobilePhotoModel], complectionHandler: @escaping (_ error: Error?) -> Void) {
         for i in 0..<photoList.count {
             let filePath = "Photos/\(placeID)/\(Date.timeIntervalSinceReferenceDate).jpg"
-            let data = photoList[i].image.jpegData(compressionQuality: 1) 
+            guard let data = photoList[i].image?.jpegData(compressionQuality: 1) else { continue }
         Storage.storage().reference()
             .child(filePath)
-            .putData(data!, metadata: nil) { [weak self] (metaData, error) in
+            .putData(data, metadata: nil) { [weak self] (_, error) in
                 guard error == nil else {
                     complectionHandler(error)
                     return
@@ -259,7 +260,7 @@ class FirebaseManager: NSObject {
                         complectionHandler(error)
                         return
                     }
-                    self?.updatePhotoToPlaceData(placeID: placeID, photoURL: (url?.absoluteString)!, complectionHandler: { (error) in
+                    self?.updatePhotoToPlaceData(placeID: placeID, photoURL: url?.absoluteString ?? "", complectionHandler: { (error) in
                         guard error == nil else {
                             complectionHandler(error)
                             return

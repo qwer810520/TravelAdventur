@@ -9,10 +9,10 @@
 import UIKit
 
 struct MobilePhotoModel {
-    var image: UIImage
+    var image: UIImage?
     var isSelect: Bool
     
-    init(image: UIImage) {
+    init(image: UIImage? = nil) {
         self.image = image
         self.isSelect = false
     }

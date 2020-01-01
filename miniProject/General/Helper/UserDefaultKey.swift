@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 enum UserDefaultsKey: String {
-    case ScreenBrightness = "ScreenBrightness"
+    case ScreenBrightness 
 }

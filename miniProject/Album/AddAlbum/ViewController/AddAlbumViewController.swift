@@ -57,7 +57,7 @@ class AddAlbunViewController: ParentViewController {
             views: ["addAlbumView": addAlbumView]))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[addAlbumView]|",
+            withVisualFormat: "V:|-\(navigationHeight)-[addAlbumView]|",
             options: [],
             metrics: nil,
             views: ["addAlbumView": addAlbumView]))
@@ -74,8 +74,8 @@ class AddAlbunViewController: ParentViewController {
                 self?.addAlbumView.selectDayTextField
                     .resignFirstResponder()
             },  checkAction: { [weak self] in
-                self?.addAlbum.day = (self?.selectDay)!
-                self?.addAlbumView.selectDayTextField.text = "\((self?.addAlbum.day)!)"
+                self?.addAlbum.day = self?.selectDay ?? 0
+                self?.addAlbumView.selectDayTextField.text = "\(self?.addAlbum.day ?? 0)"
                 self?.addAlbumView.selectDayTextField
                     .resignFirstResponder()
             })
@@ -85,8 +85,8 @@ class AddAlbunViewController: ParentViewController {
         addAlbumView.startTiemTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
                 self?.addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: Date().timeIntervalSince1970, type: .all)
             }, checkAction: { [weak self] in
-                self?.addAlbum.startTime = (self?.datePickerView.date.timeIntervalSince1970)!
-                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: (self?.datePickerView.date.timeIntervalSince1970)!, type: .all)
+                self?.addAlbum.startTime = self?.datePickerView.date.timeIntervalSince1970 ?? 0.0
+                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: self?.datePickerView.date.timeIntervalSince1970 ?? 0.0, type: .all)
                 self?.addAlbumView.startTiemTextField
                     .resignFirstResponder()
             })
@@ -154,7 +154,7 @@ extension AddAlbunViewController: AddAlbumDelegate {
         FirebaseManager.shared.addNewAlbumData(model: addAlbum) { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             self?.dismiss(animated: true, completion: nil)
@@ -165,7 +165,7 @@ extension AddAlbunViewController: AddAlbumDelegate {
     // MARK: - UIImagePickerControllerDelegate
 
 extension AddAlbunViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let picture = info[.originalImage] as? UIImage {
             addAlbumView.addAlbumCoverPhotoButton.setImage(nil, for: .normal)
             addAlbumView.albumCoverPhotoImageView.image = picture

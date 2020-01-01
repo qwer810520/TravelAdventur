@@ -66,7 +66,9 @@ class QRCodeTearderViewController: ParentViewController {
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         videoPreviewLayer?.frame = view.layer.bounds
-        view.layer.addSublayer(videoPreviewLayer!)
+        if let videoLayer = videoPreviewLayer {
+            view.layer.addSublayer(videoLayer)
+        }
         captureSession.startRunning()
         
         //          偵測到QRcode的時候顯示綠色方框
@@ -84,15 +86,12 @@ class QRCodeTearderViewController: ParentViewController {
 
 extension QRCodeTearderViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        
-        guard metadataObjects.count != 0 else {
+        guard metadataObjects.count != 0, let metadataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject, let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj) else {
             qrcodeFrameView?.frame = .zero
             return
         }
-        
-        let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
-        let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
-        qrcodeFrameView?.frame = barCodeObject!.bounds
+
+        qrcodeFrameView?.frame = barCodeObject.bounds
         
         guard let value = metadataObj.stringValue, value.count == 20 else { return }
         captureSession.stopRunning()
@@ -101,7 +100,7 @@ extension QRCodeTearderViewController: AVCaptureMetadataOutputObjectsDelegate {
         FirebaseManager.shared.checkAlbumStatus(id: value) { [weak self] (status, error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             switch status {

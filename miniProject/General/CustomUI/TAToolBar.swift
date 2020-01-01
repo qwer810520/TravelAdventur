@@ -9,10 +9,10 @@
 import UIKit
 
 class TAToolBar: UIToolbar {
-    var checkAction: (() -> ())?
-    var cancelAction: (() -> ())?
+    var checkAction: (() -> Void)?
+    var cancelAction: (() -> Void)?
     
-    init(cancelAction: (() -> ())? = nil, checkAction: (() -> ())? = nil) {
+    init(cancelAction: (() -> Void)? = nil, checkAction: (() -> Void)? = nil) {
         self.cancelAction = cancelAction
         self.checkAction = checkAction
         super.init(frame: .zero)

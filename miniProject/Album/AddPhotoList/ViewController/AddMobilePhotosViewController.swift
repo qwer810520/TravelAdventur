@@ -12,7 +12,7 @@ import Photos
 class AddMobilePhotosViewController: ParentViewController {
     
     lazy private var showMobilePhotoCollectionView: UICollectionView = {
-        let layout =  UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 2, height: (UIScreen.main.bounds.width / 3) - 2)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = 2
@@ -67,7 +67,7 @@ class AddMobilePhotosViewController: ParentViewController {
             views: ["collectionView": showMobilePhotoCollectionView]))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[collectionView]|",
+            withVisualFormat: "V:|-\(navigationHeight)-[collectionView]|",
             options: [],
             metrics: nil,
             views: ["collectionView": showMobilePhotoCollectionView]))
@@ -95,8 +95,8 @@ class AddMobilePhotosViewController: ParentViewController {
         guard fetchResult.count > 0 else { return }
         
         for i in 0..<fetchResult.count {
-            imageManager.requestImage(for: fetchResult.object(at: i), targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { [weak self] (image, error) in
-                self?.mobilePhotoList.append(MobilePhotoModel(image: image!))
+            imageManager.requestImage(for: fetchResult.object(at: i), targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { [weak self] (image, _) in
+                self?.mobilePhotoList.append(MobilePhotoModel(image: image))
             }
         }
         
@@ -106,20 +106,21 @@ class AddMobilePhotosViewController: ParentViewController {
     // MARK: - Action Method
     
     @objc private func addPhotoButtonDidPressed() {
+
         let addPhotosList = mobilePhotoList.filter { $0.isSelect }
         
         guard isNetworkConnected() else { return }
         
-        guard !addPhotosList.isEmpty else {
+        guard !addPhotosList.isEmpty, let placeInfo = placeData else {
             showAlert(type: .check, title: "請選擇要上傳的相片")
             return
         }
         
         startLoading()
-        FirebaseManager.shared.savePhotoListData(placeID: (placeData?.placeID)!, photoList: addPhotosList) { [weak self] (error) in
+        FirebaseManager.shared.savePhotoListData(placeID: placeInfo.placeID, photoList: addPhotosList) { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             
@@ -149,7 +150,7 @@ extension AddMobilePhotosViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowMobilePhotoCollectionViewCell.identifier, for: indexPath) as! ShowMobilePhotoCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(with: ShowMobilePhotoCollectionViewCell.self, for: indexPath)
         cell.imageView.image = mobilePhotoList[indexPath.row].image
         cell.layer.borderWidth = 4.0
         cell.layer.borderColor = mobilePhotoList[indexPath.row].isSelect ? TAStyle.orange.cgColor : UIColor.clear.cgColor

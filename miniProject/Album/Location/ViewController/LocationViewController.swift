@@ -57,7 +57,7 @@ class LocationViewController: ParentViewController {
         guard let mapView = locationMapView else { return }
         view.addSubview(mapView)
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[mapView]|",
+            withVisualFormat: "V:|-\(navigationHeight)-[mapView]|",
             options: [],
             metrics: nil,
             views: ["mapView": mapView]))
@@ -70,7 +70,7 @@ class LocationViewController: ParentViewController {
     }
     
     private func setQRCodeView() {
-        qrcodeView = AddAlbumQRCodeView(id: (selectAlbum?.id)!)
+        qrcodeView = AddAlbumQRCodeView(id: selectAlbum?.id ?? "")
         guard let qrView = qrcodeView else { return }
         view.addSubview(qrView)
         
@@ -81,14 +81,12 @@ class LocationViewController: ParentViewController {
             views: ["qrView": qrView]))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(getNaviHeight())-[qrView]|",
+            withVisualFormat: "V:|-\(navigationHeight)-[qrView]|",
             options: [],
             metrics: nil,
             views: ["qrView": qrView]))
         
         qrView.layoutIfNeeded()
-        
-        qrView.QRImageView.image = TAStyle.setQRImage(str: (selectAlbum?.id)!, image: qrView.QRImageView)
     }
     
     private func setPlaceMarker() {
@@ -106,10 +104,10 @@ class LocationViewController: ParentViewController {
     
     private func getPlaceList() {
         startLoading()
-        FirebaseManager.shared.getPlaceList(albumID: (selectAlbum?.id)!) { [weak self] (responsePlaceList, error) in
+        FirebaseManager.shared.getPlaceList(albumID: selectAlbum?.id ?? "") { [weak self] (responsePlaceList, error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: (error?.localizedDescription)!)
+                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
             guard !responsePlaceList.isEmpty else {
@@ -131,7 +129,7 @@ class LocationViewController: ParentViewController {
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            UIScreen.main.brightness = UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as! CGFloat
+            UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as? CGFloat) ?? 0.5
             setNavigation(title: nil, barButtonType: .Back_Add)
             qrcodeView?.removeFromSuperview()
             qrcodeView = nil
@@ -191,7 +189,8 @@ extension LocationViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowPlaceCollectionViewCell.identifier, for: indexPath) as! ShowPlaceCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(with: ShowPlaceCollectionViewCell.self, for: indexPath)
+
         cell.placeData = placeList[indexPath.row]
         return cell
     }
