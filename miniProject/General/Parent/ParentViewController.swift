@@ -76,7 +76,7 @@ class ParentViewController: UIViewController {
     // MARK: - private Method
     
     private func setUserInterface() {
-        view.backgroundColor = #colorLiteral(red: 1, green: 0.8980392157, blue: 0.7058823529, alpha: 1)
+        view.backgroundColor = .defaultBackgroundColor
     }
 
     private func getNavigationAndStatusBarHeight() -> CGFloat {
@@ -94,17 +94,19 @@ class ParentViewController: UIViewController {
         navigationItem.title = title
         navigationItem.rightBarButtonItem = nil
         navigationItem.leftBarButtonItem = nil
+        let backItem = UIBarButtonItem(image: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
+        let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonDidPressed))
         
         switch barButtonType {
         case ._Add:
-            navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
+            navigationItem.rightBarButtonItem = addItem
         case .Dismiss_:
-            navigationItem.leftBarButtonItem = TABarButtonItem.setDismissButton(target: self, action: #selector(dismissButtonDidPressed))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: "cross", target: self, action: #selector(dismissButtonDidPressed))
         case .Back_Add:
-            navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
-            navigationItem.rightBarButtonItem = TABarButtonItem.setAddBarButton(target: self, action: #selector(addButtonDidPressed))
+            navigationItem.leftBarButtonItem = backItem
+            navigationItem.rightBarButtonItem = addItem
         case .Back_:
-            navigationItem.leftBarButtonItem = TABarButtonItem.setImageBarButtonItem(imageName: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
+            navigationItem.leftBarButtonItem = backItem
         case .none:
             break
         }
@@ -161,6 +163,13 @@ class ParentViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+    }
+
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        if #available(iOS 13, *) {
+            viewControllerToPresent.modalPresentationStyle = .fullScreen
+        }
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
     
     // MARK: - Reachability Library

@@ -19,12 +19,12 @@ class SearchPlaceViewController: GMSAutocompleteViewController {
     // MARK: - private Method
     
     private func setUserInterface() {
-        UINavigationBar.appearance().barTintColor = TAStyle.orange
+        UINavigationBar.appearance().barTintColor = .pinkPeacock
         UINavigationBar.appearance().tintColor = .white
-        tableCellSeparatorColor = TAStyle.orange
+        tableCellSeparatorColor = .pinkPeacock
         tableCellBackgroundColor = .white
         tintColor = .white
         primaryTextColor = .lightGray
-        primaryTextHighlightColor = TAStyle.orange
+        primaryTextHighlightColor = .pinkPeacock
     }
 }

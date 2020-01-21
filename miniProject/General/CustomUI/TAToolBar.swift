@@ -36,11 +36,11 @@ class TAToolBar: UIToolbar {
     // MARK: - init Element
     
     private var checkButtonItem: UIBarButtonItem = {
-        return TABarButtonItem.setTitleBarButtonItem(title: "確定", target: self, action: #selector(checkButtonItemDidPressed))
+        return UIBarButtonItem(title: "確定", target: self, action: #selector(checkButtonItemDidPressed))
     }()
     
     private var cancelButtonItem: UIBarButtonItem = {
-        return TABarButtonItem.setTitleBarButtonItem(title: "取消", target: self, action: #selector(cancelButtonItemDidPressed))
+        return UIBarButtonItem(title: "取消", target: self, action: #selector(checkButtonItemDidPressed))
     }()
     
     private var spaceButtonItem: UIBarButtonItem = {

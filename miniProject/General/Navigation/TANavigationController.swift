@@ -12,11 +12,11 @@ class TANavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUserInterface()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUserInterface()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -27,9 +27,7 @@ class TANavigationController: UINavigationController {
     
     private func setUserInterface() {
         navigationBar.tintColor = .white
-        navigationBar.barTintColor = TAStyle.orange
-        navigationBar.backgroundColor = TAStyle.orange
-        navigationBar.isTranslucent = true
+        navigationBar.setBackgroundImage(createImage(from: CGSize(width: navigationBar.frame.width, height: 64), with: .pinkPeacock), for: .default)
 
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.navigationTitleFont]
     }

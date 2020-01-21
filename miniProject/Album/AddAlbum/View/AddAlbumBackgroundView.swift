@@ -40,7 +40,7 @@ class AddAlbumBackgroundView: UIView {
         backgroundImage.addSubviews([blurEffect, nameTextField, startDateTitleLabel, startTiemTextField, dayTitleLabel, selectDayTextField, addButton, addAlbumCoverPhotoButton, albumCoverPhotoImageView])
         albumCoverPhotoImageView.addSubview(addAlbumCoverPhotoButton)
         
-        let views: TAStyle.JSONDictionary = ["backgroundImage": backgroundImage, "blurEffect": blurEffect, "nameTextField": nameTextField, "startTiemTextField": startTiemTextField, "startDateTitleLabel": startDateTitleLabel, "dayTitleLabel": dayTitleLabel, "selectDayTextField": selectDayTextField, "addButton": addButton, "addAlbumCoverPhotoButton": addAlbumCoverPhotoButton, "albumCoverPhotoImageView": albumCoverPhotoImageView]
+        let views: JSONDictionary = ["backgroundImage": backgroundImage, "blurEffect": blurEffect, "nameTextField": nameTextField, "startTiemTextField": startTiemTextField, "startDateTitleLabel": startDateTitleLabel, "dayTitleLabel": dayTitleLabel, "selectDayTextField": selectDayTextField, "addButton": addButton, "addAlbumCoverPhotoButton": addAlbumCoverPhotoButton, "albumCoverPhotoImageView": albumCoverPhotoImageView]
         
         self.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[backgroundImage]|",
@@ -136,7 +136,7 @@ class AddAlbumBackgroundView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(addCoverPhotoButtonDidPressed), for: .touchUpInside)
         button.setImage(UIImage(named: "AddAlbum_NormalAlbumPhoto"), for: .normal)
-        button.tintColor = TAStyle.orange
+        button.tintColor = .pinkPeacock
         return button
     }()
     
@@ -167,7 +167,7 @@ class AddAlbumBackgroundView: UIView {
         let view = UITextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.borderStyle = .roundedRect
-        view.tintColor = TAStyle.orange
+        view.tintColor = .pinkPeacock
         view.textAlignment = .center
         view.placeholder = "請輸入行程名稱"
         view.delegate = textFieldDelegate
@@ -212,10 +212,10 @@ class AddAlbumBackgroundView: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Add", for: .normal)
-        button.titleLabel?.font = UIFont(name: TAStyle.navigationTitleFont, size: 20.0)
+        button.titleLabel?.font = .navigationTitleFont
         button.tintColor = .white
         button.layer.cornerRadius = 10
-        button.backgroundColor = TAStyle.orange
+        button.backgroundColor = .pinkPeacock
         button.addTarget(self, action: #selector(addAlbumButtonDidPressed), for: .touchUpInside)
         return button
     }()

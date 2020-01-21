@@ -9,6 +9,16 @@
 import UIKit
 import SDWebImage
 
+enum DataToStringType {
+    case all, day
+}
+
+extension DataToStringType {
+    var format: String {
+        return self == .all ? "yyyy年MM月dd日" : "dd日"
+    }
+}
+
     // MARK: - UIView Extension
 
 extension UIView {
@@ -28,17 +38,59 @@ extension UIFont {
     }
 }
 
-    // MARK: - UIView Extension
+    // MARK: - UIColor Extension
+
+extension UIColor {
+    convenience init(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+        self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: a / 100.0)
+    }
+
+    class var pinkPeacock: UIColor {
+        return .init(r: 206, g: 91, b: 120, a: 100)
+    }
+
+    class var defaultBackgroundColor: UIColor {
+        return .init(r: 236, g: 232, b: 225, a: 100)
+    }
+}
+
+    // MARK: - UIViewController Extension
+
+extension UIViewController {
+    func createImage(from size: CGSize, with color: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContext(size)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(origin: .zero, size: size))
+
+        let viewImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return viewImage
+    }
+}
+
+    // MARK: - TimeInterval Extension
 
 extension TimeInterval {
     func calculationEndTimeInterval(with day: Int) -> TimeInterval {
         return self + Double((24 * 60 * 60) * day)
+    }
+
+    func dateToString(type: DataToStringType) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = type.format
+        return dateFormatter.string(from: Date(timeIntervalSince1970: self))
     }
 }
 
     // MARK: - String Extension
 
 extension String {
+    var toImage: UIImage? {
+        return UIImage(named: self)?.withRenderingMode(.alwaysOriginal)
+    }
+
     func toQRCode(with imageView: UIImageView) -> UIImage {
         var qrcodeImage = CIImage()
         let data = self.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
@@ -53,6 +105,18 @@ extension String {
 
         let transFormedImage = qrcodeImage.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
         return UIImage(ciImage: transFormedImage)
+    }
+}
+
+    // MARK: - UIBarButtonItem Extension
+
+extension UIBarButtonItem {
+    convenience init(image name: String, target: Any, action: Selector) {
+        self.init(image: name.toImage, style: .plain, target: target, action: action)
+    }
+
+    convenience init(title: String, target: Any, action: Selector) {
+        self.init(title: title, style: .plain, target: target, action: action)
     }
 }
 

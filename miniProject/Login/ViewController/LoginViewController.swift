@@ -28,6 +28,7 @@ class LoginViewController: ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("LoginViewController", #function)
         
         InstanceID.instanceID().instanceID { instanceIDResult, _ in
             print("instanceIDResult: \(instanceIDResult?.token)")
@@ -41,6 +42,8 @@ class LoginViewController: ParentViewController {
         //  google登入要加入以下步驟
         GIDSignIn.sharedInstance().clientID = "1085221770368-a3aejta4qgsqrip293u660mh0q9dhbas.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
+
+        navigationController?.navigationBar.isHidden = true
         
         view.addSubview(backgroundView)
         view.addConstraints(NSLayoutConstraint.constraints(
@@ -53,6 +56,11 @@ class LoginViewController: ParentViewController {
             options: [],
             metrics: nil,
             views: ["view": backgroundView]))
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
     
     // MARK: - FB and Google SignIn API Method
@@ -93,7 +101,6 @@ class LoginViewController: ParentViewController {
                 self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
                 return
             }
-            
             self?.present(TATabbarController(), animated: true, completion: nil)
         }
     }

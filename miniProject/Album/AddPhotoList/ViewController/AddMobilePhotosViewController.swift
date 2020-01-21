@@ -153,7 +153,7 @@ extension AddMobilePhotosViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(with: ShowMobilePhotoCollectionViewCell.self, for: indexPath)
         cell.imageView.image = mobilePhotoList[indexPath.row].image
         cell.layer.borderWidth = 4.0
-        cell.layer.borderColor = mobilePhotoList[indexPath.row].isSelect ? TAStyle.orange.cgColor : UIColor.clear.cgColor
+        cell.layer.borderColor = mobilePhotoList[indexPath.row].isSelect ? UIColor.pinkPeacock.cgColor : UIColor.clear.cgColor
         return cell
     }
 }

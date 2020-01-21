@@ -12,7 +12,7 @@ struct PlaceModel {
     var albumID: String
     var placeID: String
     var name: String
-    var time: Double
+    var time: TimeInterval
     var latitude: Double
     var longitude: Double
     var isMark: Bool
@@ -29,11 +29,11 @@ struct PlaceModel {
         self.photoList = [String]()
     }
     
-    init(json: TAStyle.JSONDictionary) {
+    init(json: JSONDictionary) {
         self.albumID = (json["albumID"] as? String) ?? ""
         self.placeID = (json["placeID"] as? String) ?? ""
         self.name = (json["name"] as? String) ?? ""
-        self.time = (json["time"] as? Double) ?? 0.0
+        self.time = (json["time"] as? TimeInterval) ?? 0.0
         self.latitude = (json["latitude"] as? Double) ?? 0.0
         self.longitude = (json["longitude"] as? Double) ?? 0.0
         self.isMark = false

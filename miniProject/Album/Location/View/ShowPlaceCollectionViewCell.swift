@@ -14,7 +14,7 @@ class ShowPlaceCollectionViewCell: UICollectionViewCell {
         didSet {
             guard let place = placeData else { return }
             nameLabel.text = place.name
-            timeLabel.text = TAStyle.dateToString(date: TimeInterval(place.time), type: .all)
+            timeLabel.text = place.time.dateToString(type: .all)
             guard !place.photoList.isEmpty else {
                 imageView.downloadImage(urlStr: "")
                 return

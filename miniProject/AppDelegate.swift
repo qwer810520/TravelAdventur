@@ -27,9 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
         GMSPlacesClient.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
         
-        UINavigationBar.appearance().barTintColor = TAStyle.orange
-        UINavigationBar.appearance().tintColor = .white
-        
         UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
         
         window = UIWindow(frame: UIScreen.main.bounds)

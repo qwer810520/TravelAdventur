@@ -15,6 +15,8 @@ import GoogleMaps
 import LocalAuthentication
 import FirebaseFirestore
 
+typealias JSONDictionary = [String: Any]
+
 class FirebaseManager: NSObject {
     
     static let shared = FirebaseManager()
@@ -64,7 +66,7 @@ class FirebaseManager: NSObject {
     }
     
     func addUserDataForFirebase(user: LoginUserModel, complectionHandler: @escaping (_ error: Error?) -> Void) {
-        let parameters = ["uid": user.uid, "userName": user.name, "userPhoto": user.photoURL] as TAStyle.JSONDictionary
+        let parameters = ["uid": user.uid, "userName": user.name, "userPhoto": user.photoURL] as JSONDictionary
         userManager.document(user.uid).setData(parameters) { (error) in
             guard error == nil else {
                 complectionHandler(error)
@@ -96,7 +98,7 @@ class FirebaseManager: NSObject {
                 complectionHandler(error)
                 return
             }
-             let parameters = ["id": addAlbumModel.id, "title": addAlbumModel.title, "startTime": addAlbumModel.startTime, "day": addAlbumModel.day, "coverPhotoURL": fileURL] as TAStyle.JSONDictionary
+             let parameters = ["id": addAlbumModel.id, "title": addAlbumModel.title, "startTime": addAlbumModel.startTime, "day": addAlbumModel.day, "coverPhotoURL": fileURL] as JSONDictionary
             self?.albumManager.document(addAlbumModel.id)
                 .setData(parameters, completion: { (error) in
                     guard error == nil else {
@@ -171,7 +173,7 @@ class FirebaseManager: NSObject {
     
     func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (_ error: Error?) -> Void) {
         let id = placeManager.document().documentID
-        let parameters = ["albumID": albumid, "placeID": id, "name": placeData.placeName, "latitude": placeData.latitude, "longitude": placeData.longitude, "time": placeData.time] as TAStyle.JSONDictionary
+        let parameters = ["albumID": albumid, "placeID": id, "name": placeData.placeName, "latitude": placeData.latitude, "longitude": placeData.longitude, "time": placeData.time] as JSONDictionary
         placeManager.document(id).setData(parameters) { (error) in
             guard error == nil else {
                 complectionHandler(error)

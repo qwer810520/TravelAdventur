@@ -80,13 +80,13 @@ class AddAlbunViewController: ParentViewController {
                     .resignFirstResponder()
             })
         addAlbum.startTime = Date().timeIntervalSince1970
-        addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: Date().timeIntervalSince1970, type: .all)
+        addAlbumView.startTiemTextField.text = Date().timeIntervalSince1970.dateToString(type: .all)
         addAlbumView.startTiemTextField.inputView = datePickerView
         addAlbumView.startTiemTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
-                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: Date().timeIntervalSince1970, type: .all)
+                self?.addAlbumView.startTiemTextField.text = Date().timeIntervalSince1970.dateToString(type: .all)
             }, checkAction: { [weak self] in
                 self?.addAlbum.startTime = self?.datePickerView.date.timeIntervalSince1970 ?? 0.0
-                self?.addAlbumView.startTiemTextField.text = TAStyle.dateToString(date: self?.datePickerView.date.timeIntervalSince1970 ?? 0.0, type: .all)
+                self?.addAlbumView.startTiemTextField.text = (self?.datePickerView.date.timeIntervalSince1970 ?? 0.0).dateToString(type: .all)
                 self?.addAlbumView.startTiemTextField
                     .resignFirstResponder()
             })

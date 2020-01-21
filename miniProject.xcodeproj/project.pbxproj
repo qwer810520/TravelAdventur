@@ -13,7 +13,6 @@
 		3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF4D20FB777E00A39CAF /* LoginViewController.swift */; };
 		3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5120FC2F6B00A39CAF /* LoginUserModel.swift */; };
 		3930BF5420FC316F00A39CAF /* LoginBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5320FC316F00A39CAF /* LoginBackgroundView.swift */; };
-		3930BF6020FC38F200A39CAF /* TAStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5920FC38F200A39CAF /* TAStyle.swift */; };
 		3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5B20FC38F200A39CAF /* TANavigationController.swift */; };
 		3930BF6220FC38F200A39CAF /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5E20FC38F200A39CAF /* ParentViewController.swift */; };
 		39359963212E994600D305DC /* TAToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39359962212E994600D305DC /* TAToolBar.swift */; };
@@ -40,7 +39,6 @@
 		39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887721329F7A0081B356 /* AddPlaceModel.swift */; };
 		39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */; };
 		39AF888121339BE00081B356 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF888021339BE00081B356 /* PlaceModel.swift */; };
-		39B7AFAA2101DFBB0021E11B /* TABarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFA92101DFBB0021E11B /* TABarButtonItem.swift */; };
 		39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFAD2101F3720021E11B /* FirebaseManager.swift */; };
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
@@ -64,7 +62,6 @@
 		3930BF4D20FB777E00A39CAF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3930BF5120FC2F6B00A39CAF /* LoginUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserModel.swift; sourceTree = "<group>"; };
 		3930BF5320FC316F00A39CAF /* LoginBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBackgroundView.swift; sourceTree = "<group>"; };
-		3930BF5920FC38F200A39CAF /* TAStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAStyle.swift; sourceTree = "<group>"; };
 		3930BF5B20FC38F200A39CAF /* TANavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TANavigationController.swift; sourceTree = "<group>"; };
 		3930BF5E20FC38F200A39CAF /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		39359962212E994600D305DC /* TAToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAToolBar.swift; sourceTree = "<group>"; };
@@ -91,7 +88,6 @@
 		39AF887721329F7A0081B356 /* AddPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceModel.swift; sourceTree = "<group>"; };
 		39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaceViewController.swift; sourceTree = "<group>"; };
 		39AF888021339BE00081B356 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
-		39B7AFA92101DFBB0021E11B /* TABarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TABarButtonItem.swift; sourceTree = "<group>"; };
 		39B7AFAD2101F3720021E11B /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		39B7AFAF2101F39A0021E11B /* miniProject-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "miniProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		39B915F21E84127C0093E1AF /* miniProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,8 +214,6 @@
 		3930BF5820FC38F200A39CAF /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
-				3930BF5920FC38F200A39CAF /* TAStyle.swift */,
-				39B7AFA92101DFBB0021E11B /* TABarButtonItem.swift */,
 				39359962212E994600D305DC /* TAToolBar.swift */,
 			);
 			path = CustomUI;
@@ -588,10 +582,10 @@
 				39B915EE1E84127C0093E1AF /* Sources */,
 				39B915EF1E84127C0093E1AF /* Frameworks */,
 				39B915F01E84127C0093E1AF /* Resources */,
-				658810ED797F8F97649E68D2 /* [CP] Embed Pods Frameworks */,
-				868981D0E6C4EF3D94E45DD9 /* [CP] Copy Pods Resources */,
 				39DB7FD622E9496200DA05FA /* Run Script */,
 				39F0AB0723B4B4AD00C3412A /* Run SwiftLint Script */,
+				A38726FAC5B20353845110C7 /* [CP] Embed Pods Frameworks */,
+				1D3F264BDADBBD3D53D8D5BE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -678,6 +672,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		1D3F264BDADBBD3D53D8D5BE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-miniProject/Pods-miniProject-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-miniProject/Pods-miniProject-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		39DB7FD622E9496200DA05FA /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -715,7 +731,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
-		658810ED797F8F97649E68D2 /* [CP] Embed Pods Frameworks */ = {
+		A38726FAC5B20353845110C7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -765,28 +781,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-miniProject/Pods-miniProject-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		868981D0E6C4EF3D94E45DD9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-miniProject/Pods-miniProject-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-miniProject/Pods-miniProject-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -805,7 +799,6 @@
 				391264F8212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift in Sources */,
 				397E7DCC2128970F00A2B07A /* AddAlbumBackgroundView.swift in Sources */,
 				393D6FCD21344777003C79A4 /* AddMobilePhotosViewController.swift in Sources */,
-				39B7AFAA2101DFBB0021E11B /* TABarButtonItem.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
 				39359963212E994600D305DC /* TAToolBar.swift in Sources */,
 				39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */,
@@ -828,7 +821,6 @@
 				397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */,
 				393D6FD221344A6E003C79A4 /* AddPhotoButton.swift in Sources */,
 				39FCB27F20FC39BB001857AE /* Extension.swift in Sources */,
-				3930BF6020FC38F200A39CAF /* TAStyle.swift in Sources */,
 				393D6FC621344079003C79A4 /* ShowPhotoListViewController.swift in Sources */,
 				393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */,
 				3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */,

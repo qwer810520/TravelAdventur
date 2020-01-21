@@ -26,7 +26,7 @@ class AddPhotoButton: UIButton {
         self.setTitle("＋", for: .normal)
         self.setTitleColor(.white, for: .normal)
         self.titleLabel?.font = UIFont.systemFont(ofSize: 50)
-        self.backgroundColor = TAStyle.orange
+        self.backgroundColor = .pinkPeacock
         self.layer.cornerRadius = 35
     }
 }

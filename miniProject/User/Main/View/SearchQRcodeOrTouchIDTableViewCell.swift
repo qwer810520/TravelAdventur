@@ -99,8 +99,8 @@ class SearchQRcodeOrTouchIDTableViewCell: UITableViewCell {
     lazy private var touchIDSwitch: UISwitch = {
         let view = UISwitch()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.tintColor = TAStyle.orange
-        view.onTintColor = TAStyle.orange
+        view.tintColor = .pinkPeacock
+        view.onTintColor = .pinkPeacock
         view.addTarget(self, action: #selector(touchIDSwitchValueChange(sender:)), for: .valueChanged)
         return view
     }()
@@ -109,14 +109,14 @@ class SearchQRcodeOrTouchIDTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
-        view.tintColor = TAStyle.orange
+        view.tintColor = .pinkPeacock
         return view
     }()
     
     lazy private var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = TAStyle.orange
+        label.textColor = .pinkPeacock
         return label
     }()
     

@@ -74,7 +74,7 @@ class QRCodeTearderViewController: ParentViewController {
         //          偵測到QRcode的時候顯示綠色方框
         qrcodeFrameView = UIView()
         if let qrCodeFrameView = qrcodeFrameView {
-            qrCodeFrameView.layer.borderColor = TAStyle.orange.cgColor
+            qrCodeFrameView.layer.borderColor = UIColor.pinkPeacock.cgColor
             qrCodeFrameView.layer.borderWidth = 2
             view.addSubview(qrCodeFrameView)
             view.bringSubviewToFront(qrCodeFrameView)

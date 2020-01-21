@@ -23,7 +23,7 @@ struct AlbumModel {
         self.coverPhotoURL = ""
     }
     
-    init(json: TAStyle.JSONDictionary) {
+    init(json: JSONDictionary) {
         self.id = (json["id"] as? String) ?? ""
         self.title = (json["title"] as? String) ?? ""
         self.startTime = (json["startTime"] as? TimeInterval) ?? 0.0

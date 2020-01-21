@@ -126,10 +126,10 @@ class AddPlaceView: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Add", for: .normal)
-        button.titleLabel?.font = UIFont(name: TAStyle.navigationTitleFont, size: 20.0)
+        button.titleLabel?.font = .navigationTitleFont
         button.tintColor = .white
         button.layer.cornerRadius = 10
-        button.backgroundColor = TAStyle.orange
+        button.backgroundColor = .pinkPeacock
         button.addTarget(self, action: #selector(addPlaceButtonDidPressed), for: .touchUpInside)
         return button
     }()

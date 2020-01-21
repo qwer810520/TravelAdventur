@@ -66,7 +66,7 @@ class AddPlaceViewController: ParentViewController {
         datePickerView.maximumDate = Date(timeIntervalSince1970: album.startTime.calculationEndTimeInterval(with: album.day))
         addPlaceData.time = album.startTime
         datePickerView.date = Date(timeIntervalSince1970: album.startTime)
-        addPlaceView.selectPhotoDayTextField.text = TAStyle.dateToString(date: album.startTime, type: .all)
+        addPlaceView.selectPhotoDayTextField.text = album.startTime.dateToString(type: .all)
         addPlaceView.selectPhotoDayTextField.inputView = datePickerView
         addPlaceView.selectPhotoDayTextField.tintColor = .clear
         addPlaceView.selectPhotoDayTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
@@ -74,7 +74,7 @@ class AddPlaceViewController: ParentViewController {
                     .resignFirstResponder()
             }, checkAction: { [weak self] in
                 self?.addPlaceData.time = self?.datePickerView.date.timeIntervalSince1970 ?? 0.0
-                self?.addPlaceView.selectPhotoDayTextField.text = TAStyle.dateToString(date: self?.addPlaceData.time ?? 0.0, type: .all)
+                self?.addPlaceView.selectPhotoDayTextField.text = (self?.addPlaceData.time ?? 0.0).dateToString(type: .all)
                 self?.addPlaceView.selectPhotoDayTextField
                     .resignFirstResponder()
             })

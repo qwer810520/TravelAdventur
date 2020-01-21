@@ -21,7 +21,7 @@ struct LoginUserModel {
         self.albumIdList = [String]()
     }
     
-    init(json: TAStyle.JSONDictionary) {
+    init(json: JSONDictionary) {
         self.uid = (json["uid"] as? String) ?? ""
         self.name = (json["userName"] as? String) ?? ""
         self.photoURL = (json["userPhoto"] as? String) ?? ""
