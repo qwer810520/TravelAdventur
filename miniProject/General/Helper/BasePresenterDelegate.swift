@@ -16,10 +16,14 @@ protocol BasePresenterDelegate: class {
 
 extension BasePresenterDelegate {
   func showIndicator() {
-    
+    DispatchQueue.main.async {
+      TAIndicator.show()
+    }
   }
 
   func dismissIndicator() {
-
+    DispatchQueue.main.async {
+      TAIndicator.dismiss()
+    }
   }
 }

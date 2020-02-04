@@ -31,24 +31,24 @@ class AddAlbumBackgroundView: UIView {
     // MARK: - private method
     
     private func setUserInterface() {
-        self.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
         setAutoLayout()
     }
     
     private func setAutoLayout() {
-        self.addSubview(backgroundImage)
+        addSubview(backgroundImage)
         backgroundImage.addSubviews([blurEffect, nameTextField, startDateTitleLabel, startTiemTextField, dayTitleLabel, selectDayTextField, addButton, addAlbumCoverPhotoButton, albumCoverPhotoImageView])
         albumCoverPhotoImageView.addSubview(addAlbumCoverPhotoButton)
         
         let views: JSONDictionary = ["backgroundImage": backgroundImage, "blurEffect": blurEffect, "nameTextField": nameTextField, "startTiemTextField": startTiemTextField, "startDateTitleLabel": startDateTitleLabel, "dayTitleLabel": dayTitleLabel, "selectDayTextField": selectDayTextField, "addButton": addButton, "addAlbumCoverPhotoButton": addAlbumCoverPhotoButton, "albumCoverPhotoImageView": albumCoverPhotoImageView]
         
-        self.addConstraints(NSLayoutConstraint.constraints(
+        addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[backgroundImage]|",
             options: [],
             metrics: nil,
             views: views))
         
-        self.addConstraints(NSLayoutConstraint.constraints(
+        addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:|[backgroundImage]|",
             options: [],
             metrics: nil,

@@ -123,26 +123,23 @@ class FirebaseManager2: NSObject {
     }
   }
 
-  func getAlbumData(complectionHandler: @escaping (_ album: [AlbumModel], _ error: Error?) -> Void) {
-    albumManager.getDocuments { [weak self] (albumList, error) in
-      guard error == nil, let responseData = albumList  else {
-        complectionHandler([AlbumModel](), error)
+  func getAlbumData(complectionHandler: @escaping (Result<[AlbumModel], Error>) -> Void) {
+    albumManager.getDocuments { [weak self] albumList, error in
+      guard error == nil, let responseData = albumList, let userAlbumList = self?.loginUserModel?.albumIdList, !userAlbumList.isEmpty else {
+        if let error = error {
+          complectionHandler(.failure(error))
+        }
         return
       }
 
       var albumList = [AlbumModel]()
-
-      guard let userAlbumList = self?.loginUserModel?.albumIdList, !userAlbumList.isEmpty else {
-        complectionHandler(albumList, nil)
-        return
-      }
 
       responseData.documents.forEach {
         let albumData = AlbumModel(json: $0.data())
         guard userAlbumList.contains(albumData.id) else { return }
         albumList.append(albumData)
       }
-      complectionHandler(albumList, nil)
+      complectionHandler(.success(albumList))
     }
   }
 

@@ -9,106 +9,79 @@
 import UIKit
 
 class MainViewController: ParentViewController {
-    
-    fileprivate var albumList = [AlbumModel]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
-    lazy fileprivate var collectionView: UICollectionView = {
-        let layout = StickyCollectionViewFlowLayout()
-        layout.firstItemTransform = 0.05
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 60, height: (UIScreen.main.bounds.width - 60) * 0.8375)
-        layout.minimumLineSpacing = 20
-        layout.minimumInteritemSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.register(ShowAlbumDetailCollectionViewCell.self, forCellWithReuseIdentifier: ShowAlbumDetailCollectionViewCell.identifier)
-        view.backgroundColor = .clear
-        view.delegate = self
-        view.dataSource = self
-        return view
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getAlbumList()
-        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
-        setUserInterface()
-    }
-    
-    // MARK: - private Method
-    
-    private func setUserInterface() {
-        setNavigation(title: "Travel Adventur", barButtonType: ._Add)
-        view.addSubview(collectionView)
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(navigationHeight)-[collectionView]|",
-            options: [],
-            metrics: nil,
-            views: ["collectionView": collectionView]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[collectionView]|",
-            options: [],
-            metrics: nil,
-            views: ["collectionView": collectionView]))
-    }
-    
-    // MARK: - API Method
-    
-    private func getAlbumList() {
-        startLoading()
-        FirebaseManager2.shared.getAlbumData { [weak self] (albumList, error) in
-            self?.stopLoading()
-            guard error == nil else {
-                self?.showAlert(title: error?.localizedDescription ?? "")
-                return
-            }
-            self?.albumList = albumList
-        }
-    }
-    
-    // MARK: - Action Method
-    
-    override func addButtonDidPressed() {
-        let vc = TANavigationController(rootViewController: AddAlbunViewController()) 
-        present(vc, animated: true, completion: nil)
-    }
+
+  lazy private var mainView: MainView = {
+    return MainView(delegate: self)
+  }()
+
+  private var presenter: MainPresenter?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    presenter = MainPresenter(delegate: self)
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    setUserInterface()
+  }
+
+  // MARK: - Private Methods
+
+  private func setUserInterface() {
+    setNavigation(title: "Travel Adventur")
+    view.addSubview(mainView)
+    setUpLayout()
+  }
+
+  private func setUpLayout() {
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|[mainView]-tabbarHeight-|",
+      options: [],
+      metrics: ["tabbarHeight": tabbarHeight],
+      views: ["mainView": mainView]))
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[mainView]|",
+      options: [],
+      metrics: nil,
+      views: ["mainView": mainView]))
+  }
 }
 
-    // MARK: - UICollectionViewDelegate
+  // MARK: - MainViewDelegate
 
-extension MainViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = LocationViewController()
-        vc.selectAlbum = albumList[indexPath.row]
-        navigationController?.pushViewController(vc, animated: true)
-    }
+extension MainViewController: MainViewDelegate {
+  func addAlbumButtonDidPressed() {
+    print(#function)
+    let addAlbunVC = TANavigationController(rootViewController: AddAlbunViewController())
+    present(addAlbunVC, animated: true, completion: nil)
+  }
+
+  func getAlbumListCount() -> Int? {
+    return presenter?.albumList.count ?? 0
+  }
+
+  func getAlbumInfo(with indexPath: IndexPath) -> AlbumModel? {
+    return presenter?.getAlbumInfo(with: indexPath)
+  }
+
+  func didSelectItem(with indexPath: IndexPath) {
+    let locationVC = LocationViewController()
+    locationVC.selectAlbum = presenter?.getAlbumInfo(with: indexPath)
+    navigationController?.pushViewController(locationVC, animated: true)
+  }
 }
 
-    // MARK: - UICollectionViewDataSource
+  // MARK: - MainPresenterDelegate
 
-extension MainViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return albumList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let detailCell = collectionView.dequeueReusableCell(with: ShowAlbumDetailCollectionViewCell.self, for: indexPath)
-        detailCell.imageView.image = nil
-        detailCell.albumModel = albumList[indexPath.row]
-        return detailCell
-    }
+extension MainViewController: MainPresenterDelegate {
+  func refreshUI() {
+    mainView.refreshUI()
+  }
+
+  func presentAlert(with title: String) {
+    showAlert(title: title)
+  }
 }
