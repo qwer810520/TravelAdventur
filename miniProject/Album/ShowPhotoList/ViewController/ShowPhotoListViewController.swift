@@ -65,10 +65,10 @@ class ShowPhotoListViewController: ParentViewController {
     // MARK: - API Method
     
     private func getPhotoList() {
-        guard isNetworkConnected(), let placeInfo = placeData else { return }
-        FirebaseManager.shared.getPlaceData(id: placeInfo.placeID) { [weak self] (placeData, error) in
+        guard let placeInfo = placeData else { return }
+        FirebaseManager2.shared.getPlaceData(id: placeInfo.placeID) { [weak self] (placeData, error) in
             guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
+                self?.showAlert(title: error?.localizedDescription ?? "")
                 return
             }
             

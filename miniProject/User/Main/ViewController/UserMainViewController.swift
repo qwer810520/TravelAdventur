@@ -40,7 +40,7 @@ class UserMainViewController: ParentViewController {
     
     private func setUserInterface() {
         setNavigation(title: "Profile", barButtonType: .none)
-        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as? CGFloat) ?? 0.5
+        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
         setAutoLayout()
     }
     
@@ -61,11 +61,13 @@ class UserMainViewController: ParentViewController {
     }
     
     private func getUserProfile() {
-        FirebaseManager.shared.getUserProfile { [weak self] (error) in
-            guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
-                return
-            }
+        FirebaseManager2.shared.getUserProfile { [weak self] result in
+          switch result {
+            case .success:
+              break
+            case .failure(let error):
+              self?.showAlert(title: error.localizedDescription)
+          }
         }
     }
 }
@@ -133,7 +135,7 @@ extension UserMainViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(with: ShowProfileTableViewCell.self, for: indexPath)
-            cell.userModel = FirebaseManager.shared.loginUserModel
+            cell.userModel = FirebaseManager2.shared.loginUserModel
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
@@ -142,7 +144,7 @@ extension UserMainViewController: UITableViewDataSource {
         case 2:
             let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
             cell.cellType = .touchID
-            cell.isOn = UserDefaults.standard.bool(forKey: "touchIDSwitch")
+            cell.isOn = UserDefaults.standard.bool(forKey: UserDefaultsKey.touchIDSwitch.rawValue)
             cell.delegate = self
             return cell
         case 4:
@@ -157,6 +159,6 @@ extension UserMainViewController: UITableViewDataSource {
 
 extension UserMainViewController: searchQRcodeOrTouchIDCellDelegate {
     func qrcodeSwitchValueChange(isOn: Bool) {
-        UserDefaults.standard.set(isOn, forKey: "touchIDSwitch")
+        UserDefaults.standard.set(isOn, forKey: UserDefaultsKey.touchIDSwitch.rawValue)
     }
 }

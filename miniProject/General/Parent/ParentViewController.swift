@@ -112,12 +112,12 @@ class ParentViewController: UIViewController {
         }
     }
     
-    func showAlert(type: AlertType, title: String, message: String? = nil, checkAction: ((UIAlertAction) -> Void)? = nil) {
+    func showAlert(title: String, message: String? = nil, rightTitle: String = "確定", rightAction: ((UIAlertAction) -> Void)? = nil, leftTitle: String? = nil, leftAction: ((UIAlertAction) -> Void)? = nil) {
         let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        if type == .cancel_check {
-            alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        if let leftTitle = leftTitle {
+            alertVC.addAction(UIAlertAction(title: leftTitle, style: .default, handler: leftAction))
         }
-        alertVC.addAction(UIAlertAction(title: "確定", style: .default, handler: checkAction))
+        alertVC.addAction(UIAlertAction(title: rightTitle, style: .default, handler: rightAction))
         present(alertVC, animated: true, completion: nil)
     }
     
@@ -170,12 +170,6 @@ class ParentViewController: UIViewController {
             viewControllerToPresent.modalPresentationStyle = .fullScreen
         }
         super.present(viewControllerToPresent, animated: flag, completion: completion)
-    }
-    
-    // MARK: - Reachability Library
-    
-    func isNetworkConnected() -> Bool {
-        return true
     }
     
     // MARK: - SVProgressHUD Library

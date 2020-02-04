@@ -9,9 +9,9 @@
 import UIKit
 
 struct LoginUserModel {
-    var uid: String
-    var name: String
-    var photoURL: String
+    let uid: String
+    let name: String
+    let photoURL: String
     var albumIdList: [String]
     
     init(uid: String, name: String, photoURL: String) {

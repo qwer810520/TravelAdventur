@@ -39,7 +39,8 @@ class TATabbarController: UITabBarController {
         albumVC.tabBarItem.tag = TATabbarItem.album.hashValue
         
         let userVC = TANavigationController(rootViewController: UserMainViewController())
-        userVC.tabBarItem = UITabBarItem(title: nil, image: "tabbarIcon_User".toImage, tag: TATabbarItem.user.hashValue)
+        userVC.tabBarItem = UITabBarItem(title: "User", image: "tabbar_user_deselect_icon".toImage, selectedImage: "tabbar_user_select_icon".toImage)
+        userVC.tabBarItem.tag = TATabbarItem.user.hashValue
         
         viewControllers = [albumVC, userVC]
     }

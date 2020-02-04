@@ -9,5 +9,5 @@
 import Foundation
 
 enum UserDefaultsKey: String {
-    case ScreenBrightness 
+    case screenBrightness, touchIDSwitch, FBTokenString, withIDToken, accessToken, loginSet
 }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3903B64B23E807D10036BC74 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3903B64A23E807D10036BC74 /* APIClient.swift */; };
+		3903B64D23E816120036BC74 /* GoogleToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3903B64C23E816120036BC74 /* GoogleToken.swift */; };
+		3903B64F23E819870036BC74 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3903B64E23E819870036BC74 /* LoginPresenter.swift */; };
+		3903B65123E81B480036BC74 /* BasePresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3903B65023E81B480036BC74 /* BasePresenterDelegate.swift */; };
 		391264F8212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391264F1212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift */; };
 		391264FB212FAA96001E3EB7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391264F7212FAA96001E3EB7 /* MainViewController.swift */; };
 		391264FD212FABD9001E3EB7 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391264FC212FABD9001E3EB7 /* AlbumModel.swift */; };
@@ -39,7 +43,7 @@
 		39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887721329F7A0081B356 /* AddPlaceModel.swift */; };
 		39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */; };
 		39AF888121339BE00081B356 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF888021339BE00081B356 /* PlaceModel.swift */; };
-		39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFAD2101F3720021E11B /* FirebaseManager.swift */; };
+		39B7AFAE2101F3720021E11B /* FirebaseManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFAD2101F3720021E11B /* FirebaseManager2.swift */; };
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
@@ -56,6 +60,10 @@
 
 /* Begin PBXFileReference section */
 		361112AB1DD1F483A23E5993 /* Pods_miniProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_miniProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3903B64A23E807D10036BC74 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		3903B64C23E816120036BC74 /* GoogleToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleToken.swift; sourceTree = "<group>"; };
+		3903B64E23E819870036BC74 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		3903B65023E81B480036BC74 /* BasePresenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenterDelegate.swift; sourceTree = "<group>"; };
 		391264F1212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		391264F7212FAA96001E3EB7 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		391264FC212FABD9001E3EB7 /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
@@ -88,7 +96,7 @@
 		39AF887721329F7A0081B356 /* AddPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceModel.swift; sourceTree = "<group>"; };
 		39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaceViewController.swift; sourceTree = "<group>"; };
 		39AF888021339BE00081B356 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
-		39B7AFAD2101F3720021E11B /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		39B7AFAD2101F3720021E11B /* FirebaseManager2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager2.swift; sourceTree = "<group>"; };
 		39B7AFAF2101F39A0021E11B /* miniProject-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "miniProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		39B915F21E84127C0093E1AF /* miniProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39B915F51E84127C0093E1AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +130,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3903B64923E801210036BC74 /* APIClint */ = {
+			isa = PBXGroup;
+			children = (
+				3903B64A23E807D10036BC74 /* APIClient.swift */,
+			);
+			path = APIClint;
+			sourceTree = "<group>";
+		};
 		391264EF212FAA96001E3EB7 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +187,7 @@
 				3930BF5020FC2F5900A39CAF /* Model */,
 				3930BF4F20FB855300A39CAF /* View */,
 				3930BF4C20FB777E00A39CAF /* ViewController */,
+				3903B64E23E819870036BC74 /* LoginPresenter.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -248,6 +265,8 @@
 			children = (
 				39FCB27E20FC39BB001857AE /* Extension.swift */,
 				397E7DC2212893D400A2B07A /* UserDefaultKey.swift */,
+				3903B64C23E816120036BC74 /* GoogleToken.swift */,
+				3903B65023E81B480036BC74 /* BasePresenterDelegate.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -465,6 +484,7 @@
 		39B7AFAB2101F3720021E11B /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				3903B64923E801210036BC74 /* APIClint */,
 				39B7AFAC2101F3720021E11B /* FirebaseManager */,
 			);
 			path = Manager;
@@ -473,7 +493,7 @@
 		39B7AFAC2101F3720021E11B /* FirebaseManager */ = {
 			isa = PBXGroup;
 			children = (
-				39B7AFAD2101F3720021E11B /* FirebaseManager.swift */,
+				39B7AFAD2101F3720021E11B /* FirebaseManager2.swift */,
 			);
 			path = FirebaseManager;
 			sourceTree = "<group>";
@@ -791,17 +811,19 @@
 				3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */,
 				39CEC1F52134DF7600E0A5B6 /* UserMainViewController.swift in Sources */,
 				3989C0AA21008F7C00E8BE56 /* TATabbarController.swift in Sources */,
+				3903B64B23E807D10036BC74 /* APIClient.swift in Sources */,
 				393D6FD521345216003C79A4 /* MobilePhotoModel.swift in Sources */,
 				3979330521314E2D000BB774 /* AddPlaceView.swift in Sources */,
 				39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */,
 				39CEC1FD2134F2B000E0A5B6 /* SignOutTableViewCell.swift in Sources */,
+				3903B64D23E816120036BC74 /* GoogleToken.swift in Sources */,
 				397932FE213083B1000BB774 /* LocationMapView.swift in Sources */,
 				391264F8212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift in Sources */,
 				397E7DCC2128970F00A2B07A /* AddAlbumBackgroundView.swift in Sources */,
 				393D6FCD21344777003C79A4 /* AddMobilePhotosViewController.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
 				39359963212E994600D305DC /* TAToolBar.swift in Sources */,
-				39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */,
+				39B7AFAE2101F3720021E11B /* FirebaseManager2.swift in Sources */,
 				3930BF5420FC316F00A39CAF /* LoginBackgroundView.swift in Sources */,
 				391264FD212FABD9001E3EB7 /* AlbumModel.swift in Sources */,
 				39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */,
@@ -815,7 +837,9 @@
 				3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */,
 				39AF888121339BE00081B356 /* PlaceModel.swift in Sources */,
 				393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */,
+				3903B65123E81B480036BC74 /* BasePresenterDelegate.swift in Sources */,
 				39CEC1F72134E27F00E0A5B6 /* ShowProfileTableViewCell.swift in Sources */,
+				3903B64F23E819870036BC74 /* LoginPresenter.swift in Sources */,
 				3949955521351D0E00853992 /* QRCodeTearderViewController.swift in Sources */,
 				39EFD4DF213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift in Sources */,
 				397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */,

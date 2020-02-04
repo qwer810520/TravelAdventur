@@ -109,18 +109,16 @@ class AddMobilePhotosViewController: ParentViewController {
 
         let addPhotosList = mobilePhotoList.filter { $0.isSelect }
         
-        guard isNetworkConnected() else { return }
-        
         guard !addPhotosList.isEmpty, let placeInfo = placeData else {
-            showAlert(type: .check, title: "請選擇要上傳的相片")
+            showAlert(title: "請選擇要上傳的相片")
             return
         }
         
         startLoading()
-        FirebaseManager.shared.savePhotoListData(placeID: placeInfo.placeID, photoList: addPhotosList) { [weak self] (error) in
+        FirebaseManager2.shared.savePhotoListData(placeID: placeInfo.placeID, photoList: addPhotosList) { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
+                self?.showAlert(title: error?.localizedDescription ?? "")
                 return
             }
             

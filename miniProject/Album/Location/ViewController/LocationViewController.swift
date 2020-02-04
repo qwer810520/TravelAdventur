@@ -104,10 +104,10 @@ class LocationViewController: ParentViewController {
     
     private func getPlaceList() {
         startLoading()
-        FirebaseManager.shared.getPlaceList(albumID: selectAlbum?.id ?? "") { [weak self] (responsePlaceList, error) in
+        FirebaseManager2.shared.getPlaceList(albumID: selectAlbum?.id ?? "") { [weak self] (responsePlaceList, error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
+                self?.showAlert(title: error?.localizedDescription ?? "")
                 return
             }
             guard !responsePlaceList.isEmpty else {
@@ -129,14 +129,14 @@ class LocationViewController: ParentViewController {
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as? CGFloat) ?? 0.5
+            UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
             setNavigation(title: nil, barButtonType: .Back_Add)
             qrcodeView?.removeFromSuperview()
             qrcodeView = nil
             setLocationMapView()
             setPlaceMarker()
         case 1:
-             UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
+             UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.screenBrightness.rawValue)
              UIScreen.main.brightness = 1.0
             setNavigation(title: nil, barButtonType: .Back_)
             locationMapView?.removeFromSuperview()

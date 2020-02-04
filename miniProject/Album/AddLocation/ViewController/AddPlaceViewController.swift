@@ -83,7 +83,6 @@ class AddPlaceViewController: ParentViewController {
     // MARK: - Action Method
     
     @objc private func setSearchPlaceVC() {
-        guard isNetworkConnected() else { return }
         let searchPlaceVC = SearchPlaceViewController()
         searchPlaceVC.delegate = self
         present(searchPlaceVC, animated: true, completion: nil)
@@ -95,14 +94,14 @@ class AddPlaceViewController: ParentViewController {
 extension AddPlaceViewController: AddPlaceDelegate {
     func addPlaceButtonDidPressed() {
         guard !addPlaceData.placeName.isEmpty, let album = album else {
-            showAlert(type: .check, title: "請選擇拍照地點")
+            showAlert(title: "請選擇拍照地點")
             return
         }
         startLoading()
-        FirebaseManager.shared.addNewPlaceData(albumid: album.id, placeData: addPlaceData) { [weak self] (error) in
+        FirebaseManager2.shared.addNewPlaceData(albumid: album.id, placeData: addPlaceData) { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
+                self?.showAlert(title: error?.localizedDescription ?? "")
                 return
             }
             self?.dismiss(animated: true, completion: nil)
@@ -123,7 +122,7 @@ extension AddPlaceViewController: GMSAutocompleteViewControllerDelegate {
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        showAlert(type: .check, title: error.localizedDescription)
+        showAlert(title: error.localizedDescription)
     }
 
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {

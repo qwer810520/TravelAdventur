@@ -24,10 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .application( application,
             didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
-        GMSServices.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
-        GMSPlacesClient.provideAPIKey("AIzaSyChQQgQpGBg8KuFyMI0p0eB-YO0AmvXUX4")
+        GMSServices.provideAPIKey(GoogleToken.provideAPIKey)
+        GMSPlacesClient.provideAPIKey(GoogleToken.provideAPIKey)
         
-        UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.ScreenBrightness.rawValue)
+        UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.screenBrightness.rawValue)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = LoginViewController()

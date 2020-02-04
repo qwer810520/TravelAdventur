@@ -95,21 +95,20 @@ extension QRCodeTearderViewController: AVCaptureMetadataOutputObjectsDelegate {
         
         guard let value = metadataObj.stringValue, value.count == 20 else { return }
         captureSession.stopRunning()
-        guard isNetworkConnected() else { return }
         startLoading()
-        FirebaseManager.shared.checkAlbumStatus(id: value) { [weak self] (status, error) in
+        FirebaseManager2.shared.checkAlbumStatus(id: value) { [weak self] (status, error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
+                self?.showAlert(title: error?.localizedDescription ?? "")
                 return
             }
             switch status {
             case true:
-                self?.showAlert(type: .check, title: "新增成功", checkAction: { (_) in
+                self?.showAlert(title: "新增成功", rightAction: { _ in
                     self?.dismiss(animated: true, completion: nil)
                 })
             case false:
-                self?.showAlert(type: .check, title: "錯誤", message: "請掃描正確的QRCode", checkAction: { (_) in
+                self?.showAlert(title: "錯誤", message: "請掃描正確的QRCode", rightAction: { _ in
                     self?.captureSession.startRunning()
                 })
             }

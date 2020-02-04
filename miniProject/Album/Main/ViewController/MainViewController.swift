@@ -39,7 +39,7 @@ class MainViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getAlbumList()
-        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.ScreenBrightness.rawValue) as? CGFloat) ?? 0.5
+        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
         setUserInterface()
     }
     
@@ -65,12 +65,11 @@ class MainViewController: ParentViewController {
     // MARK: - API Method
     
     private func getAlbumList() {
-        guard isNetworkConnected() else { return }
         startLoading()
-        FirebaseManager.shared.getAlbumData { [weak self] (albumList, error) in
+        FirebaseManager2.shared.getAlbumData { [weak self] (albumList, error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
+                self?.showAlert(title: error?.localizedDescription ?? "")
                 return
             }
             self?.albumList = albumList

@@ -139,22 +139,21 @@ extension AddAlbunViewController: AddAlbumDelegate {
     }
     
     func addAlbumButtonDidPressed() {
-        guard isNetworkConnected() else { return }
         guard let name = addAlbumView.nameTextField.text, !name.isEmpty else {
-            showAlert(type: .check, title: "請輸入相簿名稱")
+            showAlert(title: "請輸入相簿名稱")
             return
         }
         
         guard addAlbum.coverPhoto != nil else {
-            showAlert(type: .check, title: "請選擇封面相片")
+            showAlert(title: "請選擇封面相片")
             return
         }
         addAlbum.title = name
         startLoading()
-        FirebaseManager.shared.addNewAlbumData(model: addAlbum) { [weak self] (error) in
+        FirebaseManager2.shared.addNewAlbumData(model: addAlbum) { [weak self] (error) in
             self?.stopLoading()
             guard error == nil else {
-                self?.showAlert(type: .check, title: error?.localizedDescription ?? "")
+                self?.showAlert(title: error?.localizedDescription ?? "")
                 return
             }
             self?.dismiss(animated: true, completion: nil)
