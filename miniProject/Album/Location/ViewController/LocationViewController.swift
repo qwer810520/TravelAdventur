@@ -10,188 +10,137 @@ import UIKit
 import GoogleMaps
 
 class LocationViewController: ParentViewController {
-    
-    var selectAlbum: AlbumModel?
-    fileprivate var placeList = [PlaceModel]()
-    
-    lazy var segmented: UISegmentedControl = {
-        let view = UISegmentedControl(items: ["Place", "Shared Album"])
-        view.frame.size = CGSize(width: UIScreen.main.bounds.width * 0.6, height: 30)
-        view.tintColor = .white
-        view.selectedSegmentIndex = 0
-        view.addTarget(self, action: #selector(segmentedValueChanged(sender:)), for: .valueChanged)
-        return view
-    }()
-    
-    fileprivate var locationMapView: LocationMapView?
-    fileprivate var qrcodeView: AddAlbumQRCodeView?
-    fileprivate var willDisplayIndex: Int?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getPlaceList()
-        setUserInterFace()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        locationMapView?.removeFromSuperview()
-        locationMapView = nil
-    }
-    
-    // MARK: - private Method
-    
-    private func setUserInterFace() {
-        setNavigation(title: nil, barButtonType: .Back_Add)
-        navigationItem.titleView = segmented
-        setLocationMapView()
-    }
-    
-    private func setLocationMapView() {
-        locationMapView = LocationMapView(delegate: self, dataSource: self)
-        segmented.selectedSegmentIndex = 0
-        guard let mapView = locationMapView else { return }
-        view.addSubview(mapView)
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(navigationHeight)-[mapView]|",
-            options: [],
-            metrics: nil,
-            views: ["mapView": mapView]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[mapView]|",
-            options: [],
-            metrics: nil,
-            views: ["mapView": mapView]))
-    }
-    
-    private func setQRCodeView() {
-        qrcodeView = AddAlbumQRCodeView(id: selectAlbum?.id ?? "")
-        guard let qrView = qrcodeView else { return }
-        view.addSubview(qrView)
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[qrView]|",
-            options: [],
-            metrics: nil,
-            views: ["qrView": qrView]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(navigationHeight)-[qrView]|",
-            options: [],
-            metrics: nil,
-            views: ["qrView": qrView]))
-        
-        qrView.layoutIfNeeded()
-    }
-    
-    private func setPlaceMarker() {
-        guard let mapView = locationMapView?.mapView else { return }
-        mapView.clear()
-        mapView.camera = GMSCameraPosition.camera(withLatitude: 23.65, longitude: 120.982024, zoom: 7.7)
-        placeList.forEach {
-            let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude))
-            marker.icon = $0.isMark ? UIImage(named: "orangeIcon") : UIImage(named: "redIcon")
-            marker.map = mapView
-        }
-    }
-    
-    // MARK: - API Method
-    
-    private func getPlaceList() {
-        startLoading()
-        FirebaseManager2.shared.getPlaceList(albumID: selectAlbum?.id ?? "") { [weak self] (responsePlaceList, error) in
-            self?.stopLoading()
-            guard error == nil else {
-                self?.showAlert(title: error?.localizedDescription ?? "")
-                return
-            }
-            guard !responsePlaceList.isEmpty else {
-                
-                return
-            }
-            var placeList = responsePlaceList
-            placeList[0].isMark = true
-            self?.placeList = placeList
-            
-            self?.setPlaceMarker()
-            //            locationMapView?.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
-            self?.locationMapView?.collectionView.reloadData()
-        }
-    }
-    
-    // MARK: - Action Method
-    
-    @objc private func segmentedValueChanged(sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
+
+  var selectAlbum: AlbumModel?
+  fileprivate var placeList = [PlaceModel]()
+
+  lazy private var segmented: UISegmentedControl = {
+    let view = UISegmentedControl(items: ["Place", "Shared Album"])
+    view.frame.size = CGSize(width: UIScreen.main.bounds.width * 0.6, height: 30)
+    view.tintColor = .white
+    view.selectedSegmentIndex = 0
+    view.addTarget(self, action: #selector(segmentedValueChanged(sender:)), for: .valueChanged)
+    return view
+  }()
+
+  fileprivate var locationMapView: LocationMapView?
+  fileprivate var qrcodeView: AddAlbumQRCodeView?
+  private var presenter: LocationPresenter?
+  fileprivate var willDisplayIndex: Int?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    presenter = LocationPresenter(albumInfo: selectAlbum ?? AlbumModel(), delegate: self)
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    setUserInterFace()
+  }
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    locationMapView?.removeFromSuperview()
+    locationMapView = nil
+  }
+
+  // MARK: - private Method
+
+  private func setUserInterFace() {
+    setNavigation(title: nil, barButtonType: .back_add)
+    navigationItem.titleView = segmented
+    setUpLocationMapView()
+  }
+
+  private func setUpLocationMapView() {
+    presenter?.getPlaceList()
+    locationMapView = LocationMapView(delegate: self)
+    segmented.selectedSegmentIndex = 0
+    guard let mapView = locationMapView else { return }
+    view.addSubview(mapView)
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|[mapView]|",
+      options: [],
+      metrics: nil,
+      views: ["mapView": mapView]))
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[mapView]|",
+      options: [],
+      metrics: nil,
+      views: ["mapView": mapView]))
+  }
+
+  private func setUpQRCodeView() {
+    qrcodeView = AddAlbumQRCodeView(id: presenter?.getAlbumID() ?? "")
+    guard let qrView = qrcodeView else { return }
+    view.addSubview(qrView)
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[qrView]|",
+      options: [],
+      metrics: nil,
+      views: ["qrView": qrView]))
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|[qrView]|",
+      options: [],
+      metrics: nil,
+      views: ["qrView": qrView]))
+
+    qrView.layoutIfNeeded()
+  }
+
+  // MARK: - Action Method
+
+  @objc private func segmentedValueChanged(sender: UISegmentedControl) {
+    DispatchQueue.main.async { [weak self] in
+      switch sender.selectedSegmentIndex {
         case 0:
-            UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
-            setNavigation(title: nil, barButtonType: .Back_Add)
-            qrcodeView?.removeFromSuperview()
-            qrcodeView = nil
-            setLocationMapView()
-            setPlaceMarker()
+          UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
+          self?.setNavigation(title: nil, barButtonType: .back_add)
+          self?.qrcodeView?.removeFromSuperview()
+          self?.qrcodeView = nil
+          self?.setUpLocationMapView()
         case 1:
-             UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.screenBrightness.rawValue)
-             UIScreen.main.brightness = 1.0
-            setNavigation(title: nil, barButtonType: .Back_)
-            locationMapView?.removeFromSuperview()
-            locationMapView = nil
-            setQRCodeView()
+          UserDefaults.standard.set(UIScreen.main.brightness, forKey: UserDefaultsKey.screenBrightness.rawValue)
+          UIScreen.main.brightness = 1.0
+          self?.setNavigation(title: nil, barButtonType: .back_)
+          self?.locationMapView?.removeFromSuperview()
+          self?.locationMapView = nil
+          self?.setUpQRCodeView()
         default:
-            break
-        }
+          break
+      }
     }
-    
-    override func addButtonDidPressed() {
-        let vc = TANavigationController(rootViewController: AddPlaceViewController())
-        guard let rootVC = vc.viewControllers.first as? AddPlaceViewController else { return }
-        rootVC.album = selectAlbum
-        present(vc, animated: true, completion: nil)
-    }
+  }
+
+  override func addButtonDidPressed() {
+    let vc = TANavigationController(rootViewController: AddPlaceViewController())
+    guard let rootVC = vc.viewControllers.first as? AddPlaceViewController else { return }
+    rootVC.album = selectAlbum
+    present(vc, animated: true, completion: nil)
+  }
 }
 
-    // MARK: - UICollectionViewDelegate
+  // MARK: - LocationPresenterDelegate
 
-extension LocationViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = ShowPhotoListViewController()
-        vc.placeData = placeList[indexPath.row]
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        willDisplayIndex = indexPath.row
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let willDisplayIndex = willDisplayIndex,  willDisplayIndex != indexPath.row else { return }
-        placeList[willDisplayIndex].isMark = true
-        placeList[indexPath.row].isMark = false
-        setPlaceMarker()
-    }
+extension LocationViewController: LocationPresenterDelegate {
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
+    showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
+  }
+
+  func refreshUI() {
+    locationMapView?.setUpUI(with: presenter?.placeList ?? [])
+  }
 }
 
-    // MARK: - UICollectionViewDataSource
+  // MARK: - LocationMapViewDelegate
 
-extension LocationViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return placeList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(with: ShowPlaceCollectionViewCell.self, for: indexPath)
-
-        cell.placeData = placeList[indexPath.row]
-        return cell
-    }
+extension LocationViewController: LocationMapViewDelegate {
+  func didSelectItem(with placeInfo: PlaceModel) {
+    let showPhotoListVC = ShowPhotoListViewController()
+    showPhotoListVC.placeData = placeInfo
+    navigationController?.pushViewController(showPhotoListVC, animated: true)
+  }
 }

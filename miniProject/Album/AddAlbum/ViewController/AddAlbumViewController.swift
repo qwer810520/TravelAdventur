@@ -35,7 +35,7 @@ class AddAlbumViewController: ParentViewController {
   // MARK: - Private Method
 
   private func setUserInterface() {
-    setNavigation(title: "Add Album", barButtonType: .Dismiss_)
+    setNavigation(title: "Add Album", barButtonType: .dismiss_)
     view.addSubview(addAlbumView)
     setUpNotification()
     setUpLayout()

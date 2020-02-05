@@ -38,7 +38,7 @@ class AddPlaceViewController: ParentViewController {
     // MARK: - private Method
     
     private func setUserInterface() {
-        setNavigation(title: "Add Place", barButtonType: .Dismiss_)
+        setNavigation(title: "Add Place", barButtonType: .dismiss_)
         view.backgroundColor = .clear
         
         view.addSubview(addPlaceView)

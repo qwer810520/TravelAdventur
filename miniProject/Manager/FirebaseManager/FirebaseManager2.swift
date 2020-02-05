@@ -187,16 +187,21 @@ class FirebaseManager2: NSObject {
     }
   }
 
-  func getPlaceList(albumID: String, complectionHandler: @escaping (_ placeList: [PlaceModel], _ error: Error?) -> Void) {
+  func getPlaceList(albumID: String, complectionHandler: @escaping (Result<[PlaceModel], Error>) -> Void) {
     placeManager.getDocuments { (response, error) in
       guard error == nil, let responseData = response else {
-        complectionHandler([PlaceModel](), error)
+        if let error = error {
+          complectionHandler(.failure(error))
+        }
         return
       }
 
-      var placeList = [PlaceModel]()
-      responseData.documents.forEach { placeList.append(PlaceModel(json: $0.data())) }
-      complectionHandler( placeList.filter { $0.albumID == albumID }.sorted(by: { $0.time < $1.time }), nil)
+      let placeList = responseData.documents
+        .map { PlaceModel(json: $0.data()) }
+        .filter { $0.albumID == albumID }
+        .sorted { $0.time < $1.time }
+      
+      complectionHandler(.success(placeList))
     }
   }
 

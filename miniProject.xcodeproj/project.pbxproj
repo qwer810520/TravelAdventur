@@ -16,6 +16,7 @@
 		391264F8212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391264F1212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift */; };
 		391264FB212FAA96001E3EB7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391264F7212FAA96001E3EB7 /* MainViewController.swift */; };
 		391264FD212FABD9001E3EB7 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391264FC212FABD9001E3EB7 /* AlbumModel.swift */; };
+		39269EE223EAA1A5009830BE /* LocationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39269EE123EAA1A5009830BE /* LocationPresenter.swift */; };
 		3930BF4E20FB777E00A39CAF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF4D20FB777E00A39CAF /* LoginViewController.swift */; };
 		3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5120FC2F6B00A39CAF /* LoginUserModel.swift */; };
 		3930BF5420FC316F00A39CAF /* LoginBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5320FC316F00A39CAF /* LoginBackgroundView.swift */; };
@@ -76,6 +77,7 @@
 		391264F1212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		391264F7212FAA96001E3EB7 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		391264FC212FABD9001E3EB7 /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
+		39269EE123EAA1A5009830BE /* LocationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPresenter.swift; sourceTree = "<group>"; };
 		3930BF4D20FB777E00A39CAF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3930BF5120FC2F6B00A39CAF /* LoginUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserModel.swift; sourceTree = "<group>"; };
 		3930BF5320FC316F00A39CAF /* LoginBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBackgroundView.swift; sourceTree = "<group>"; };
@@ -212,6 +214,14 @@
 				391264F7212FAA96001E3EB7 /* MainViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		39269EE023EAA190009830BE /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				39269EE123EAA1A5009830BE /* LocationPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		3930BF4B20FB777E00A39CAF /* Login */ = {
@@ -417,6 +427,7 @@
 		397932F221307835000BB774 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				39269EE023EAA190009830BE /* Presenter */,
 				39AF887F21339BBE0081B356 /* Model */,
 				397932F421307835000BB774 /* View */,
 				397932F621307835000BB774 /* ViewController */,
@@ -914,6 +925,7 @@
 				39CEC1F72134E27F00E0A5B6 /* ShowProfileTableViewCell.swift in Sources */,
 				3903B68123E909360036BC74 /* IndicatorAnimationView.swift in Sources */,
 				3903B64F23E819870036BC74 /* LoginPresenter.swift in Sources */,
+				39269EE223EAA1A5009830BE /* LocationPresenter.swift in Sources */,
 				3949955521351D0E00853992 /* QRCodeTearderViewController.swift in Sources */,
 				39EFD4DF213000C900667479 /* ShowAlbumDetailCollectionViewCell.swift in Sources */,
 				397E7DC92128961E00A2B07A /* AddAlbumViewController.swift in Sources */,

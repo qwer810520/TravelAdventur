@@ -42,7 +42,7 @@ class ShowPhotoListViewController: ParentViewController {
     // MARK: - private Method
     
     private func setUserUnterface() {
-        setNavigation(title: "Photos", barButtonType: .Back_Add)
+        setNavigation(title: "Photos", barButtonType: .back_add)
         setAutoLayout()
     }
     

@@ -53,7 +53,7 @@ class AddMobilePhotosViewController: ParentViewController {
     // MARK: - private Method
     
     private func setUserInterface() {
-        setNavigation(title: "Add Photo", barButtonType: .Dismiss_)
+        setNavigation(title: "Add Photo", barButtonType: .dismiss_)
         serAutoLayout()
     }
     

@@ -9,57 +9,45 @@
 import UIKit
 
 class AddAlbumQRCodeView: UIView {
-    var id: String
-    
-    init(id: String) {
-        self.id = id
-        super.init(frame: .zero)
-        setUserInterface()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - private Method
-    
-    private func setUserInterface() {
-        translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
-        setAutoLayout()
-    }
-    
-    private func setAutoLayout() {
-        addSubview(qrcodeImageView)
-        
-        addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-80-[qrcodeImageView]-80-|",
-            options: [],
-            metrics: nil,
-            views: ["qrcodeImageView": qrcodeImageView]))
-        
-        addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-150-[qrcodeImageView]",
-            options: [],
-            metrics: nil,
-            views: ["qrcodeImageView": qrcodeImageView]))
-        
-        NSLayoutConstraint(item: qrcodeImageView, attribute: .height, relatedBy: .equal, toItem: qrcodeImageView, attribute: .width, multiplier: 1.0, constant: 0.0).isActive = true
+  var id: String
 
-        qrcodeImageView.image = id.toQRCode(with: qrcodeImageView)
-    }
-    
-    // MARK: - init Element
-    
-    lazy var qrcodeImageView: UIImageView = {
-        let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy private var descriptionLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+  lazy var qrcodeImageView: UIImageView = {
+    let widthAndHeight: CGFloat = UIScreen.main.bounds.width - (80 * 2)
+    return UIImageView(frame: CGRect(x: (UIScreen.main.bounds.width - widthAndHeight) / 2 , y: 150, width: widthAndHeight, height: widthAndHeight))
+  }()
+
+  lazy private var descriptionLabel: UILabel = {
+    let view = UILabel()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
+  // MARK: - Initialization
+
+  init(id: String) {
+    self.id = id
+    super.init(frame: .zero)
+    setUserInterface()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  override func removeFromSuperview() {
+    super.removeFromSuperview()
+    qrcodeImageView.image = nil
+  }
+
+  // MARK: - Private Methods
+
+  private func setUserInterface() {
+    translatesAutoresizingMaskIntoConstraints = false
+    addSubview(qrcodeImageView)
+    setUpAutoLayout()
+  }
+
+  private func setUpAutoLayout() {
+    qrcodeImageView.image = id.toQRCode(with: qrcodeImageView)
+  }
 }

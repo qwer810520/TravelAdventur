@@ -44,7 +44,7 @@ class QRCodeTearderViewController: ParentViewController {
     // MARK: - private Method
     
     private func setUserInterface() {
-        setNavigation(title: "Search Album", barButtonType: .Dismiss_)
+        setNavigation(title: "Search Album", barButtonType: .dismiss_)
     }
     
     private func setVideoPreviewLayer() {

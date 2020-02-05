@@ -12,10 +12,10 @@ import Photos
 
 enum NaviBarButtonType {
   case none
-  case _Add
-  case Dismiss_
-  case Back_Add
-  case Back_
+  case _add
+  case dismiss_
+  case back_add
+  case back_
 }
 
 enum AlertType {
@@ -71,6 +71,10 @@ class ParentViewController: UIViewController {
     super.viewWillDisappear(animated)
   }
 
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+  }
+
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
 
@@ -101,14 +105,14 @@ class ParentViewController: UIViewController {
     let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonDidPressed))
 
     switch barButtonType {
-      case ._Add:
+      case ._add:
         navigationItem.rightBarButtonItem = addItem
-      case .Dismiss_:
+      case .dismiss_:
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: "navi_dismissItem_Icon", target: self, action: #selector(dismissButtonDidPressed))
-      case .Back_Add:
+      case .back_add:
         navigationItem.leftBarButtonItem = backItem
-        navigationItem.rightBarButtonItem = addItem
-      case .Back_:
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: "navi_addLocationItem_Icon", target: self, action: #selector(addButtonDidPressed))
+      case .back_:
         navigationItem.leftBarButtonItem = backItem
       case .none:
         break
