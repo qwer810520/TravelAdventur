@@ -104,7 +104,7 @@ class ParentViewController: UIViewController {
       case ._Add:
         navigationItem.rightBarButtonItem = addItem
       case .Dismiss_:
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: "cross", target: self, action: #selector(dismissButtonDidPressed))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: "navi_dismissItem_Icon", target: self, action: #selector(dismissButtonDidPressed))
       case .Back_Add:
         navigationItem.leftBarButtonItem = backItem
         navigationItem.rightBarButtonItem = addItem
@@ -116,7 +116,7 @@ class ParentViewController: UIViewController {
   }
 
   func showAlert(title: String, message: String? = nil, rightTitle: String = "確定", rightAction: ((UIAlertAction) -> Void)? = nil, leftTitle: String? = nil, leftAction: ((UIAlertAction) -> Void)? = nil) {
-    let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+    let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
     if let leftTitle = leftTitle {
       alertVC.addAction(UIAlertAction(title: leftTitle, style: .default, handler: leftAction))
     }
@@ -127,27 +127,6 @@ class ParentViewController: UIViewController {
   func selectTabbarItem(type: TATabbarItem) {
     guard let tabbarController = tabBarController as? TATabbarController else { return }
     tabbarController.selectItem(item: type)
-  }
-
-  func checkPermission(handler: @escaping () -> Void) {     //相簿認證
-    let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
-    switch photoAuthorizationStatus {
-      case .authorized:
-        print("Access is granted by user")
-        handler()
-      case .notDetermined:
-        PHPhotoLibrary.requestAuthorization { (newStatus) in
-          print("status is \(newStatus)")
-          guard newStatus == PHAuthorizationStatus.authorized else { return }
-          handler()
-      }
-      case .denied:
-        print("User has denied the permission.")
-      case .restricted:
-        print("User do not have access to photo album.")
-      default:
-        break
-    }
   }
 
   // MARK: - Action Method
@@ -165,7 +144,8 @@ class ParentViewController: UIViewController {
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+    super.touchesBegan(touches, with: event)
+    view.endEditing(true)
   }
 
   override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {

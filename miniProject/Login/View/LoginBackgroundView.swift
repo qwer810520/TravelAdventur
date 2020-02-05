@@ -26,10 +26,6 @@ class LoginBackgroundView: UIView {
         setUserInterface()
     }
     
-    deinit {
-        print("LoginBackgroundView", #function)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

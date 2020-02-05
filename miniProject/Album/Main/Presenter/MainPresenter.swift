@@ -8,9 +8,7 @@
 
 import UIKit
 
-protocol MainPresenterDelegate: BasePresenterDelegate {
-  func refreshUI()
-}
+protocol MainPresenterDelegate: BasePresenterDelegate { }
 
 class MainPresenter: NSObject {
 
@@ -25,7 +23,6 @@ class MainPresenter: NSObject {
     self.delegate = delegate
     super.init()
     UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
-    getAlbumList()
   }
 
   // MARK: - API Methods
@@ -42,7 +39,7 @@ class MainPresenter: NSObject {
         case .success(let albumList):
           self?.albumList = albumList
         case .failure(let error):
-          self?.delegate?.presentAlert(with: error.localizedDescription)
+          self?.delegate?.presentAlert(with: error.localizedDescription, message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)
       }
     }
   }

@@ -23,7 +23,6 @@ class MainViewController: ParentViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-
     setUserInterface()
   }
 
@@ -32,6 +31,7 @@ class MainViewController: ParentViewController {
   private func setUserInterface() {
     setNavigation(title: "Travel Adventur")
     view.addSubview(mainView)
+    presenter?.getAlbumList()
     setUpLayout()
   }
 
@@ -54,8 +54,7 @@ class MainViewController: ParentViewController {
 
 extension MainViewController: MainViewDelegate {
   func addAlbumButtonDidPressed() {
-    print(#function)
-    let addAlbunVC = TANavigationController(rootViewController: AddAlbunViewController())
+    let addAlbunVC = TANavigationController(rootViewController: AddAlbumViewController())
     present(addAlbunVC, animated: true, completion: nil)
   }
 
@@ -77,11 +76,11 @@ extension MainViewController: MainViewDelegate {
   // MARK: - MainPresenterDelegate
 
 extension MainViewController: MainPresenterDelegate {
-  func refreshUI() {
-    mainView.refreshUI()
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
+    showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
   }
 
-  func presentAlert(with title: String) {
-    showAlert(title: title)
+  func refreshUI() {
+    mainView.refreshUI()
   }
 }

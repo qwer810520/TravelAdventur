@@ -8,182 +8,143 @@
 
 import UIKit
 
-class AddAlbunViewController: ParentViewController {
-    
-    private var addAlbum = AddAlbumModel()
-    fileprivate var selectDay = 1
-    fileprivate var dayList = (1...30).map { $0 }
-    lazy private var addAlbumView: AddAlbumBackgroundView = {
-        return AddAlbumBackgroundView(delegate: self, textFieldDelegate: self)
-    }()
-    
-    lazy private var datePickerView: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.locale = Locale(identifier: "Chinese")
-        return datePicker
-    }()
-    
-    lazy private var selectDayPickerView: UIPickerView = {
-        let pickerView = UIPickerView()
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        return pickerView
-    }()
-    
-    @IBAction func inputImageBotton(_ sender: UIButton) {
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUserInterface()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    // MARK: - private Method
-    
-    private func setUserInterface() {
-        setNavigation(title: "Add Album", barButtonType: .Dismiss_)
-        view.addSubview(addAlbumView)
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[addAlbumView]|",
-            options: [],
-            metrics: nil,
-            views: ["addAlbumView": addAlbumView]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(navigationHeight)-[addAlbumView]|",
-            options: [],
-            metrics: nil,
-            views: ["addAlbumView": addAlbumView]))
-        
-        setTextField()
-    }
-    
-    private func setTextField() {
-        selectDay = dayList[0]
-        addAlbum.day = dayList[0]
-        addAlbumView.selectDayTextField.text = "\(dayList[0])"
-        addAlbumView.selectDayTextField.inputView = selectDayPickerView
-        addAlbumView.selectDayTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
-                self?.addAlbumView.selectDayTextField
-                    .resignFirstResponder()
-            },  checkAction: { [weak self] in
-                self?.addAlbum.day = self?.selectDay ?? 0
-                self?.addAlbumView.selectDayTextField.text = "\(self?.addAlbum.day ?? 0)"
-                self?.addAlbumView.selectDayTextField
-                    .resignFirstResponder()
-            })
-        addAlbum.startTime = Date().timeIntervalSince1970
-        addAlbumView.startTiemTextField.text = Date().timeIntervalSince1970.dateToString(type: .all)
-        addAlbumView.startTiemTextField.inputView = datePickerView
-        addAlbumView.startTiemTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
-                self?.addAlbumView.startTiemTextField.text = Date().timeIntervalSince1970.dateToString(type: .all)
-            }, checkAction: { [weak self] in
-                self?.addAlbum.startTime = self?.datePickerView.date.timeIntervalSince1970 ?? 0.0
-                self?.addAlbumView.startTiemTextField.text = (self?.datePickerView.date.timeIntervalSince1970 ?? 0.0).dateToString(type: .all)
-                self?.addAlbumView.startTiemTextField
-                    .resignFirstResponder()
-            })
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
+class AddAlbumViewController: ParentViewController {
+
+  lazy private var addAlbumView: AddAlbumBackgroundView = {
+    return AddAlbumBackgroundView(dayOptionList: Array(1...30), delegate: self)
+  }()
+
+  private var presenter: AddAlbumPresenter?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    presenter = AddAlbumPresenter(delegate: self)
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    setUserInterface()
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+
+  // MARK: - Private Method
+
+  private func setUserInterface() {
+    setNavigation(title: "Add Album", barButtonType: .Dismiss_)
+    view.addSubview(addAlbumView)
+    setUpNotification()
+    setUpLayout()
+    refreshUI()
+  }
+
+  private func setUpLayout() {
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[addAlbumView]|",
+      options: [],
+      metrics: nil,
+      views: ["addAlbumView": addAlbumView]))
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|[addAlbumView]|",
+      options: [],
+      metrics: nil,
+      views: ["addAlbumView": addAlbumView]))
+  }
+
+  private func setUpNotification() {
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+
+  private func resetAddAlbumViewFrame() {
+    guard addAlbumView.frame.origin.y != 0 else { return }
+    addAlbumView.frame.origin.y = 0
+  }
+
+  // MARK: - Action Methods
+
+  @objc private func keyboardWillShow(notification: Notification) {
+      if let height = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+        switch addAlbumView.didEditingTextFieldType {
+          case .day:
+            guard addAlbumView.inputBackgroundView.frame.maxY > (addAlbumView.frame.height - height) else { return }
+            addAlbumView.frame.origin.y = -(addAlbumView.inputBackgroundView.frame.maxY - (addAlbumView.frame.height - height))
+            view.layoutIfNeeded()
+          default:
+            resetAddAlbumViewFrame()
+        }
+      }
+  }
+
+  @objc private func keyBoardWillHidden(notification: Notification) {
+    resetAddAlbumViewFrame()
+  }
 }
 
-    // MARK: - UIPickerViewDelegate
+// MARK: - AddAlbumDelegate
 
-extension AddAlbunViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectDay = dayList[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return String(describing: dayList[row])
-    }
+extension AddAlbumViewController: AddAlbumDelegate {
+  func addAlbumCoverPhotoButtonDidPressed() {
+    view.endEditing(true)
+    presenter?.checkAlbumAuthority()
+  }
+
+  func nameTextFieldEditingChanged(with text: String) {
+    presenter?.setAlbumName(with: text)
+  }
+
+  func didSelectDateOption(with date: TimeInterval) {
+    presenter?.setAlbumStartDate(with: date)
+  }
+
+  func didSelectDateDay(with day: Int) {
+    presenter?.setAlbumDayRange(with: day)
+  }
+
+  func addAlbumButtonDidPressed() {
+    presenter?.addAlnum()
+  }
 }
 
-    // MARK: - UIPickerViewDataSource
+  // MARK: - AddAlbumPresenterDelegate
 
-extension AddAlbunViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+extension AddAlbumViewController: AddAlbumPresenterDelegate {
+  func presentImagePickerVC() {
+    DispatchQueue.main.async { [weak self] in
+      UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
+      let imagePicker = UIImagePickerController()
+      imagePicker.allowsEditing = false
+      imagePicker.sourceType = .photoLibrary
+      imagePicker.delegate = self
+      self?.present(imagePicker, animated: true, completion: nil)
     }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return dayList.count
-    }
+  }
+
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
+    showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
+  }
+
+  func refreshUI() {
+    addAlbumView.setAlbumInfo(with: presenter?.addAlbum ?? AddAlbumModel())
+  }
+
+  func dismissVC() {
+    dismiss(animated: true, completion: nil)
+  }
 }
 
-    // MARK: - AddAlbumDelegate
+// MARK: - UIImagePickerControllerDelegate
 
-extension AddAlbunViewController: AddAlbumDelegate {
-    func addAlbumCoverButtonDidPressed() {
-        view.endEditing(true)
-        checkPermission { [weak self] in
-            DispatchQueue.main.async {
-            UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
-                let imagePicker = UIImagePickerController()
-                imagePicker.allowsEditing = false
-                imagePicker.sourceType = .photoLibrary
-                imagePicker.delegate = self
-                self?.present(imagePicker, animated: true, completion: nil)
-            }
-        }
+extension AddAlbumViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+    if let picture = info[.originalImage] as? UIImage {
+      presenter?.setAlbumCoverImage(with: picture)
     }
-    
-    func addAlbumButtonDidPressed() {
-        guard let name = addAlbumView.nameTextField.text, !name.isEmpty else {
-            showAlert(title: "請輸入相簿名稱")
-            return
-        }
-        
-        guard addAlbum.coverPhoto != nil else {
-            showAlert(title: "請選擇封面相片")
-            return
-        }
-        addAlbum.title = name
-        startLoading()
-        FirebaseManager2.shared.addNewAlbumData(model: addAlbum) { [weak self] (error) in
-            self?.stopLoading()
-            guard error == nil else {
-                self?.showAlert(title: error?.localizedDescription ?? "")
-                return
-            }
-            self?.dismiss(animated: true, completion: nil)
-        }
-    }
-}
-
-    // MARK: - UIImagePickerControllerDelegate
-
-extension AddAlbunViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let picture = info[.originalImage] as? UIImage {
-            addAlbumView.addAlbumCoverPhotoButton.setImage(nil, for: .normal)
-            addAlbumView.albumCoverPhotoImageView.image = picture
-            addAlbum.coverPhoto = picture
-        }
-        dismiss(animated: true, completion: nil)
-    }
-}
-
-    // MARK: - UITextFieldDelegate
-
-extension AddAlbunViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case addAlbumView.nameTextField:
-            addAlbumView.nameTextField.resignFirstResponder()
-            return false
-        default:
-            return true
-        }
-    }
+    dismissVC()
+  }
 }

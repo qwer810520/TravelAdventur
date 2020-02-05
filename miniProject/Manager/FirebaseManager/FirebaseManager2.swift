@@ -81,45 +81,47 @@ class FirebaseManager2: NSObject {
     }
   }
 
-  private func addAlbumIdToUserData(id: String, complectionHandler: @escaping  (_ error: Error?) -> Void) {
+  private func addAlbumIdToUserData(id: String, complectionHandler: @escaping  (Result<Bool, Error>) -> Void) {
     guard let user = loginUserModel else { return }
     userManager.document(user.uid)
-      .updateData(["albumIdList": FieldValue.arrayUnion([id])]) { (error) in
-        guard error == nil else {
-          complectionHandler(error)
-          return
+      .updateData(["albumIdList": FieldValue.arrayUnion([id])]) { error in
+        switch error {
+          case .some(let error):
+            complectionHandler(.failure(error))
+          case .none:
+            complectionHandler(.success(true))
         }
-        complectionHandler(nil)
     }
   }
 
   // MARK: - Album API Method
 
-  func addNewAlbumData(model: AddAlbumModel,  complectionHandler: @escaping (_ error: Error?) -> Void) {
+  func addNewAlbumData(model: AddAlbumModel,  complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
     var addAlbumModel = model
     addAlbumModel.id = albumManager.document().documentID
     saveAlbumPhotoData(model: addAlbumModel) { [weak self] (fileURL, error) in
-      guard error == nil else {
-        complectionHandler(error)
-        return
-      }
-      let parameters = ["id": addAlbumModel.id, "title": addAlbumModel.title, "startTime": addAlbumModel.startTime, "day": addAlbumModel.day, "coverPhotoURL": fileURL] as JSONDictionary
-      self?.albumManager.document(addAlbumModel.id)
-        .setData(parameters, completion: { (error) in
-          guard error == nil else {
-            complectionHandler(error)
-            return
-          }
-          self?.addAlbumIdToUserData(id: addAlbumModel.id, complectionHandler: { (error) in
-            guard error == nil else {
-              complectionHandler(error)
-              return
+      switch error {
+        case .some(let error):
+          complectionHandler(.failure(error))
+        case .none:
+          let parameters = ["id": addAlbumModel.id, "title": addAlbumModel.title, "startTime": addAlbumModel.startTime, "day": addAlbumModel.day, "coverPhotoURL": fileURL] as JSONDictionary
+          self?.albumManager.document(addAlbumModel.id).setData(parameters, completion: { error in
+            switch error {
+              case .some(let error):
+                complectionHandler(.failure(error))
+              case .none:
+                self?.addAlbumIdToUserData(id: addAlbumModel.id, complectionHandler: { res in
+                  switch res {
+                    case .success:
+                      self?.loginUserModel?.albumIdList.append(addAlbumModel.id)
+                      complectionHandler(.success(true))
+                    case .failure(let error):
+                      complectionHandler(.failure(error))
+                  }
+                })
             }
-            complectionHandler(nil)
-            self?.loginUserModel?.albumIdList
-              .append(addAlbumModel.id)
           })
-        })
+      }
     }
   }
 
@@ -157,13 +159,13 @@ class FirebaseManager2: NSObject {
             complectionHandler(false, error)
             return
           }
-
-          self?.addAlbumIdToUserData(id: id, complectionHandler: { (error) in
-            guard error == nil else {
-              complectionHandler(false, nil)
-              return
+          self?.addAlbumIdToUserData(id: id, complectionHandler: { res in
+            switch res {
+              case .failure(let error):
+                complectionHandler(false, error)
+              case .success:
+                complectionHandler(false, nil)
             }
-            complectionHandler(true, error)
           })
         case false:
           complectionHandler(responseData.exists, nil)
@@ -227,7 +229,7 @@ class FirebaseManager2: NSObject {
       return
     }
     let filePath = "Album/\(model.id)/\(Date.timeIntervalSinceReferenceDate).jpg"
-    guard let imageData = image.jpegData(compressionQuality: 1) else { return }
+    guard let imageData = image.scaleZoomPhoto().jpegData(compressionQuality: 1) else { return }
 
     Storage.storage()
       .reference()
@@ -253,7 +255,7 @@ class FirebaseManager2: NSObject {
   func savePhotoListData(placeID: String, photoList: [MobilePhotoModel], complectionHandler: @escaping (_ error: Error?) -> Void) {
     for i in 0..<photoList.count {
       let filePath = "Photos/\(placeID)/\(Date.timeIntervalSinceReferenceDate).jpg"
-      guard let data = photoList[i].image?.jpegData(compressionQuality: 1) else { continue }
+      guard let data = photoList[i].image?.scaleZoomPhoto().jpegData(compressionQuality: 1) else { continue }
       Storage.storage().reference()
         .child(filePath)
         .putData(data, metadata: nil) { [weak self] (_, error) in

@@ -86,6 +86,10 @@ extension LoginViewController: LoginDelegate {
 // MARK: - LoginPresentDelegate
 
 extension LoginViewController: LoginPresentDelegate {
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
+    showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
+  }
+
   func presentToMainVC() {
     present(TATabbarController(), animated: true, completion: nil)
   }

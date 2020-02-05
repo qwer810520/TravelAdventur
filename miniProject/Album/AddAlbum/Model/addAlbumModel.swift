@@ -9,17 +9,27 @@
 import UIKit
 
 struct AddAlbumModel {
-    var id: String
-    var title: String
-    var startTime: Double
-    var day: Int
-    var coverPhoto: UIImage?
-    
-    init() {
-        self.id = ""
-        self.title = ""
-        self.startTime = 0.0
-        self.day = 0
-        self.coverPhoto = nil
+  var id: String
+  var title: String
+  var startTime: Double
+  var day: Int
+  var coverPhoto: UIImage?
+
+  init() {
+    self.id = ""
+    self.title = ""
+    self.startTime = Date().timeIntervalSince1970
+    self.day = 1
+    self.coverPhoto = nil
+  }
+
+  func checkFormatter() throws {
+    guard !title.isEmpty else {
+      throw TAError.other("請輸入相簿名稱")
     }
+
+    guard coverPhoto != nil else {
+      throw TAError.other("請選擇封面相片")
+    }
+  }
 }

@@ -55,7 +55,7 @@ class LoginPresenter: NSObject {
         case .success:
           self?.getUserProfile()
         case .failure:
-          self?.delegate?.presentAlert(with: "登入失敗")
+          self?.delegate?.presentAlert(with: "登入失敗", message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)
       }
     }
   }
@@ -67,7 +67,7 @@ class LoginPresenter: NSObject {
         case .success:
           self?.delegate?.presentToMainVC()
         case .failure(let error):
-          self?.delegate?.presentAlert(with: error.localizedDescription)
+          self?.delegate?.presentAlert(with: error.localizedDescription, message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)
       }
     }
   }
@@ -119,7 +119,7 @@ class LoginPresenter: NSObject {
               errorMessage = error.localizedDescription
           }
           OperationQueue.main.addOperation {
-            self?.delegate?.presentAlert(with: errorMessage)
+            self?.delegate?.presentAlert(with: errorMessage, message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)
         }
       }
     }

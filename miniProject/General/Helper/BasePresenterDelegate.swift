@@ -9,7 +9,8 @@
 import UIKit
 
 protocol BasePresenterDelegate: class {
-  func presentAlert(with title: String)
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?)
+  func refreshUI()
   func showIndicator()
   func dismissIndicator()
 }
@@ -26,4 +27,6 @@ extension BasePresenterDelegate {
       TAIndicator.dismiss()
     }
   }
+
+  func refreshUI() { }
 }

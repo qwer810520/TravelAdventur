@@ -9,226 +9,194 @@
 import UIKit
 
 protocol AddAlbumDelegate: class {
-    func addAlbumButtonDidPressed()
-    func addAlbumCoverButtonDidPressed()
+  func addAlbumButtonDidPressed()
+  func nameTextFieldEditingChanged(with text: String)
+  func didSelectDateOption(with date: TimeInterval)
+  func didSelectDateDay(with day: Int)
+  func addAlbumCoverPhotoButtonDidPressed()
 }
 
 class AddAlbumBackgroundView: UIView {
-    weak var delegate: AddAlbumDelegate?
-    weak var textFieldDelegate: UITextFieldDelegate?
-    
-    init(delegate: AddAlbumDelegate? = nil, textFieldDelegate: UITextFieldDelegate? = nil) {
-        self.delegate = delegate
-        self.textFieldDelegate = textFieldDelegate
-        super.init(frame: .zero)
-        setUserInterface()
+
+  lazy private var addAlbumCoverPhotoButton: UIButton = {
+    let button = UIButton(type: .system)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle(nil, for: .normal)
+    button.imageView?.contentMode = .scaleAspectFit
+    button.layer.cornerRadius = 5
+    button.layer.shadowOffset = CGSize(width: 5, height: 5)
+    button.layer.shadowOpacity = 0.3
+    button.layer.shadowRadius = 10
+    button.layer.shadowColor = UIColor.black.cgColor
+    button.clipsToBounds = true
+    button.addTarget(self, action: #selector(addAlbumCoverPhotoButtonDidPressed), for: .touchUpInside)
+    return button
+  }()
+
+  lazy private(set) var inputBackgroundView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .white
+    view.layer.shadowOffset = CGSize(width: 5, height: 5)
+    view.layer.shadowOpacity = 0.3
+    view.layer.shadowRadius = 10
+    view.layer.shadowColor = UIColor.black.cgColor
+    view.layer.cornerRadius = 5
+    return view
+  }()
+
+  lazy private var nameInputTextField: AddAlbumNameInputView = {
+     return AddAlbumNameInputView(delegate: self)
+   }()
+
+   lazy private(set) var dateInputTextField: AddAlbumDateOptionView = {
+     return AddAlbumDateOptionView(type: .date, dayOptionList: [], delegate: self)
+   }()
+
+   lazy private(set) var dayInputTextFidld: AddAlbumDateOptionView = {
+     return AddAlbumDateOptionView(type: .day, dayOptionList: dayOptionList, delegate: self)
+   }()
+
+   lazy private var addButton: UIButton = {
+     let button = UIButton(type: .system)
+     button.translatesAutoresizingMaskIntoConstraints = false
+     button.setTitle("Add", for: .normal)
+     button.titleLabel?.font = .navigationTitleFont
+     button.tintColor = .white
+     button.layer.cornerRadius = 5
+     button.backgroundColor = .pinkPeacock
+     button.addTarget(self, action: #selector(addAlbumButtonDidPressed), for: .touchUpInside)
+     return button
+   }()
+
+  weak var delegate: AddAlbumDelegate?
+  private(set) var didEditingTextFieldType: AddAlbumDateType = .none
+  private var dayOptionList = [Int]()
+
+  init(dayOptionList: [Int], delegate: AddAlbumDelegate? = nil) {
+    self.dayOptionList = dayOptionList
+    self.delegate = delegate
+    super.init(frame: .zero)
+    setUserInterface()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func setAlbumInfo(with info: AddAlbumModel) {
+    dateInputTextField.setInfo(with: info)
+    dayInputTextFidld.setInfo(with: info)
+    switch info.coverPhoto {
+      case .some(let image):
+        addAlbumCoverPhotoButton.setImage(nil, for: .normal)
+        addAlbumCoverPhotoButton.setBackgroundImage(image, for: .normal)
+      case .none:
+        addAlbumCoverPhotoButton.setImage("addAlbum_albumCover_Icon".toImage, for: .normal)
+        addAlbumCoverPhotoButton.setBackgroundImage(nil, for: .normal)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - private method
-    
-    private func setUserInterface() {
-        translatesAutoresizingMaskIntoConstraints = false
-        setAutoLayout()
-    }
-    
-    private func setAutoLayout() {
-        addSubview(backgroundImage)
-        backgroundImage.addSubviews([blurEffect, nameTextField, startDateTitleLabel, startTiemTextField, dayTitleLabel, selectDayTextField, addButton, addAlbumCoverPhotoButton, albumCoverPhotoImageView])
-        albumCoverPhotoImageView.addSubview(addAlbumCoverPhotoButton)
-        
-        let views: JSONDictionary = ["backgroundImage": backgroundImage, "blurEffect": blurEffect, "nameTextField": nameTextField, "startTiemTextField": startTiemTextField, "startDateTitleLabel": startDateTitleLabel, "dayTitleLabel": dayTitleLabel, "selectDayTextField": selectDayTextField, "addButton": addButton, "addAlbumCoverPhotoButton": addAlbumCoverPhotoButton, "albumCoverPhotoImageView": albumCoverPhotoImageView]
-        
-        addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[backgroundImage]|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[backgroundImage]|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[blurEffect]|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[blurEffect]|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[nameTextField]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[startDateTitleLabel]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[startTiemTextField]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[dayTitleLabel]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[selectDayTextField]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-40-[addButton]-40-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-60-[albumCoverPhotoImageView]-60-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        backgroundImage.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-20-[nameTextField(40)]-20-[startDateTitleLabel(30)]-5-[startTiemTextField(==nameTextField)]-20-[dayTitleLabel(==startDateTitleLabel)]-5-[selectDayTextField(==nameTextField)]-20-[albumCoverPhotoImageView]-70-[addButton(50)]-50-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        albumCoverPhotoImageView
-            .addConstraints(NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|[addAlbumCoverPhotoButton]|",
-                options: [],
-                metrics: nil,
-                views: views))
-        
-        albumCoverPhotoImageView
-            .addConstraints(NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|[addAlbumCoverPhotoButton]|",
-                options: [],
-                metrics: nil,
-                views: views))
-    }
-    
-    // MARK: - init Element
-    
-    lazy var addAlbumCoverPhotoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(addCoverPhotoButtonDidPressed), for: .touchUpInside)
-        button.setImage(UIImage(named: "AddAlbum_NormalAlbumPhoto"), for: .normal)
-        button.tintColor = .pinkPeacock
-        return button
-    }()
-    
-    lazy var albumCoverPhotoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
-    
-    lazy private var backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.isUserInteractionEnabled = true
-        imageView.image = UIImage(named: "addPlace")
-        return imageView
-    }()
-    
-    lazy private var blurEffect: UIVisualEffectView = {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var nameTextField: UITextField = {
-        let view = UITextField()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.borderStyle = .roundedRect
-        view.tintColor = .pinkPeacock
-        view.textAlignment = .center
-        view.placeholder = "請輸入行程名稱"
-        view.delegate = textFieldDelegate
-        return view
-    }()
-    
-    lazy private var startDateTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "出發日期："
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16.0)
-        return label
-    }()
-    
-    lazy var startTiemTextField: UITextField = {
-        let view = UITextField()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.borderStyle = .roundedRect
-        view.textAlignment = .center
-        return view
-    }()
-    
-    lazy private var dayTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "天數："
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16.0)
-        return label
-    }()
-    
-    lazy var selectDayTextField: UITextField = {
-        let view = UITextField()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.borderStyle = .roundedRect
-        view.textAlignment = .center
-        return view
-    }()
-    
-    lazy private var addButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Add", for: .normal)
-        button.titleLabel?.font = .navigationTitleFont
-        button.tintColor = .white
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .pinkPeacock
-        button.addTarget(self, action: #selector(addAlbumButtonDidPressed), for: .touchUpInside)
-        return button
-    }()
-    
-    // MARK: - Action Method
-    
-    @objc private func addAlbumButtonDidPressed() {
-        guard let delegate = self.delegate else { return }
-        delegate.addAlbumButtonDidPressed()
-    }
-    
-    @objc private func addCoverPhotoButtonDidPressed() {
-        guard let delegate = self.delegate else { return }
-        delegate.addAlbumCoverButtonDidPressed()
-    }
+  }
+
+  // MARK: - Private Methods
+
+  private func setUserInterface() {
+    translatesAutoresizingMaskIntoConstraints = false
+    setAutoLayout()
+  }
+
+  private func setAutoLayout() {
+    addSubviews([inputBackgroundView, addButton, addAlbumCoverPhotoButton])
+
+    inputBackgroundView.addSubviews([nameInputTextField, dateInputTextField, dayInputTextFidld])
+
+    let views: [String: Any] = ["addAlbumCoverPhotoButton": addAlbumCoverPhotoButton, "backgroundView": inputBackgroundView, "addButton": addButton, "nameInputTextField": nameInputTextField, "dateInputTextField": dateInputTextField, "dayInputTextFidld": dayInputTextFidld]
+
+    inputBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[nameInputTextField]|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    inputBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[dateInputTextField]|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    inputBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[dayInputTextFidld]|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    inputBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|-5-[nameInputTextField(==dayInputTextFidld)][dateInputTextField(==nameInputTextField)][dayInputTextFidld(==dateInputTextField)]-5-|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|-20-[addAlbumCoverPhotoButton]-20-|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|-20-[backgroundView]-20-|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|-20-[addButton]-20-|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|-20-[addAlbumCoverPhotoButton(180)]-20-[backgroundView(195)]-40-[addButton(40)]",
+      options: [],
+      metrics: nil,
+      views: views))
+
+  }
+
+  // MARK: - Action Method
+
+  @objc private func addAlbumButtonDidPressed() {
+    guard let delegate = delegate else { return }
+    delegate.addAlbumButtonDidPressed()
+  }
+
+  @objc private func addAlbumCoverPhotoButtonDidPressed() {
+    delegate?.addAlbumCoverPhotoButtonDidPressed()
+  }
+}
+
+  // MARK: - AddAlbumNameInputDelegate
+
+extension AddAlbumBackgroundView: AddAlbumNameInputDelegate {
+  func nameInputEditingBegin() {
+    didEditingTextFieldType = .none
+  }
+
+  func nameInputTextFieldEditingChanged(with text: String) {
+    delegate?.nameTextFieldEditingChanged(with: text)
+  }
+}
+
+  // MARK: - AddAlbumDateOptionDelegate
+
+extension AddAlbumBackgroundView: AddAlbumDateOptionDelegate {
+  func textFieldEditingDidBegin(with type: AddAlbumDateType) {
+    didEditingTextFieldType = type
+  }
+
+  func didSelectDateOption(with date: TimeInterval) {
+    delegate?.didSelectDateOption(with: date)
+  }
+
+  func didSelectDayOption(with day: Int) {
+    delegate?.didSelectDateDay(with: day)
+  }
 }

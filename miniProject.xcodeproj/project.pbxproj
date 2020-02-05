@@ -33,6 +33,9 @@
 		3949955521351D0E00853992 /* QRCodeTearderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3949955421351D0E00853992 /* QRCodeTearderViewController.swift */; };
 		3954A4AD23E91C000062121F /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954A4AC23E91C000062121F /* MainPresenter.swift */; };
 		3954A4AF23E922BD0062121F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954A4AE23E922BD0062121F /* MainView.swift */; };
+		3954A4B223E94EFD0062121F /* AddAlbumNameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954A4B123E94EFC0062121F /* AddAlbumNameInputView.swift */; };
+		3954A4B423E9521D0062121F /* AddAlbumDateOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954A4B323E9521D0062121F /* AddAlbumDateOptionView.swift */; };
+		3954A4B723E998B10062121F /* AddAlbumPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954A4B623E998B10062121F /* AddAlbumPresenter.swift */; };
 		396C01301E880F4400BF57F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C012F1E880F4400BF57F6 /* MapKit.framework */; };
 		397932FA2130787D000BB774 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932F92130787D000BB774 /* LocationViewController.swift */; };
 		397932FE213083B1000BB774 /* LocationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397932FD213083B1000BB774 /* LocationMapView.swift */; };
@@ -90,6 +93,9 @@
 		3949955421351D0E00853992 /* QRCodeTearderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeTearderViewController.swift; sourceTree = "<group>"; };
 		3954A4AC23E91C000062121F /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		3954A4AE23E922BD0062121F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		3954A4B123E94EFC0062121F /* AddAlbumNameInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumNameInputView.swift; sourceTree = "<group>"; };
+		3954A4B323E9521D0062121F /* AddAlbumDateOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumDateOptionView.swift; sourceTree = "<group>"; };
+		3954A4B623E998B10062121F /* AddAlbumPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumPresenter.swift; sourceTree = "<group>"; };
 		396C012F1E880F4400BF57F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		397932F92130787D000BB774 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		397932FD213083B1000BB774 /* LocationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapView.swift; sourceTree = "<group>"; };
@@ -391,6 +397,23 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		3954A4B023E94EBA0062121F /* Element */ = {
+			isa = PBXGroup;
+			children = (
+				3954A4B123E94EFC0062121F /* AddAlbumNameInputView.swift */,
+				3954A4B323E9521D0062121F /* AddAlbumDateOptionView.swift */,
+			);
+			path = Element;
+			sourceTree = "<group>";
+		};
+		3954A4B523E9989A0062121F /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				3954A4B623E998B10062121F /* AddAlbumPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		397932F221307835000BB774 /* Location */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +471,7 @@
 		397E7DC62128961E00A2B07A /* AddAlbum */ = {
 			isa = PBXGroup;
 			children = (
+				3954A4B523E9989A0062121F /* Presenter */,
 				397E7DCD2128971300A2B07A /* Model */,
 				397E7DCA212896AD00A2B07A /* View */,
 				397E7DC72128961E00A2B07A /* ViewController */,
@@ -466,6 +490,7 @@
 		397E7DCA212896AD00A2B07A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3954A4B023E94EBA0062121F /* Element */,
 				397E7DCB2128970F00A2B07A /* AddAlbumBackgroundView.swift */,
 			);
 			path = View;
@@ -875,9 +900,11 @@
 				39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */,
 				397932FA2130787D000BB774 /* LocationViewController.swift in Sources */,
 				39CEC1FB2134E69B00E0A5B6 /* SearchQRcodeOrTouchIDTableViewCell.swift in Sources */,
+				3954A4B223E94EFD0062121F /* AddAlbumNameInputView.swift in Sources */,
 				393D6FC9213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift in Sources */,
 				3979330221314D91000BB774 /* AddPlaceViewController.swift in Sources */,
 				3930BF6220FC38F200A39CAF /* ParentViewController.swift in Sources */,
+				3954A4B423E9521D0062121F /* AddAlbumDateOptionView.swift in Sources */,
 				39CEC1F92134E5B300E0A5B6 /* BlankTableViewCell.swift in Sources */,
 				391264FB212FAA96001E3EB7 /* MainViewController.swift in Sources */,
 				3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */,
@@ -896,6 +923,7 @@
 				393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */,
 				3954A4AD23E91C000062121F /* MainPresenter.swift in Sources */,
 				3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */,
+				3954A4B723E998B10062121F /* AddAlbumPresenter.swift in Sources */,
 				397E7DCF2128972300A2B07A /* addAlbumModel.swift in Sources */,
 				393D6FD02134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift in Sources */,
 				397E7DC3212893D400A2B07A /* UserDefaultKey.swift in Sources */,

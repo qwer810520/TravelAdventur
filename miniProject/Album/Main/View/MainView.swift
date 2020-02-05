@@ -39,6 +39,11 @@ class MainView: UIView {
     button.setImage("Main_addAlbumBtn_Icon".toImage, for: .normal)
     button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     button.addTarget(self, action: #selector(addButtonDidPressed), for: .touchUpInside)
+    button.layer.cornerRadius = 20
+    button.layer.shadowOffset = CGSize(width: 5, height: 5)
+    button.layer.shadowOpacity = 0.6
+    button.layer.shadowRadius = 5
+    button.layer.shadowColor = UIColor.lightGray.cgColor
     return button
   }()
 
