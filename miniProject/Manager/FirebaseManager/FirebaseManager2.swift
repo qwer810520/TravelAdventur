@@ -175,15 +175,17 @@ class FirebaseManager2: NSObject {
 
   // MARK: - Place API Method
 
-  func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (_ error: Error?) -> Void) {
+  func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
     let id = placeManager.document().documentID
     let parameters = ["albumID": albumid, "placeID": id, "name": placeData.placeName, "latitude": placeData.latitude, "longitude": placeData.longitude, "time": placeData.time] as JSONDictionary
     placeManager.document(id).setData(parameters) { (error) in
       guard error == nil else {
-        complectionHandler(error)
+        if let error = error {
+          complectionHandler(.failure(error))
+        }
         return
       }
-      complectionHandler(nil)
+      complectionHandler(.success(true))
     }
   }
 

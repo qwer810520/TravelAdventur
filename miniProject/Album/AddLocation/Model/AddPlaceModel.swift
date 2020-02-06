@@ -9,15 +9,21 @@
 import UIKit
 
 struct AddPlaceModel {
-    var placeName: String
-    var latitude: Double
-    var longitude: Double
-    var time: Double
-    
-    init() {
-        self.placeName = ""
-        self.latitude = 0.0
-        self.longitude = 0.0
-        self.time = 0.0
+  var placeName: String
+  var latitude: Double
+  var longitude: Double
+  var time: Double
+
+  init() {
+    self.placeName = ""
+    self.latitude = 0.0
+    self.longitude = 0.0
+    self.time = 0.0
+  }
+
+  func checkPlaceInfoIsEqual() throws {
+    guard !placeName.isEmpty else {
+      throw TAError.other("請選擇拍照地點")
     }
+  }
 }

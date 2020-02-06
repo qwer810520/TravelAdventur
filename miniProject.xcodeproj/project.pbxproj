@@ -56,6 +56,8 @@
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
 		39BDFA20233DE3F800BABE4C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39BDFA1F233DE3F800BABE4C /* GoogleService-Info.plist */; };
+		39CBAAF623EBA65800C4A1D0 /* AddPlaceInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CBAAF523EBA65800C4A1D0 /* AddPlaceInputView.swift */; };
+		39CBAB2523EBF1BF00C4A1D0 /* AddPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CBAB2423EBF1BF00C4A1D0 /* AddPlacePresenter.swift */; };
 		39CEC1F52134DF7600E0A5B6 /* UserMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F42134DF7600E0A5B6 /* UserMainViewController.swift */; };
 		39CEC1F72134E27F00E0A5B6 /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F62134E27F00E0A5B6 /* ShowProfileTableViewCell.swift */; };
 		39CEC1F92134E5B300E0A5B6 /* BlankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F82134E5B300E0A5B6 /* BlankTableViewCell.swift */; };
@@ -121,6 +123,8 @@
 		39B916011E84127C0093E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39BDFA1F233DE3F800BABE4C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		39BDFA21233DEDE300BABE4C /* miniProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = miniProject.entitlements; sourceTree = "<group>"; };
+		39CBAAF523EBA65800C4A1D0 /* AddPlaceInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceInputView.swift; sourceTree = "<group>"; };
+		39CBAB2423EBF1BF00C4A1D0 /* AddPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlacePresenter.swift; sourceTree = "<group>"; };
 		39CEC1F42134DF7600E0A5B6 /* UserMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMainViewController.swift; sourceTree = "<group>"; };
 		39CEC1F62134E27F00E0A5B6 /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		39CEC1F82134E5B300E0A5B6 /* BlankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankTableViewCell.swift; sourceTree = "<group>"; };
@@ -456,6 +460,7 @@
 		397932FF21314D91000BB774 /* AddLocation */ = {
 			isa = PBXGroup;
 			children = (
+				39CBAB2323EBF1A900C4A1D0 /* Presenter */,
 				39AF887621329F6A0081B356 /* Model */,
 				3979330321314E1B000BB774 /* View */,
 				3979330021314D91000BB774 /* ViewController */,
@@ -474,6 +479,7 @@
 		3979330321314E1B000BB774 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				39CBAAF423EBA64500C4A1D0 /* Element */,
 				3979330421314E2D000BB774 /* AddPlaceView.swift */,
 			);
 			path = View;
@@ -613,6 +619,22 @@
 				39B7AFAF2101F39A0021E11B /* miniProject-Bridging-Header.h */,
 			);
 			path = miniProject;
+			sourceTree = "<group>";
+		};
+		39CBAAF423EBA64500C4A1D0 /* Element */ = {
+			isa = PBXGroup;
+			children = (
+				39CBAAF523EBA65800C4A1D0 /* AddPlaceInputView.swift */,
+			);
+			path = Element;
+			sourceTree = "<group>";
+		};
+		39CBAB2323EBF1A900C4A1D0 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				39CBAB2423EBF1BF00C4A1D0 /* AddPlacePresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		39CEC1ED2134DF1200E0A5B6 /* User */ = {
@@ -848,7 +870,6 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/abseil/absl.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
@@ -868,7 +889,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/absl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
@@ -906,11 +926,13 @@
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
 				39359963212E994600D305DC /* TAToolBar.swift in Sources */,
 				39B7AFAE2101F3720021E11B /* FirebaseManager2.swift in Sources */,
+				39CBAB2523EBF1BF00C4A1D0 /* AddPlacePresenter.swift in Sources */,
 				3930BF5420FC316F00A39CAF /* LoginBackgroundView.swift in Sources */,
 				391264FD212FABD9001E3EB7 /* AlbumModel.swift in Sources */,
 				39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */,
 				397932FA2130787D000BB774 /* LocationViewController.swift in Sources */,
 				39CEC1FB2134E69B00E0A5B6 /* SearchQRcodeOrTouchIDTableViewCell.swift in Sources */,
+				39CBAAF623EBA65800C4A1D0 /* AddPlaceInputView.swift in Sources */,
 				3954A4B223E94EFD0062121F /* AddAlbumNameInputView.swift in Sources */,
 				393D6FC9213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift in Sources */,
 				3979330221314D91000BB774 /* AddPlaceViewController.swift in Sources */,

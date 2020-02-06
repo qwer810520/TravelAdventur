@@ -43,6 +43,7 @@ class AddAlbumQRCodeView: UIView {
 
   private func setUserInterface() {
     translatesAutoresizingMaskIntoConstraints = false
+    backgroundColor = .white
     addSubview(qrcodeImageView)
     setUpAutoLayout()
   }

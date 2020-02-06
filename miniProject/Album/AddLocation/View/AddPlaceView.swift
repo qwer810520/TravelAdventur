@@ -7,137 +7,133 @@
 //
 
 import UIKit
+import GooglePlaces
 
 protocol AddPlaceDelegate: class {
-    func addPlaceButtonDidPressed()
+  func addPlaceButtonDidPressed()
+  func placeTextFieldEditingBegin()
+  func didSelectDate(with date: TimeInterval)
 }
 
 class AddPlaceView: UIView {
-    weak var delegate: AddPlaceDelegate?
-    
-    init(delegate: AddPlaceDelegate? = nil) {
-        self.delegate = delegate
-        super.init(frame: .zero)
-        setUserInterface()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - private method
-    
-    private func setUserInterface() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .clear
-        setAutoLayout()
-        
-    }
-    
-    private func setAutoLayout() {
-        self.addSubviews([blurEffect, selectLocationTextField, photoDayTitleLabel, selectPhotoDayTextField, addButton])
-        
-        let views: [String: Any] = ["blurEffect": blurEffect, "selectLocationTextField": selectLocationTextField, "photoDayTitleLabel": photoDayTitleLabel, "selectPhotoDayTextField": selectPhotoDayTextField, "addButton": addButton]
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[blurEffect]|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[blurEffect]|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[selectLocationTextField]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[photoDayTitleLabel]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[selectPhotoDayTextField]-20-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-40-[addButton]-40-|",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-20-[selectLocationTextField(40)]-20-[photoDayTitleLabel(30)]-5-[selectPhotoDayTextField(==selectLocationTextField)]",
-            options: [],
-            metrics: nil,
-            views: views))
-        
-        self.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[addButton(50)]-50-|",
-            options: [],
-            metrics: nil,
-            views: views))
-    }
-    
-    // MARK: - init Element
-    
-    lazy private var blurEffect: UIVisualEffectView = {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var selectLocationTextField: UITextField = {
-        let view = UITextField()
-        view.placeholder = "請輸入拍照地點"
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.borderStyle = .roundedRect
-        view.textAlignment = .center
-        return view
-    }()
-    
-    lazy private var photoDayTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "拍照日期："
-        label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = .white
-        return label
-    }()
-    
-    lazy var selectPhotoDayTextField: UITextField = {
-        let view = UITextField()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.borderStyle = .roundedRect
-        view.textAlignment = .center
-        return view
-    }()
-    
-    lazy private var addButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Add", for: .normal)
-        button.titleLabel?.font = .navigationTitleFont
-        button.tintColor = .white
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .pinkPeacock
-        button.addTarget(self, action: #selector(addPlaceButtonDidPressed), for: .touchUpInside)
-        return button
-    }()
-    
-    // MARK: - Action method
-    
-    @objc private func addPlaceButtonDidPressed() {
-        guard let delegate = delegate else { return }
-        delegate.addPlaceButtonDidPressed()
-    }
+
+  lazy private var inputBackgroundView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .white
+    view.layer.shadowOffset = CGSize(width: 5, height: 5)
+    view.layer.shadowOpacity = 0.3
+    view.layer.shadowRadius = 10
+    view.layer.shadowColor = UIColor.black.cgColor
+    view.layer.cornerRadius = 5
+    return view
+  }()
+
+  lazy private var placeInputTextField: AddPlaceInputView = {
+    return AddPlaceInputView(viewType: .place, delegate: self)
+  }()
+
+  lazy private var dateInputTextField: AddPlaceInputView = {
+    return AddPlaceInputView(viewType: .date, delegate: self)
+  }()
+
+  lazy private var addButton: UIButton = {
+    let button = UIButton(type: .system)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("Add", for: .normal)
+    button.titleLabel?.font = .navigationTitleFont
+    button.tintColor = .white
+    button.layer.cornerRadius = 10
+    button.backgroundColor = .pinkPeacock
+    button.addTarget(self, action: #selector(addPlaceButtonDidPressed), for: .touchUpInside)
+    return button
+  }()
+
+  weak var delegate: AddPlaceDelegate?
+
+  // MARK: - Initialization
+
+  init(delegate: AddPlaceDelegate? = nil) {
+    self.delegate = delegate
+    super.init(frame: .zero)
+    setUserInterface()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func setInfo(with albumInfo: AlbumModel, placeInfo: AddPlaceModel) {
+    placeInputTextField.setInfo(with: albumInfo, placeInfo: placeInfo)
+    dateInputTextField.setInfo(with: albumInfo, placeInfo: placeInfo)
+  }
+
+  // MARK: - Private method
+
+  private func setUserInterface() {
+    translatesAutoresizingMaskIntoConstraints = false
+    backgroundColor = .clear
+    addSubviews([inputBackgroundView, addButton])
+    inputBackgroundView.addSubviews([placeInputTextField, dateInputTextField])
+    setUpAutoLayout()
+  }
+
+  private func setUpAutoLayout() {
+    let views: [String: Any] = ["inputBackgroundView": inputBackgroundView, "addButton": addButton, "placeInputTextField": placeInputTextField, "dateInputTextField": dateInputTextField]
+
+    inputBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[placeInputTextField]|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    inputBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[dateInputTextField]|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    inputBackgroundView.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|-5-[placeInputTextField(==dateInputTextField)][dateInputTextField(==placeInputTextField)]-5-|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|-20-[inputBackgroundView]-20-|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|-20-[addButton]-20-|",
+      options: [],
+      metrics: nil,
+      views: views))
+
+    addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|-20-[inputBackgroundView(130)]-40-[addButton(40)]",
+      options: [],
+      metrics: nil,
+      views: views))
+  }
+
+  // MARK: - Action methods
+
+  @objc private func addPlaceButtonDidPressed() {
+    guard let delegate = delegate else { return }
+    delegate.addPlaceButtonDidPressed()
+  }
+}
+
+  // MARK: - AddPlaceInputDelegate
+
+extension AddPlaceView: AddPlaceInputDelegate {
+  func placeTextFieldEditingBegin() {
+    delegate?.placeTextFieldEditingBegin()
+  }
+
+  func didSelectDate(with date: TimeInterval) {
+    delegate?.didSelectDate(with: date)
+  }
 }

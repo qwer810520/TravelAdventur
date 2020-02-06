@@ -11,121 +11,99 @@ import GoogleMaps
 import GooglePlaces
 
 class AddPlaceViewController: ParentViewController {
-    
-    var album: AlbumModel?
-    private var addPlaceData = AddPlaceModel()
-    
-    lazy var addPlaceView: AddPlaceView = {
-        return AddPlaceView(delegate: self)
-    }()
-    
-    lazy private var datePickerView: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.locale = Locale(identifier: "Chinese")
-        return datePicker
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUserInterface()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    // MARK: - private Method
-    
-    private func setUserInterface() {
-        setNavigation(title: "Add Place", barButtonType: .dismiss_)
-        view.backgroundColor = .clear
-        
-        view.addSubview(addPlaceView)
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[addPlaceView]|",
-            options: [],
-            metrics: nil,
-            views: ["addPlaceView": addPlaceView]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(navigationHeight)-[addPlaceView]|",
-            options: [],
-            metrics: nil,
-            views: ["addPlaceView": addPlaceView]))
-        
-        setTextField()
-    }
-    
-    private func setTextField() {
-        addPlaceView.selectLocationTextField.addTarget(self, action: #selector(setSearchPlaceVC), for: .editingDidBegin)
-        addPlaceView.selectLocationTextField.inputView = nil
-        guard let album = album else { return }
-        datePickerView.minimumDate = Date(timeIntervalSince1970: album.startTime)
-        datePickerView.maximumDate = Date(timeIntervalSince1970: album.startTime.calculationEndTimeInterval(with: album.day))
-        addPlaceData.time = album.startTime
-        datePickerView.date = Date(timeIntervalSince1970: album.startTime)
-        addPlaceView.selectPhotoDayTextField.text = album.startTime.dateToString(type: .all)
-        addPlaceView.selectPhotoDayTextField.inputView = datePickerView
-        addPlaceView.selectPhotoDayTextField.tintColor = .clear
-        addPlaceView.selectPhotoDayTextField.inputAccessoryView = TAToolBar(cancelAction: { [weak self] in
-                self?.addPlaceView.selectPhotoDayTextField
-                    .resignFirstResponder()
-            }, checkAction: { [weak self] in
-                self?.addPlaceData.time = self?.datePickerView.date.timeIntervalSince1970 ?? 0.0
-                self?.addPlaceView.selectPhotoDayTextField.text = (self?.addPlaceData.time ?? 0.0).dateToString(type: .all)
-                self?.addPlaceView.selectPhotoDayTextField
-                    .resignFirstResponder()
-            })
-    }
-    
-    // MARK: - Action Method
-    
-    @objc private func setSearchPlaceVC() {
-        let searchPlaceVC = SearchPlaceViewController()
-        searchPlaceVC.delegate = self
-        present(searchPlaceVC, animated: true, completion: nil)
-    }
+
+  var album: AlbumModel?
+  private var presenter: AddPlacePresenter?
+
+  lazy var addPlaceView: AddPlaceView = {
+    return AddPlaceView(delegate: self)
+  }()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    presenter = AddPlacePresenter(albumInfo: album ?? AlbumModel(), delegate: self)
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    setUserInterface()
+  }
+
+  // MARK: - private Method
+
+  private func setUserInterface() {
+    setNavigation(title: "Add Place", barButtonType: .dismiss_)
+
+    view.addSubview(addPlaceView)
+    setUpAutoLayout()
+
+    refreshUI()
+  }
+
+  private func setUpAutoLayout() {
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[addPlaceView]|",
+      options: [],
+      metrics: nil,
+      views: ["addPlaceView": addPlaceView]))
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|-[addPlaceView]|",
+      options: [],
+      metrics: nil,
+      views: ["addPlaceView": addPlaceView]))
+  }
 }
 
-    // MARK: - AddPlaceDelegate
+  // MARK: - AddPlaceDelegate
 
 extension AddPlaceViewController: AddPlaceDelegate {
-    func addPlaceButtonDidPressed() {
-        guard !addPlaceData.placeName.isEmpty, let album = album else {
-            showAlert(title: "請選擇拍照地點")
-            return
-        }
-        startLoading()
-        FirebaseManager2.shared.addNewPlaceData(albumid: album.id, placeData: addPlaceData) { [weak self] (error) in
-            self?.stopLoading()
-            guard error == nil else {
-                self?.showAlert(title: error?.localizedDescription ?? "")
-                return
-            }
-            self?.dismiss(animated: true, completion: nil)
-        }
-    }
+  func placeTextFieldEditingBegin() {
+    let searchPlaceVC = SearchPlaceViewController()
+    searchPlaceVC.delegate = self
+    present(searchPlaceVC, animated: true, completion: nil)
+  }
+
+  func didSelectDate(with date: TimeInterval) {
+    presenter?.setDateInfo(with: date)
+  }
+
+  func addPlaceButtonDidPressed() {
+    presenter?.addNewPlaceInfo()
+  }
 }
 
-    // MARK: - GMSAutocompleteViewControllerDelegate
+  // MARK: - AddPlacePresenterDelegate
+
+extension AddPlaceViewController: AddPlacePresenterDelegate {
+  func dismiss() {
+    dismiss(animated: true, completion: nil)
+  }
+
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
+    showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
+  }
+
+  func refreshUI() {
+    guard let presenter = presenter else { return }
+    addPlaceView.setInfo(with: presenter.albumInfo, placeInfo: presenter.addPlaceInfo)
+  }
+}
+
+  // MARK: - GMSAutocompleteViewControllerDelegate
 
 extension AddPlaceViewController: GMSAutocompleteViewControllerDelegate {
-    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        addPlaceView.selectLocationTextField.text = place.name
-        addPlaceData.placeName = place.name ?? ""
-        addPlaceData.longitude = place.coordinate.longitude
-        addPlaceData.latitude = place.coordinate.latitude
+  func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+    presenter?.setPlaceInfo(with: place.name ?? "", longitude: place.coordinate.longitude, latitude: place.coordinate.latitude)
     
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        showAlert(title: error.localizedDescription)
-    }
+    dismiss()
+  }
 
-    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-        dismiss(animated: true, completion: nil)
-    }
+  func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+    showAlert(title: error.localizedDescription)
+  }
+
+  func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+    dismiss()
+  }
 }

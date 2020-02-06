@@ -23,7 +23,7 @@ class TANavigationController: UINavigationController {
         return .lightContent
     }
     
-    // MARK: - private Method
+    // MARK: - Private methods
     
     private func setUserInterface() {
         navigationBar.tintColor = .white

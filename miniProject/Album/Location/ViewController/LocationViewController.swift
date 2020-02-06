@@ -116,10 +116,10 @@ class LocationViewController: ParentViewController {
   }
 
   override func addButtonDidPressed() {
-    let vc = TANavigationController(rootViewController: AddPlaceViewController())
-    guard let rootVC = vc.viewControllers.first as? AddPlaceViewController else { return }
-    rootVC.album = selectAlbum
-    present(vc, animated: true, completion: nil)
+    let addPlaceVC = AddPlaceViewController()
+    addPlaceVC.album = selectAlbum
+    let navigation = TANavigationController(rootViewController: addPlaceVC)
+    present(navigation, animated: true, completion: nil)
   }
 }
 
