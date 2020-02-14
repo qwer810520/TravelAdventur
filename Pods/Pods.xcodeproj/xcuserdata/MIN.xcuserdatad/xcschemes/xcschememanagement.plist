@@ -149,6 +149,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Nuke.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-miniProject.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -159,17 +164,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SDWebImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SwiftLint.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>TRMosaicLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

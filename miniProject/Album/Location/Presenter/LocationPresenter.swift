@@ -39,7 +39,9 @@ class LocationPresenter: NSObject {
           self?.delegate?.presentAlert(with: error.localizedDescription, message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)
         case .success(let infoList):
           self?.placeList = infoList
-          self?.placeList[0].isMark = true
+          if !infoList.isEmpty {
+            self?.placeList[0].isMark = true
+          }
           self?.delegate?.refreshUI()
       }
     }

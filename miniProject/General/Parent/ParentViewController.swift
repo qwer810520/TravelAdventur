@@ -14,7 +14,8 @@ enum NaviBarButtonType {
   case none
   case _add
   case dismiss_
-  case back_add
+  case back_addPlace
+  case back_addPhoto
   case back_
 }
 
@@ -32,8 +33,6 @@ class ParentViewController: UIViewController {
   var tabbarHeight: CGFloat {
     return tabBarController?.tabBar.frame.height ?? 0
   }
-
-  private let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
   private let loadingBackgroudView: UIView = {
     let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -102,16 +101,17 @@ class ParentViewController: UIViewController {
     navigationItem.rightBarButtonItem = nil
     navigationItem.leftBarButtonItem = nil
     let backItem = UIBarButtonItem(image: "BarButtonItem_backIcon", target: self, action: #selector(popButtonDidPressed))
-    let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonDidPressed))
-
     switch barButtonType {
       case ._add:
-        navigationItem.rightBarButtonItem = addItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonDidPressed))
       case .dismiss_:
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: "navi_dismissItem_Icon", target: self, action: #selector(dismissButtonDidPressed))
-      case .back_add:
+      case .back_addPlace:
         navigationItem.leftBarButtonItem = backItem
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: "navi_addLocationItem_Icon", target: self, action: #selector(addButtonDidPressed))
+      case .back_addPhoto:
+        navigationItem.leftBarButtonItem = backItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: "navi_addPhotoItem_Icon", target: self, action: #selector(addButtonDidPressed))
       case .back_:
         navigationItem.leftBarButtonItem = backItem
       case .none:

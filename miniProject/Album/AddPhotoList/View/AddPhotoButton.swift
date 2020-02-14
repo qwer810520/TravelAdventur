@@ -22,11 +22,7 @@ class AddPhotoButton: UIButton {
     // MARK: - private Method
     
     private func setUserInterface() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.setTitle("＋", for: .normal)
-        self.setTitleColor(.white, for: .normal)
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 50)
-        self.backgroundColor = .pinkPeacock
-        self.layer.cornerRadius = 35
+        setImage("Main_addAlbumBtn_Icon".toImage, for: .normal)
+        layer.cornerRadius = 25
     }
 }

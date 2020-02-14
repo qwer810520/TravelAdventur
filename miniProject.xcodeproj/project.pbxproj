@@ -25,6 +25,7 @@
 		39359963212E994600D305DC /* TAToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39359962212E994600D305DC /* TAToolBar.swift */; };
 		393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */; };
 		393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */; };
+		393D6E8023ED1204002C1E7B /* ShowPhotoListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6E7F23ED1203002C1E7B /* ShowPhotoListPresenter.swift */; };
 		393D6FC621344079003C79A4 /* ShowPhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FC521344079003C79A4 /* ShowPhotoListViewController.swift */; };
 		393D6FC9213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FC8213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift */; };
 		393D6FCD21344777003C79A4 /* AddMobilePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6FCC21344777003C79A4 /* AddMobilePhotosViewController.swift */; };
@@ -56,8 +57,10 @@
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
 		39BDFA20233DE3F800BABE4C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39BDFA1F233DE3F800BABE4C /* GoogleService-Info.plist */; };
+		39C920A323F42D2F0020D6F7 /* AddMobilePhotosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C920A223F42D2F0020D6F7 /* AddMobilePhotosPresenter.swift */; };
 		39CBAAF623EBA65800C4A1D0 /* AddPlaceInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CBAAF523EBA65800C4A1D0 /* AddPlaceInputView.swift */; };
 		39CBAB2523EBF1BF00C4A1D0 /* AddPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CBAB2423EBF1BF00C4A1D0 /* AddPlacePresenter.swift */; };
+		39CBAB2823EC057D00C4A1D0 /* ShowPhotoFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CBAB2723EC057D00C4A1D0 /* ShowPhotoFlowLayout.swift */; };
 		39CEC1F52134DF7600E0A5B6 /* UserMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F42134DF7600E0A5B6 /* UserMainViewController.swift */; };
 		39CEC1F72134E27F00E0A5B6 /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F62134E27F00E0A5B6 /* ShowProfileTableViewCell.swift */; };
 		39CEC1F92134E5B300E0A5B6 /* BlankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CEC1F82134E5B300E0A5B6 /* BlankTableViewCell.swift */; };
@@ -88,6 +91,7 @@
 		39359962212E994600D305DC /* TAToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAToolBar.swift; sourceTree = "<group>"; };
 		393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
 		393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumQRCodeView.swift; sourceTree = "<group>"; };
+		393D6E7F23ED1203002C1E7B /* ShowPhotoListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoListPresenter.swift; sourceTree = "<group>"; };
 		393D6FC521344079003C79A4 /* ShowPhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoListViewController.swift; sourceTree = "<group>"; };
 		393D6FC8213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		393D6FCC21344777003C79A4 /* AddMobilePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMobilePhotosViewController.swift; sourceTree = "<group>"; };
@@ -123,8 +127,10 @@
 		39B916011E84127C0093E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39BDFA1F233DE3F800BABE4C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		39BDFA21233DEDE300BABE4C /* miniProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = miniProject.entitlements; sourceTree = "<group>"; };
+		39C920A223F42D2F0020D6F7 /* AddMobilePhotosPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMobilePhotosPresenter.swift; sourceTree = "<group>"; };
 		39CBAAF523EBA65800C4A1D0 /* AddPlaceInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceInputView.swift; sourceTree = "<group>"; };
 		39CBAB2423EBF1BF00C4A1D0 /* AddPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlacePresenter.swift; sourceTree = "<group>"; };
+		39CBAB2723EC057D00C4A1D0 /* ShowPhotoFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoFlowLayout.swift; sourceTree = "<group>"; };
 		39CEC1F42134DF7600E0A5B6 /* UserMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMainViewController.swift; sourceTree = "<group>"; };
 		39CEC1F62134E27F00E0A5B6 /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		39CEC1F82134E5B300E0A5B6 /* BlankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankTableViewCell.swift; sourceTree = "<group>"; };
@@ -319,9 +325,18 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		393D6E7E23ED11E4002C1E7B /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				393D6E7F23ED1203002C1E7B /* ShowPhotoListPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		393D6FC321343FCE003C79A4 /* ShowPhotoList */ = {
 			isa = PBXGroup;
 			children = (
+				393D6E7E23ED11E4002C1E7B /* Presenter */,
 				393D6FC721344297003C79A4 /* View */,
 				393D6FC421343FEF003C79A4 /* ViewController */,
 			);
@@ -339,6 +354,7 @@
 		393D6FC721344297003C79A4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				39CBAB2623EC056500C4A1D0 /* FlowLayout */,
 				393D6FC8213442B5003C79A4 /* ShowPhotosCollectionViewCell.swift */,
 			);
 			path = View;
@@ -347,6 +363,7 @@
 		393D6FCA213446BC003C79A4 /* AddPhotoList */ = {
 			isa = PBXGroup;
 			children = (
+				39C920A123F42D110020D6F7 /* Presenter */,
 				393D6FD3213451E6003C79A4 /* Model */,
 				393D6FCE21344826003C79A4 /* View */,
 				393D6FCB213446E2003C79A4 /* ViewController */,
@@ -621,6 +638,14 @@
 			path = miniProject;
 			sourceTree = "<group>";
 		};
+		39C920A123F42D110020D6F7 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				39C920A223F42D2F0020D6F7 /* AddMobilePhotosPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		39CBAAF423EBA64500C4A1D0 /* Element */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,6 +660,14 @@
 				39CBAB2423EBF1BF00C4A1D0 /* AddPlacePresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		39CBAB2623EC056500C4A1D0 /* FlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				39CBAB2723EC057D00C4A1D0 /* ShowPhotoFlowLayout.swift */,
+			);
+			path = FlowLayout;
 			sourceTree = "<group>";
 		};
 		39CEC1ED2134DF1200E0A5B6 /* User */ = {
@@ -868,9 +901,8 @@
 				"${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/abseil/absl.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -887,9 +919,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMAppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nuke.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/absl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -931,6 +962,8 @@
 				391264FD212FABD9001E3EB7 /* AlbumModel.swift in Sources */,
 				39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */,
 				397932FA2130787D000BB774 /* LocationViewController.swift in Sources */,
+				393D6E8023ED1204002C1E7B /* ShowPhotoListPresenter.swift in Sources */,
+				39CBAB2823EC057D00C4A1D0 /* ShowPhotoFlowLayout.swift in Sources */,
 				39CEC1FB2134E69B00E0A5B6 /* SearchQRcodeOrTouchIDTableViewCell.swift in Sources */,
 				39CBAAF623EBA65800C4A1D0 /* AddPlaceInputView.swift in Sources */,
 				3954A4B223E94EFD0062121F /* AddAlbumNameInputView.swift in Sources */,
@@ -961,6 +994,7 @@
 				397E7DCF2128972300A2B07A /* addAlbumModel.swift in Sources */,
 				393D6FD02134483C003C79A4 /* ShowMobilePhotoCollectionViewCell.swift in Sources */,
 				397E7DC3212893D400A2B07A /* UserDefaultKey.swift in Sources */,
+				39C920A323F42D2F0020D6F7 /* AddMobilePhotosPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

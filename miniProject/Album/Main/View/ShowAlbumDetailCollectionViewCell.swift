@@ -13,7 +13,7 @@ class ShowAlbumDetailCollectionViewCell: UICollectionViewCell {
   var albumModel: AlbumModel? {
     didSet {
       guard let albumModel = albumModel else { return }
-      imageView.downloadImage(urlStr: albumModel.coverPhotoURL)
+      imageView.downloadImage(urlStr: albumModel.coverPhotoURL, withContentMode: .scaleAspectFill)
       titleLabel.text = albumModel.title
       timeLabel.text = albumModel.startTime.dateToString(type: .all) + " ~ " + albumModel.startTime.calculationEndTimeInterval(with: albumModel.day).dateToString(type: .day)
     }

@@ -16,11 +16,10 @@ class ShowPlaceCollectionViewCell: UICollectionViewCell {
       nameLabel.text = place.name
       timeLabel.text = place.time.dateToString(type: .all)
       guard !place.photoList.isEmpty else {
-        imageView.downloadImage(urlStr: "")
+        imageView.setPlaceholdImage()
         return
       }
-      imageView.downloadImage(urlStr: place.photoList[0])
-
+      imageView.downloadImage(urlStr: place.photoList[0], withContentMode: .scaleAspectFill)
     }
   }
 
@@ -60,6 +59,11 @@ class ShowPlaceCollectionViewCell: UICollectionViewCell {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    imageView.image = nil
   }
 
   // MARK: - private method

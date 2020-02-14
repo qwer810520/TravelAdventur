@@ -11,6 +11,7 @@ source 'https://github.com/CocoaPods/Specs.git'
       pod 'FBSDKCoreKit'
       pod 'FBSDKShareKit'
       pod 'FBSDKLoginKit'
+
       pod 'Firebase'
       pod 'Firebase/Core'
       pod 'Firebase/Auth'
@@ -21,11 +22,16 @@ source 'https://github.com/CocoaPods/Specs.git'
       pod 'Fabric', '~> 1.10.2'
       pod 'Crashlytics', '~> 3.13.4'
       pod 'Firebase/Analytics'
+
       #pod 'SVProgressHUD'
-      pod 'TRMosaicLayout'
+      #pod 'TRMosaicLayout'
+
       pod 'GoogleMaps'
       pod 'GooglePlaces'
       pod 'GoogleSignIn'
-      pod 'SDWebImage'
+
+      #pod 'SDWebImage'
+      pod 'Nuke'
+
       pod 'SwiftLint'
 end

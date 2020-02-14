@@ -342,12 +342,9 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - Nuke (8.4.0)
   - Protobuf (3.11.2)
-  - SDWebImage (5.4.0):
-    - SDWebImage/Core (= 5.4.0)
-  - SDWebImage/Core (5.4.0)
   - SwiftLint (0.38.0)
-  - TRMosaicLayout (1.0.0)
 
 DEPENDENCIES:
   - Crashlytics (~> 3.13.4)
@@ -366,9 +363,8 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - GoogleSignIn
-  - SDWebImage
+  - Nuke
   - SwiftLint
-  - TRMosaicLayout
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -406,10 +402,9 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - Nuke
     - Protobuf
-    - SDWebImage
     - SwiftLint
-    - TRMosaicLayout
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -446,11 +441,10 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  Nuke: fa6f784c4f7e1c0f9313668510186c68b7af2509
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
-  SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
-  TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
 
-PODFILE CHECKSUM: 2bc48cb689cdf5e959e9e00a5e942b74762598c4
+PODFILE CHECKSUM: c35b7ac363bdfeba5679f1a30b8f2dd28513ec4c
 
 COCOAPODS: 1.8.4

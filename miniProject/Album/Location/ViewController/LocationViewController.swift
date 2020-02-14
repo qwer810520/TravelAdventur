@@ -47,7 +47,7 @@ class LocationViewController: ParentViewController {
   // MARK: - private Method
 
   private func setUserInterFace() {
-    setNavigation(title: nil, barButtonType: .back_add)
+    setNavigation(title: nil, barButtonType: .back_addPlace)
     navigationItem.titleView = segmented
     setUpLocationMapView()
   }
@@ -98,7 +98,7 @@ class LocationViewController: ParentViewController {
       switch sender.selectedSegmentIndex {
         case 0:
           UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
-          self?.setNavigation(title: nil, barButtonType: .back_add)
+          self?.setNavigation(title: nil, barButtonType: .back_addPlace)
           self?.qrcodeView?.removeFromSuperview()
           self?.qrcodeView = nil
           self?.setUpLocationMapView()

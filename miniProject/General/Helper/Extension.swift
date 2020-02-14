@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import SDWebImage
+//import SDWebImage
+import Nuke
 import Photos
 
 enum TAError: LocalizedError {
@@ -191,8 +192,21 @@ extension UITableView {
   // MARK: - UIImageView Extension
 
 extension UIImageView {
-  func downloadImage(urlStr: String) {
-    self.sd_setImage(with: URL(string: urlStr), placeholderImage: UIImage(named: "normalImage"))
+  func setPlaceholdImage() {
+    image = "normalImage".toImage
+    contentMode = .scaleAspectFit
+  }
+
+  func downloadImage(urlStr: String, withContentMode ontentMode: UIView.ContentMode = .scaleAspectFit) {
+    let options = ImageLoadingOptions(
+      placeholder: "normalImage".toImage,
+      failureImage: "normalImage".toImage,
+      contentModes: .init(success: ontentMode, failure: .scaleAspectFit, placeholder: .scaleAspectFit))
+    guard let url = URL(string: urlStr) else {
+      setPlaceholdImage()
+      return
+    }
+    Nuke.loadImage(with: url, options: options, into: self)
   }
 }
 
@@ -203,7 +217,7 @@ extension UIImage {
       let width = size.width
       let height = size.height
 
-      let scale: CGFloat = width > height ? 800 / height : 800 / width
+      let scale: CGFloat = width > height ? 500 / height :500 / width
       UIGraphicsBeginImageContextWithOptions(CGSize(width: width * scale, height: height * scale), false, 1)
       draw(in: CGRect(x: 0, y: 0, width: width * scale, height: height * scale))
       guard let resizeImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() else {

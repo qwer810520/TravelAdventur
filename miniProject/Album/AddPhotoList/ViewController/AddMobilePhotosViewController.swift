@@ -10,148 +10,126 @@ import UIKit
 import Photos
 
 class AddMobilePhotosViewController: ParentViewController {
-    
-    lazy private var showMobilePhotoCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 2, height: (UIScreen.main.bounds.width / 3) - 2)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = 2
-        layout.minimumInteritemSpacing = 2
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.dataSource = self
-        view.delegate = self
-        view.allowsMultipleSelection = true
-        view.register(ShowMobilePhotoCollectionViewCell.self, forCellWithReuseIdentifier: ShowMobilePhotoCollectionViewCell.identifier)
-        return view
-    }()
-    
-    lazy private var addPhotoButton: AddPhotoButton = {
-        let button = AddPhotoButton()
-        button.addTarget(self, action: #selector(addPhotoButtonDidPressed), for: .touchUpInside)
-        return button
-    }()
-    
-    var placeData: PlaceModel?
-    fileprivate var mobilePhotoList = [MobilePhotoModel]() {
-        didSet {
-            showMobilePhotoCollectionView.reloadData()
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        grabPhotos()
-        setUserInterface()
-    }
-    
-    // MARK: - private Method
-    
-    private func setUserInterface() {
-        setNavigation(title: "Add Photo", barButtonType: .dismiss_)
-        serAutoLayout()
-    }
-    
-    private func serAutoLayout() {
-        view.addSubviews([showMobilePhotoCollectionView, addPhotoButton])
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[collectionView]|",
-            options: [],
-            metrics: nil,
-            views: ["collectionView": showMobilePhotoCollectionView]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(navigationHeight)-[collectionView]|",
-            options: [],
-            metrics: nil,
-            views: ["collectionView": showMobilePhotoCollectionView]))
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[button(70)]-20-|",
-            options: [],
-            metrics: nil,
-            views: ["button": addPhotoButton]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[button(70)]-20-|",
-            options: [],
-            metrics: nil,
-            views: ["button": addPhotoButton]))
-    }
-    
-    private func grabPhotos() {
-        let imageManager = PHImageManager.default()
-        let requestOptions = PHImageRequestOptions()
-        requestOptions.isSynchronous = true
-        requestOptions.deliveryMode = .highQualityFormat
-        let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        let fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-        guard fetchResult.count > 0 else { return }
-        
-        for i in 0..<fetchResult.count {
-            imageManager.requestImage(for: fetchResult.object(at: i), targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { [weak self] (image, _) in
-                self?.mobilePhotoList.append(MobilePhotoModel(image: image))
-            }
-        }
-        
-        showMobilePhotoCollectionView.reloadData()
-    }
-    
-    // MARK: - Action Method
-    
-    @objc private func addPhotoButtonDidPressed() {
 
-        let addPhotosList = mobilePhotoList.filter { $0.isSelect }
-        
-        guard !addPhotosList.isEmpty, let placeInfo = placeData else {
-            showAlert(title: "請選擇要上傳的相片")
-            return
-        }
-        
-        startLoading()
-        FirebaseManager2.shared.savePhotoListData(placeID: placeInfo.placeID, photoList: addPhotosList) { [weak self] (error) in
-            self?.stopLoading()
-            guard error == nil else {
-                self?.showAlert(title: error?.localizedDescription ?? "")
-                return
-            }
-            
-            self?.dismiss(animated: true, completion: nil)
-        }
-    }
+  lazy private var showMobilePhotoCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 2, height: (UIScreen.main.bounds.width / 3) - 2)
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    layout.minimumLineSpacing = 2
+    layout.minimumInteritemSpacing = 2
+    let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .clear
+    view.dataSource = self
+    view.delegate = self
+    view.allowsMultipleSelection = true
+    view.register(with: [ShowMobilePhotoCollectionViewCell.self])
+    return view
+  }()
+
+  lazy private var addPhotoButton: AddPhotoButton = {
+    let button = AddPhotoButton()
+    button.addTarget(self, action: #selector(addPhotoButtonDidPressed), for: .touchUpInside)
+    button.frame = CGRect(x: view.bounds.width - 70, y: view.frame.maxY, width: 50, height: 50)
+
+    return button
+  }()
+
+  var placeData: PlaceModel?
+  private var presenter: AddMobilePhotosPresenter?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    presenter = AddMobilePhotosPresenter(placeData: placeData ?? PlaceModel(), delegate: self)
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    presenter?.queryPhotos()
+    setUserInterface()
+  }
+
+  // MARK: - private Method
+
+  private func setUserInterface() {
+    setNavigation(title: "Add Photo", barButtonType: .dismiss_)
+    view.addSubviews([showMobilePhotoCollectionView, addPhotoButton])
+    setupAutoLayout()
+  }
+
+  private func setupAutoLayout() {
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[collectionView]|",
+      options: [],
+      metrics: nil,
+      views: ["collectionView": showMobilePhotoCollectionView]))
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|[collectionView]|",
+      options: [],
+      metrics: nil,
+      views: ["collectionView": showMobilePhotoCollectionView]))
+  }
+
+  // MARK: - Action Method
+
+  @objc private func addPhotoButtonDidPressed() {
+    presenter?.uploadPhotoData()
+  }
 }
 
-    // MARK: - UICollectionViewDelegate
+  // MARK: - UICollectionViewDelegate
 
 extension AddMobilePhotosViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        mobilePhotoList[indexPath.row].isSelect = mobilePhotoList[indexPath.row].isSelect ? false : true
-        collectionView.reloadData()
-    }
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    presenter?.didSelectItem(with: indexPath.item)
+  }
 }
 
-    // MARK: - UICollectionViewDataSource
+  // MARK: - UICollectionViewDataSource
 
 extension AddMobilePhotosViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return presenter?.mobilePhotoList.count ?? 0
+  }
+
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(with: ShowMobilePhotoCollectionViewCell.self, for: indexPath)
+    cell.photoData = presenter?.mobilePhotoList[indexPath.row]
+    return cell
+  }
+}
+
+  // MARK: - AddMobilePhotosPresenterDelegate
+
+extension AddMobilePhotosViewController: AddMobilePhotosPresenterDelegate {
+  func addButtonIsHidden(fromStatus status: Bool) {
+    let viewHeight = view.frame.height
+    switch status {
+      case true:
+        guard addPhotoButton.frame.minY != viewHeight else { return }
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0, animations: { [weak self] in
+          self?.addPhotoButton.frame.origin.y = viewHeight
+        })
+      case false:
+        guard addPhotoButton.frame.minY != viewHeight - 70 else { return }
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0, animations: { [weak self] in
+          self?.addPhotoButton.frame.origin.y = viewHeight - 70
+        })
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mobilePhotoList.count
+  }
+
+  func dismissVC() {
+    dismiss(animated: true)
+  }
+
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
+    showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
+  }
+
+  func refreshUI() {
+    DispatchQueue.main.async { [weak self] in
+      self?.showMobilePhotoCollectionView.reloadData()
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(with: ShowMobilePhotoCollectionViewCell.self, for: indexPath)
-        cell.imageView.image = mobilePhotoList[indexPath.row].image
-        cell.layer.borderWidth = 4.0
-        cell.layer.borderColor = mobilePhotoList[indexPath.row].isSelect ? UIColor.pinkPeacock.cgColor : UIColor.clear.cgColor
-        return cell
-    }
+  }
 }

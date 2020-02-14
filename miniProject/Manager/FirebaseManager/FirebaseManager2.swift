@@ -207,14 +207,16 @@ class FirebaseManager2: NSObject {
     }
   }
 
-  func getPlaceData(id: String, complectionHandler: @escaping (_ placeData: PlaceModel, _ error: Error?) -> Void) {
-    placeManager.document(id).getDocument { (response, error) in
+  func getPlaceData(id: String, complectionHandler: @escaping (Result<[String], Error>) -> Void) {
+    placeManager.document(id).getDocument { response, error in
       guard error == nil, let responseData = response?.data() else {
-        complectionHandler(PlaceModel(), error)
+        if let error = error {
+          complectionHandler(.failure(error))
+        }
         return
       }
       let placeData = PlaceModel(json: responseData)
-      complectionHandler(placeData, nil)
+      complectionHandler(.success(placeData.photoList))
     }
   }
 
@@ -222,10 +224,6 @@ class FirebaseManager2: NSObject {
     placeManager.document(placeID).updateData(["photoList": FieldValue.arrayUnion([photoURL])]) { (error) in
       complectionHandler(error)
     }
-  }
-
-  func checkAlbumStatus() {
-
   }
 
   // MARK: - Storage API Method
@@ -259,7 +257,7 @@ class FirebaseManager2: NSObject {
     }
   }
 
-  func savePhotoListData(placeID: String, photoList: [MobilePhotoModel], complectionHandler: @escaping (_ error: Error?) -> Void) {
+  func savePhotoListData(placeID: String, photoList: [MobilePhotoModel], complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
     for i in 0..<photoList.count {
       let filePath = "Photos/\(placeID)/\(Date.timeIntervalSinceReferenceDate).jpg"
       guard let data = photoList[i].image?.scaleZoomPhoto().jpegData(compressionQuality: 1) else { continue }
@@ -267,24 +265,30 @@ class FirebaseManager2: NSObject {
         .child(filePath)
         .putData(data, metadata: nil) { [weak self] (_, error) in
           guard error == nil else {
-            complectionHandler(error)
+            if let error = error {
+              complectionHandler(.failure(error))
+            }
             return
           }
           Storage.storage().reference()
             .child(filePath)
             .downloadURL(completion: { (url, error) in
-              guard error == nil else {
-                complectionHandler(error)
+              guard error == nil, let url = url else {
+                if let error = error {
+                  complectionHandler(.failure(error))
+                }
                 return
               }
-              self?.updatePhotoToPlaceData(placeID: placeID, photoURL: url?.absoluteString ?? "", complectionHandler: { (error) in
+              self?.updatePhotoToPlaceData(placeID: placeID, photoURL: url.absoluteString, complectionHandler: { (error) in
                 guard error == nil else {
-                  complectionHandler(error)
+                  if let error = error {
+                    complectionHandler(.failure(error))
+                  }
                   return
                 }
-
+                
                 if i == photoList.count - 1 {
-                  complectionHandler(nil)
+                  complectionHandler(.success(true))
                 }
               })
             })
