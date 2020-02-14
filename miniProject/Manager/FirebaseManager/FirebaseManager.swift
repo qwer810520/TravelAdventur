@@ -45,16 +45,16 @@ class FirebaseManager: NSObject {
 
   func getUserProfile(complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
     guard let user = loginUserInfo else { return }
-    userManager.document(user.uid).getDocument { [weak self] (response, error) in
-      guard error == nil, let result = response?.exists, let data = response?.data() else {
+    userManager.document(user.uid).getDocument { [weak self] response, error in
+      guard error == nil, let response = response else {
         if let error = error {
           complectionHandler(.failure(error))
         }
         return
       }
-      switch result {
+      switch response.exists {
         case true:
-          self?.loginUserInfo = LoginUserModel(json: data)
+          self?.loginUserInfo = LoginUserModel(json: response.data() ?? [:])
           complectionHandler(.success(true))
         case false:
           self?.addUserDataForFirebase(user: user, complectionHandler: { result in
@@ -127,7 +127,7 @@ class FirebaseManager: NSObject {
 
   func getAlbumData(complectionHandler: @escaping (Result<[AlbumModel], Error>) -> Void) {
     albumManager.getDocuments { [weak self] albumList, error in
-      guard error == nil, let responseData = albumList, let userAlbumList = self?.loginUserInfo?.albumIdList, !userAlbumList.isEmpty else {
+      guard error == nil, let responseData = albumList, let userAlbumList = self?.loginUserInfo?.albumIdList else {
         if let error = error {
           complectionHandler(.failure(error))
         }

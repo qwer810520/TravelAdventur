@@ -18,16 +18,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "150F2D91-08B9-4ABB-B613-DC183E88B167"
+            uuid = "20DC0BF2-9180-421B-AD9C-511B6B94071C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "miniProject/Album/Main/ViewController/MainViewController.swift"
+            filePath = "miniProject/Login/Presenter/LoginPresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "setUserInterface()"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "googleLogin()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

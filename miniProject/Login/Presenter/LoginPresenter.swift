@@ -16,30 +16,36 @@ import LocalAuthentication
 
 protocol LoginPresentDelegate: BasePresenterDelegate {
   func presentToMainVC()
+  func setUpGoogleSigninDelegate()
+  func googleSignBtnDidPressed()
 }
 
 class LoginPresenter: NSObject {
 
   weak var delegate: LoginPresentDelegate? = nil
+  private var isInLoginFlow = false
 
   init(delegate: LoginPresentDelegate? = nil) {
     self.delegate = delegate
     super.init()
     GIDSignIn.sharedInstance().clientID = GoogleToken.authClientID
-    GIDSignIn.sharedInstance().delegate = self
+    delegate?.setUpGoogleSigninDelegate()
   }
 
   // MARK: - API Methods
 
   func googleLogin() {
     UserDefaults.standard.set(false, forKey: UserDefaultsKey.loginSet.rawValue)
-    GIDSignIn.sharedInstance().signIn()
+    delegate?.googleSignBtnDidPressed()
+    isInLoginFlow = true
   }
 
   func facebookLogin(with viewController: ParentViewController) {
+    isInLoginFlow = true
     UserDefaults.standard.set(true, forKey: UserDefaultsKey.loginSet.rawValue)
     LoginManager().logIn(permissions: ["email", "public_profile"], from: viewController) { [weak self] (_, error: Error?) in
       guard error == nil, let accessToken = AccessToken.current else {
+        self?.isInLoginFlow = false
         return
       }
       UserDefaults.standard.set(accessToken.tokenString, forKey: UserDefaultsKey.FBTokenString.rawValue)
@@ -55,6 +61,8 @@ class LoginPresenter: NSObject {
         case .success:
           self?.getUserProfile()
         case .failure:
+          self?.delegate?.dismissIndicator()
+          self?.isInLoginFlow = false
           self?.delegate?.presentAlert(with: "登入失敗", message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)
       }
     }
@@ -62,6 +70,7 @@ class LoginPresenter: NSObject {
 
   private func getUserProfile() {
     FirebaseManager.shared.getUserProfile { [weak self] result in
+      self?.isInLoginFlow = false
       self?.delegate?.dismissIndicator()
       switch result {
         case .success:
@@ -77,9 +86,22 @@ class LoginPresenter: NSObject {
     authenticateWithTouchID()
   }
 
+  func sign(_ signIn: GIDSignIn?, didSignInFor user: GIDGoogleUser?, withError error: Error?) {
+    guard error == nil, let user = user else {
+      isInLoginFlow = false
+      delegate?.presentAlert(with: error?.localizedDescription ?? "Something went Error", message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)
+      return
+    }
+    UserDefaults.standard.set(user.authentication.idToken, forKey: UserDefaultsKey.withIDToken.rawValue)
+    UserDefaults.standard.set(user.authentication.accessToken, forKey: UserDefaultsKey.accessToken.rawValue)
+    let credential = GoogleAuthProvider.credential(withIDToken: user.authentication.idToken, accessToken: user.authentication.accessToken)
+    firebaseAuthSingin(credential: credential)
+  }
+
   // MARK: - TouchID Method
 
   private func authenticateWithTouchID() {
+    guard !isInLoginFlow else { return }
     let localAuthContent = LAContext()
     var error: NSError?
     guard localAuthContent.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
@@ -123,17 +145,5 @@ class LoginPresenter: NSObject {
         }
       }
     }
-  }
-}
-
-// MARK: - GIDSignInDelegate
-
-extension LoginPresenter: GIDSignInDelegate {
-  func sign(_ signIn: GIDSignIn, didSignInFor user: GIDGoogleUser, withError error: Error?) {
-    guard error == nil else { return }
-    UserDefaults.standard.set(user.authentication.idToken, forKey: UserDefaultsKey.withIDToken.rawValue)
-    UserDefaults.standard.set(user.authentication.accessToken, forKey: UserDefaultsKey.accessToken.rawValue)
-    let credential = GoogleAuthProvider.credential(withIDToken: user.authentication.idToken, accessToken: user.authentication.accessToken)
-    firebaseAuthSingin(credential: credential)
   }
 }

@@ -7,12 +7,7 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
-import FBSDKLoginKit
 import GoogleSignIn
-import FirebaseDatabase
-import LocalAuthentication
 
 class LoginViewController: ParentViewController {
 
@@ -40,10 +35,6 @@ class LoginViewController: ParentViewController {
   // MARK: - Private Methods
 
   private func setUserInterface() {
-    //        InstanceID.instanceID().instanceID { instanceIDResult, _ in
-    //            print("instanceIDResult: \(instanceIDResult?.token)")
-    //        }
-
     presenter?.checkUseAuthWithTouchID()
 
     navigationController?.navigationBar.isHidden = true
@@ -86,6 +77,15 @@ extension LoginViewController: LoginDelegate {
 // MARK: - LoginPresentDelegate
 
 extension LoginViewController: LoginPresentDelegate {
+  func googleSignBtnDidPressed() {
+    GIDSignIn.sharedInstance().signIn()
+  }
+
+  func setUpGoogleSigninDelegate() {
+    GIDSignIn.sharedInstance().delegate = self
+    GIDSignIn.sharedInstance()?.presentingViewController = self
+  }
+
   func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
     showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
   }
@@ -96,5 +96,13 @@ extension LoginViewController: LoginPresentDelegate {
 
   func presentAlert(with title: String) {
     showAlert(title: title)
+  }
+}
+
+  // MARK: - GIDSignInDelegate
+
+extension LoginViewController: GIDSignInDelegate {
+  func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+    presenter?.sign(signIn, didSignInFor: user, withError: error)
   }
 }
