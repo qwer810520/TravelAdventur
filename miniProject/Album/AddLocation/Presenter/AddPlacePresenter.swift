@@ -44,7 +44,7 @@ class AddPlacePresenter: NSObject {
     do {
       try addPlaceInfo.checkPlaceInfoIsEqual()
       delegate?.showIndicator()
-      FirebaseManager2.shared.addNewPlaceData(albumid: albumInfo.id, placeData: addPlaceInfo) { [weak self] res in
+      FirebaseManager.shared.addNewPlaceData(albumid: albumInfo.id, placeData: addPlaceInfo) { [weak self] res in
         switch res {
           case .failure(let error):
             self?.delegate?.presentAlert(with: error.localizedDescription, message: nil, checkAction: nil, cancelTitle: nil, cancelAction: nil)

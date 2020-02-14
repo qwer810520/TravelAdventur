@@ -62,7 +62,7 @@ class AddMobilePhotosPresenter: NSObject {
     let photosList = mobilePhotoList.filter { $0.isSelect }
     
     delegate?.showIndicator()
-    FirebaseManager2.shared.savePhotoListData(placeID: placeData.placeID, photoList: photosList) { [weak self] result in
+    FirebaseManager.shared.savePhotoListData(placeID: placeData.placeID, photoList: photosList) { [weak self] result in
       self?.delegate?.dismissIndicator()
       switch result {
         case .success:

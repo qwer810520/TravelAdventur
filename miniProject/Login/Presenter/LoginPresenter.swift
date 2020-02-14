@@ -50,7 +50,7 @@ class LoginPresenter: NSObject {
 
   private func firebaseAuthSingin(credential: AuthCredential) {
     delegate?.showIndicator()
-    FirebaseManager2.shared.signInForFirebase(credential: credential) { [weak self] result in
+    FirebaseManager.shared.signInForFirebase(credential: credential) { [weak self] result in
       switch result {
         case .success:
           self?.getUserProfile()
@@ -61,7 +61,7 @@ class LoginPresenter: NSObject {
   }
 
   private func getUserProfile() {
-    FirebaseManager2.shared.getUserProfile { [weak self] result in
+    FirebaseManager.shared.getUserProfile { [weak self] result in
       self?.delegate?.dismissIndicator()
       switch result {
         case .success:

@@ -18,49 +18,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F3AF23AA-76D2-401A-8B46-569D1FF2832E"
-            shouldBeEnabled = "No"
+            uuid = "150F2D91-08B9-4ABB-B613-DC183E88B167"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "miniProject/Album/AddPhotoList/Presenter/AddMobilePhotosPresenter.swift"
+            filePath = "miniProject/Album/Main/ViewController/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "uploadPhotoData()"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "setUserInterface()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F3AF23AA-76D2-401A-8B46-569D1FF2832E - 1eac5b40452932c7"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "miniProject.AddMobilePhotosPresenter.uploadPhotoData() -&gt; ()"
-                  moduleName = "miniProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/MIN/Desktop/DemoProject/miniProject/miniProject/Album/AddPhotoList/Presenter/AddMobilePhotosPresenter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
-                  offsetFromSymbolStart = "344">
-               </Location>
-               <Location
-                  uuid = "F3AF23AA-76D2-401A-8B46-569D1FF2832E - dc695b0cc1658c17"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Result&lt;Swift.Bool, Swift.Error&gt;) -&gt; () in miniProject.AddMobilePhotosPresenter.uploadPhotoData() -&gt; ()"
-                  moduleName = "miniProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/MIN/Desktop/DemoProject/miniProject/miniProject/Album/AddPhotoList/Presenter/AddMobilePhotosPresenter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
-                  offsetFromSymbolStart = "152">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

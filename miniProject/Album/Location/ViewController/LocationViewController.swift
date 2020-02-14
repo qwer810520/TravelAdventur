@@ -40,6 +40,7 @@ class LocationViewController: ParentViewController {
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
+    UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
     locationMapView?.removeFromSuperview()
     locationMapView = nil
   }
@@ -108,7 +109,9 @@ class LocationViewController: ParentViewController {
           self?.setNavigation(title: nil, barButtonType: .back_)
           self?.locationMapView?.removeFromSuperview()
           self?.locationMapView = nil
-          self?.setUpQRCodeView()
+          Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
+            self?.setUpQRCodeView()
+          }
         default:
           break
       }

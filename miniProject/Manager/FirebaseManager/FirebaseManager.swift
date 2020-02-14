@@ -17,11 +17,11 @@ import FirebaseFirestore
 
 typealias JSONDictionary = [String: Any]
 
-class FirebaseManager2: NSObject {
+class FirebaseManager: NSObject {
 
-  static let shared = FirebaseManager2()
+  static let shared = FirebaseManager()
 
-  private(set) var loginUserModel: LoginUserModel?
+  private(set) var loginUserInfo: LoginUserModel?
 
   private let userManager = Firestore.firestore().collection("User")
   private let albumManager = Firestore.firestore().collection("Album")
@@ -38,13 +38,13 @@ class FirebaseManager2: NSObject {
         return
       }
 
-      self?.loginUserModel = LoginUserModel(uid: userData.user.uid, name: userData.user.displayName ?? "", photoURL: userData.user.photoURL?.absoluteString ?? "")
+      self?.loginUserInfo = LoginUserModel(uid: userData.user.uid, name: userData.user.displayName ?? "", photoURL: userData.user.photoURL?.absoluteString ?? "")
       complectionHandler(.success(true))
     }
   }
 
   func getUserProfile(complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
-    guard let user = loginUserModel else { return }
+    guard let user = loginUserInfo else { return }
     userManager.document(user.uid).getDocument { [weak self] (response, error) in
       guard error == nil, let result = response?.exists, let data = response?.data() else {
         if let error = error {
@@ -54,7 +54,7 @@ class FirebaseManager2: NSObject {
       }
       switch result {
         case true:
-          self?.loginUserModel = LoginUserModel(json: data)
+          self?.loginUserInfo = LoginUserModel(json: data)
           complectionHandler(.success(true))
         case false:
           self?.addUserDataForFirebase(user: user, complectionHandler: { result in
@@ -82,7 +82,7 @@ class FirebaseManager2: NSObject {
   }
 
   private func addAlbumIdToUserData(id: String, complectionHandler: @escaping  (Result<Bool, Error>) -> Void) {
-    guard let user = loginUserModel else { return }
+    guard let user = loginUserInfo else { return }
     userManager.document(user.uid)
       .updateData(["albumIdList": FieldValue.arrayUnion([id])]) { error in
         switch error {
@@ -94,7 +94,7 @@ class FirebaseManager2: NSObject {
     }
   }
 
-  // MARK: - Album API Method
+  // MARK: - Album API Methods
 
   func addNewAlbumData(model: AddAlbumModel,  complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
     var addAlbumModel = model
@@ -113,7 +113,7 @@ class FirebaseManager2: NSObject {
                 self?.addAlbumIdToUserData(id: addAlbumModel.id, complectionHandler: { res in
                   switch res {
                     case .success:
-                      self?.loginUserModel?.albumIdList.append(addAlbumModel.id)
+                      self?.loginUserInfo?.albumIdList.append(addAlbumModel.id)
                       complectionHandler(.success(true))
                     case .failure(let error):
                       complectionHandler(.failure(error))
@@ -127,7 +127,7 @@ class FirebaseManager2: NSObject {
 
   func getAlbumData(complectionHandler: @escaping (Result<[AlbumModel], Error>) -> Void) {
     albumManager.getDocuments { [weak self] albumList, error in
-      guard error == nil, let responseData = albumList, let userAlbumList = self?.loginUserModel?.albumIdList, !userAlbumList.isEmpty else {
+      guard error == nil, let responseData = albumList, let userAlbumList = self?.loginUserInfo?.albumIdList, !userAlbumList.isEmpty else {
         if let error = error {
           complectionHandler(.failure(error))
         }
@@ -145,35 +145,39 @@ class FirebaseManager2: NSObject {
     }
   }
 
-  func checkAlbumStatus(id: String, complectionHandler: @escaping (_ status: Bool, _ error: Error?) -> Void) {
-    guard let user = loginUserModel else { return }
+  func checkAlbumStatus(id: String, complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    guard let user = loginUserInfo else { return }
     albumManager.document(id).getDocument { [weak self] (response, error) in
       guard error == nil, let responseData = response else {
-        complectionHandler(false, error)
+        if let error = error {
+          complectionHandler(.failure(error))
+        }
         return
       }
 
       switch responseData.exists {
         case true:
           guard !user.albumIdList.contains(id) else {
-            complectionHandler(false, error)
+            if let error = error {
+              complectionHandler(.failure(error))
+            }
             return
           }
           self?.addAlbumIdToUserData(id: id, complectionHandler: { res in
             switch res {
               case .failure(let error):
-                complectionHandler(false, error)
+                complectionHandler(.failure(error))
               case .success:
-                complectionHandler(false, nil)
+                complectionHandler(.success(true))
             }
           })
         case false:
-          complectionHandler(responseData.exists, nil)
+          complectionHandler(.failure(TAError.other("Something went Fail")))
       }
     }
   }
 
-  // MARK: - Place API Method
+  // MARK: - Place API Methods
 
   func addNewPlaceData(albumid: String, placeData: AddPlaceModel, complectionHandler: @escaping (Result<Bool, Error>) -> Void) {
     let id = placeManager.document().documentID

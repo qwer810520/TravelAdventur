@@ -23,6 +23,8 @@
 		3930BF6120FC38F200A39CAF /* TANavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5B20FC38F200A39CAF /* TANavigationController.swift */; };
 		3930BF6220FC38F200A39CAF /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3930BF5E20FC38F200A39CAF /* ParentViewController.swift */; };
 		39359963212E994600D305DC /* TAToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39359962212E994600D305DC /* TAToolBar.swift */; };
+		393A100B23F6591700B1D0BC /* UserMainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393A100A23F6591700B1D0BC /* UserMainPresenter.swift */; };
+		393A100E23F687EF00B1D0BC /* QRCodeTearderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393A100D23F687EF00B1D0BC /* QRCodeTearderPresenter.swift */; };
 		393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */; };
 		393AA45821340B6F003AF817 /* AddAlbumQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */; };
 		393D6E8023ED1204002C1E7B /* ShowPhotoListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393D6E7F23ED1203002C1E7B /* ShowPhotoListPresenter.swift */; };
@@ -52,7 +54,7 @@
 		39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887721329F7A0081B356 /* AddPlaceModel.swift */; };
 		39AF887E213304AC0081B356 /* SearchPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */; };
 		39AF888121339BE00081B356 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF888021339BE00081B356 /* PlaceModel.swift */; };
-		39B7AFAE2101F3720021E11B /* FirebaseManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFAD2101F3720021E11B /* FirebaseManager2.swift */; };
+		39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B7AFAD2101F3720021E11B /* FirebaseManager.swift */; };
 		39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B915F51E84127C0093E1AF /* AppDelegate.swift */; };
 		39B915FD1E84127C0093E1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FC1E84127C0093E1AF /* Assets.xcassets */; };
 		39B916001E84127C0093E1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B915FE1E84127C0093E1AF /* LaunchScreen.storyboard */; };
@@ -89,6 +91,8 @@
 		3930BF5B20FC38F200A39CAF /* TANavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TANavigationController.swift; sourceTree = "<group>"; };
 		3930BF5E20FC38F200A39CAF /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		39359962212E994600D305DC /* TAToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAToolBar.swift; sourceTree = "<group>"; };
+		393A100A23F6591700B1D0BC /* UserMainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMainPresenter.swift; sourceTree = "<group>"; };
+		393A100D23F687EF00B1D0BC /* QRCodeTearderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeTearderPresenter.swift; sourceTree = "<group>"; };
 		393AA4552133D85E003AF817 /* ShowPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
 		393AA45721340B6F003AF817 /* AddAlbumQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlbumQRCodeView.swift; sourceTree = "<group>"; };
 		393D6E7F23ED1203002C1E7B /* ShowPhotoListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoListPresenter.swift; sourceTree = "<group>"; };
@@ -118,7 +122,7 @@
 		39AF887721329F7A0081B356 /* AddPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceModel.swift; sourceTree = "<group>"; };
 		39AF887D213304AB0081B356 /* SearchPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaceViewController.swift; sourceTree = "<group>"; };
 		39AF888021339BE00081B356 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
-		39B7AFAD2101F3720021E11B /* FirebaseManager2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager2.swift; sourceTree = "<group>"; };
+		39B7AFAD2101F3720021E11B /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		39B7AFAF2101F39A0021E11B /* miniProject-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "miniProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		39B915F21E84127C0093E1AF /* miniProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39B915F51E84127C0093E1AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -325,6 +329,22 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		393A100923F6590300B1D0BC /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				393A100A23F6591700B1D0BC /* UserMainPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		393A100C23F687DC00B1D0BC /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				393A100D23F687EF00B1D0BC /* QRCodeTearderPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		393D6E7E23ED11E4002C1E7B /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +419,7 @@
 		3949955221351D0E00853992 /* QRCodeTearder */ = {
 			isa = PBXGroup;
 			children = (
+				393A100C23F687DC00B1D0BC /* Presenter */,
 				3949955321351D0E00853992 /* VIewController */,
 			);
 			path = QRCodeTearder;
@@ -596,7 +617,7 @@
 		39B7AFAC2101F3720021E11B /* FirebaseManager */ = {
 			isa = PBXGroup;
 			children = (
-				39B7AFAD2101F3720021E11B /* FirebaseManager2.swift */,
+				39B7AFAD2101F3720021E11B /* FirebaseManager.swift */,
 			);
 			path = FirebaseManager;
 			sourceTree = "<group>";
@@ -682,6 +703,7 @@
 		39CEC1EE2134DF1200E0A5B6 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				393A100923F6590300B1D0BC /* Presenter */,
 				39CEC1EF2134DF1200E0A5B6 /* View */,
 				39CEC1F02134DF1200E0A5B6 /* ViewController */,
 			);
@@ -949,6 +971,7 @@
 				3979330521314E2D000BB774 /* AddPlaceView.swift in Sources */,
 				39AF887821329F7A0081B356 /* AddPlaceModel.swift in Sources */,
 				39CEC1FD2134F2B000E0A5B6 /* SignOutTableViewCell.swift in Sources */,
+				393A100E23F687EF00B1D0BC /* QRCodeTearderPresenter.swift in Sources */,
 				3903B64D23E816120036BC74 /* GoogleToken.swift in Sources */,
 				397932FE213083B1000BB774 /* LocationMapView.swift in Sources */,
 				391264F8212FAA96001E3EB7 /* StickyCollectionViewFlowLayout.swift in Sources */,
@@ -956,7 +979,7 @@
 				393D6FCD21344777003C79A4 /* AddMobilePhotosViewController.swift in Sources */,
 				39B915F61E84127C0093E1AF /* AppDelegate.swift in Sources */,
 				39359963212E994600D305DC /* TAToolBar.swift in Sources */,
-				39B7AFAE2101F3720021E11B /* FirebaseManager2.swift in Sources */,
+				39B7AFAE2101F3720021E11B /* FirebaseManager.swift in Sources */,
 				39CBAB2523EBF1BF00C4A1D0 /* AddPlacePresenter.swift in Sources */,
 				3930BF5420FC316F00A39CAF /* LoginBackgroundView.swift in Sources */,
 				391264FD212FABD9001E3EB7 /* AlbumModel.swift in Sources */,
@@ -973,6 +996,7 @@
 				3954A4B423E9521D0062121F /* AddAlbumDateOptionView.swift in Sources */,
 				39CEC1F92134E5B300E0A5B6 /* BlankTableViewCell.swift in Sources */,
 				391264FB212FAA96001E3EB7 /* MainViewController.swift in Sources */,
+				393A100B23F6591700B1D0BC /* UserMainPresenter.swift in Sources */,
 				3930BF5220FC2F6B00A39CAF /* LoginUserModel.swift in Sources */,
 				39AF888121339BE00081B356 /* PlaceModel.swift in Sources */,
 				393AA4562133D85E003AF817 /* ShowPlaceCollectionViewCell.swift in Sources */,

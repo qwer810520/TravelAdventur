@@ -22,8 +22,7 @@ class SignOutTableViewCell: UITableViewCell {
     // MARK: - private Method
     
     private func setUserInterface() {
-        contentView.backgroundColor = .clear
-        backgroundColor = .clear
+        contentView.backgroundColor = .white
         contentView.addSubview(signOutTitleLabel)
         
         contentView.addConstraints(NSLayoutConstraint.constraints(

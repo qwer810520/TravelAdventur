@@ -33,7 +33,7 @@ class MainPresenter: NSObject {
 
   func getAlbumList() {
     delegate?.showIndicator()
-    FirebaseManager2.shared.getAlbumData { [weak self] res in
+    FirebaseManager.shared.getAlbumData { [weak self] res in
       self?.delegate?.dismissIndicator()
       switch res {
         case .success(let albumList):

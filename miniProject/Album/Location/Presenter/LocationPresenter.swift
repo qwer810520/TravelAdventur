@@ -32,7 +32,7 @@ class LocationPresenter: NSObject {
 
   func getPlaceList() {
     delegate?.showIndicator()
-    FirebaseManager2.shared.getPlaceList(albumID: selectAlbum.id) { [weak self] res in
+    FirebaseManager.shared.getPlaceList(albumID: selectAlbum.id) { [weak self] res in
       self?.delegate?.dismissIndicator()
       switch res {
         case .failure(let error):

@@ -31,7 +31,6 @@ class AddMobilePhotosViewController: ParentViewController {
     let button = AddPhotoButton()
     button.addTarget(self, action: #selector(addPhotoButtonDidPressed), for: .touchUpInside)
     button.frame = CGRect(x: view.bounds.width - 70, y: view.frame.maxY, width: 50, height: 50)
-
     return button
   }()
 

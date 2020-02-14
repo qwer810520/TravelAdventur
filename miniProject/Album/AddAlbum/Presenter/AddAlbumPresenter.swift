@@ -64,7 +64,7 @@ class AddAlbumPresenter: NSObject {
     delegate?.showIndicator()
     do {
       try addAlbum.checkFormatter()
-      FirebaseManager2.shared.addNewAlbumData(model: addAlbum) { [weak self] res in
+      FirebaseManager.shared.addNewAlbumData(model: addAlbum) { [weak self] res in
         self?.delegate?.dismissIndicator()
         switch res {
           case .success:

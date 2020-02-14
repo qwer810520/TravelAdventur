@@ -7,158 +7,134 @@
 //
 
 import UIKit
-import FBSDKLoginKit
-import GoogleSignIn
-import FirebaseAuth
-import Firebase
 
 class UserMainViewController: ParentViewController {
-    
-    lazy private var tableView: UITableView = {
-        let view = UITableView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        view.dataSource = self
-        view.backgroundColor = .white
-        view.separatorStyle = .singleLine
-        view.tableFooterView = UIView(frame: .zero)
-        view.register(with: [ShowProfileTableViewCell.self, BlankTableViewCell.self, SearchQRcodeOrTouchIDTableViewCell.self, SignOutTableViewCell.self])
-        return view
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getUserProfile()
-        setUserInterface()
-    }
-    
-    // MARK: - private Method
-    
-    private func setUserInterface() {
-        setNavigation(title: "Profile", barButtonType: .none)
-        UIScreen.main.brightness = (UserDefaults.standard.object(forKey: UserDefaultsKey.screenBrightness.rawValue) as? CGFloat) ?? 0.5
-        setAutoLayout()
-    }
-    
-    private func setAutoLayout() {
-        view.addSubview(tableView)
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[tableView]|",
-            options: [],
-            metrics: nil,
-            views: ["tableView": tableView]))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(navigationHeight)-[tableView]|",
-            options: [],
-            metrics: nil,
-            views: ["tableView": tableView]))
-    }
-    
-    private func getUserProfile() {
-        FirebaseManager2.shared.getUserProfile { [weak self] result in
-          switch result {
-            case .success:
-              break
-            case .failure(let error):
-              self?.showAlert(title: error.localizedDescription)
-          }
-        }
-    }
+
+  lazy private var tableView: UITableView = {
+    let view = UITableView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.delegate = self
+    view.dataSource = self
+    view.backgroundColor = .clear
+    view.isScrollEnabled = false
+    view.separatorStyle = .none
+    view.tableFooterView = UIView(frame: .zero)
+    view.register(with: [ShowProfileTableViewCell.self, BlankTableViewCell.self, SearchQRcodeOrTouchIDTableViewCell.self, SignOutTableViewCell.self])
+    return view
+  }()
+
+  private var presenter: UserMainPresenter?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    presenter = UserMainPresenter(delegate: self)
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    setUserInterface()
+    presenter?.getUserProfile()
+  }
+
+  // MARK: - private Method
+
+  private func setUserInterface() {
+    setNavigation(title: "Profile", barButtonType: .none)
+    view.addSubview(tableView)
+
+    setUpLayout()
+  }
+
+  private func setUpLayout() {
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[tableView]|",
+      options: [],
+      metrics: nil,
+      views: ["tableView": tableView]))
+
+    view.addConstraints(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|[tableView]|",
+      options: [],
+      metrics: nil,
+      views: ["tableView": tableView]))
+  }
 }
 
-    // MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension UserMainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 160
-        case 1, 2:
-            return 40
-        case 3:
-            return 100
-        case 4:
-            return 40
-        default:
-            return 0
-        }
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch indexPath.row {
+      case 0:
+        return 160
+      case 1, 2, 3, 4:
+        return 50
+      default:
+        return 0
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        switch indexPath.row {
-        case 1:
-            let vc = TANavigationController(rootViewController: QRCodeTearderViewController())
-            present(vc, animated: true, completion: nil)
-        case 4:
-            if let providerData = Auth.auth().currentUser?.providerData {
-                let userInfo = providerData[0]
-                switch userInfo.providerID {
-                case "google.com":
-                    GIDSignIn.sharedInstance().signOut()
-                case "facebook.com":
-                    LoginManager().logOut()
-                default:
-                    break
-                }
-                do {
-                    try Auth.auth().signOut()
-                    view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-                } catch {
-                    
-                }
-            }
-        default:
-            break
-        }
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    switch indexPath.row {
+      case 1:
+        let vc = TANavigationController(rootViewController: QRCodeTearderViewController())
+        present(vc, animated: true, completion: nil)
+      case 4: 
+        presenter?.signOut()
+      default:
+        break
     }
+  }
 }
 
-    // MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension UserMainViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 5
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    switch indexPath.row {
+      case 0:
+        let cell = tableView.dequeueReusableCell(with: ShowProfileTableViewCell.self, for: indexPath)
+        cell.userModel = presenter?.getUserInfo()
+        return cell
+      case 1:
+        let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
+        cell.cellType = .qrcode
+        return cell
+      case 2:
+        let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
+        cell.cellType = .touchID
+        cell.isOn = presenter?.getTouchIDStatus()
+        cell.delegate = self
+        return cell
+      case 4:
+        return tableView.dequeueReusableCell(with: SignOutTableViewCell.self, for: indexPath)
+      default:
+        return tableView.dequeueReusableCell(with: BlankTableViewCell.self, for: indexPath)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            let cell = tableView.dequeueReusableCell(with: ShowProfileTableViewCell.self, for: indexPath)
-            cell.userModel = FirebaseManager2.shared.loginUserModel
-            return cell
-        case 1:
-            let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
-            cell.cellType = .QRcode
-            return cell
-        case 2:
-            let cell = tableView.dequeueReusableCell(with: SearchQRcodeOrTouchIDTableViewCell.self, for: indexPath)
-            cell.cellType = .touchID
-            cell.isOn = UserDefaults.standard.bool(forKey: UserDefaultsKey.touchIDSwitch.rawValue)
-            cell.delegate = self
-            return cell
-        case 4:
-            return tableView.dequeueReusableCell(with: SignOutTableViewCell.self, for: indexPath)
-        default:
-            return tableView.dequeueReusableCell(with: BlankTableViewCell.self, for: indexPath)
-        }
-    }
+  }
 }
 
-    // MARK: - searchQRcodeOrTouchIDCellDelegate
+  // MARK: - searchQRcodeOrTouchIDCellDelegate
 
-extension UserMainViewController: searchQRcodeOrTouchIDCellDelegate {
-    func qrcodeSwitchValueChange(isOn: Bool) {
-        UserDefaults.standard.set(isOn, forKey: UserDefaultsKey.touchIDSwitch.rawValue)
-    }
+extension UserMainViewController: SearchQRcodeOrTouchIDCellDelegate {
+  func touchIDSwitchValueChange(with status: Bool) {
+    presenter?.setTouchIDSwitch(forStatus: status)
+  }
+}
+
+  // MARK: - UserMainPresenterDelegate
+
+extension UserMainViewController: UserMainPresenterDelegate {
+  func dismissToLoginVC() {
+    dismiss(animated: true)
+  }
+
+  func presentAlert(with title: String, message: String?, checkAction: ((UIAlertAction) -> Void)?, cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) {
+    showAlert(title: title, message: message, rightAction: checkAction, leftTitle: cancelTitle, leftAction: cancelAction)
+  }
 }

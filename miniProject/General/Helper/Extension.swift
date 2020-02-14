@@ -129,6 +129,10 @@ extension String {
     let transFormedImage = qrcodeImage.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
     return UIImage(ciImage: transFormedImage)
   }
+
+  func isAlbumIDFormat() -> Bool {
+    return self.range(of: "^[A-Za-z0-9]{20}+$", options: .regularExpression) != nil
+  }
 }
 
 // MARK: - UIBarButtonItem Extension

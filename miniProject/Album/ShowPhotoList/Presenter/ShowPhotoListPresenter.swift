@@ -26,7 +26,7 @@ class ShowPhotoListPresenter: NSObject {
 
   func getPhotoList() {
     delegate?.showIndicator()
-    FirebaseManager2.shared.getPlaceData(id: placeInfo.placeID) { [weak self] res in
+    FirebaseManager.shared.getPlaceData(id: placeInfo.placeID) { [weak self] res in
       self?.delegate?.dismissIndicator()
       switch res {
         case .success(let urlList):
