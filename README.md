@@ -1,11 +1,6 @@
 # TravelAdventur
 			
 ### 功能Demo
-
-### 網路判斷
-![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/NetworkJudgment1.gif)
-
-* 當無法連接網路時會跳出Alert來提醒使用者。
  
 ### TouchID
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/TouchID_Demo1.gif)
@@ -32,12 +27,6 @@
 ![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/GooglePlace_Demo1.gif)
 
 * 使用GooglePlace來搜尋拍照地點，確認後在GoogleMap加入新圖標。
-
-### 顯示相片頁面(mosaic-layout)
-
-![](https://github.com/qwer810520/TravelAdventur/blob/master/mini_Demo/DetailCollectionIView_Demo1.gif)
-
-* 使用的第三方: <https://github.com/vinnyoodles/mosaic-layout>
 
 ## 近期更新
 #### 2020更新
