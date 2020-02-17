@@ -42,9 +42,9 @@
 ## 近期更新
 #### 2020更新
 * 重構MVC架構為MVP
-* 更換[SDWebImage] (https://github.com/SDWebImage/SDWebImage)，改採用[Nuke] (https://github.com/kean/Nuke)
-* 更換[SVProgressHUD] (https://github.com/SVProgressHUD/SVProgressHUD) ，改使用客製化Indicator
-* 更換[TRMosaicLayout] (https://github.com/vinnyoodles/mosaic-layout) 套件，改採用iOS 13的`UICollectionViewCompositionalLayout`
+* 更換[SDWebImage](https://github.com/SDWebImage/SDWebImage)，改採用[Nuke](https://github.com/kean/Nuke)
+* 更換[SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD)，改使用客製化Indicator
+* 更換[TRMosaicLayout](https://github.com/vinnyoodles/mosaic-layout)套件，改採用iOS 13的`UICollectionViewCompositionalLayout`
 * 優化UI整體性
 
 #### 2018更新
