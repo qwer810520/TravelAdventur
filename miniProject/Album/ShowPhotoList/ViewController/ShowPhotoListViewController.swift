@@ -13,9 +13,55 @@ class ShowPhotoListViewController: ParentViewController {
   var placeData: PlaceModel?
   private var presenter: ShowPhotoListPresenter?
 
+  @available(iOS 13, *)
+  lazy private var albumFormatLayout: UICollectionViewLayout = {
+    let layout = UICollectionViewCompositionalLayout { [weak self] _, _ -> NSCollectionLayoutSection? in
+      let width = self?.view.frame.width ?? 0.0
+
+      let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .fractionalHeight(1.0))
+      let item = NSCollectionLayoutItem(layoutSize: itemSize)
+      item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+
+      let item1 = NSCollectionLayoutItem(
+        layoutSize: NSCollectionLayoutSize(
+          widthDimension: .fractionalWidth(1.0),
+          heightDimension: .fractionalHeight(0.3)))
+      item1.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+
+      let subGroup = NSCollectionLayoutGroup.vertical(
+        layoutSize: NSCollectionLayoutSize(
+          widthDimension: .fractionalWidth(0.3),
+          heightDimension: .fractionalHeight(1.0)),
+        subitem: item1,
+        count: 2)
+
+      let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(width), heightDimension: .absolute(width * 0.6))
+      let group1 = NSCollectionLayoutGroup.horizontal(
+        layoutSize: groupSize,
+        subitems: [item, subGroup])
+      let group2 = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [subGroup, item])
+
+      let parentGroup = NSCollectionLayoutGroup.vertical(
+        layoutSize: NSCollectionLayoutSize(
+          widthDimension: .absolute(width),
+          heightDimension: .absolute((width * 0.6) * 2)),
+        subitems: [group1, group2])
+      
+      return NSCollectionLayoutSection(group: parentGroup)
+    }
+    return layout
+  }()
+
   lazy private var showPhotosCollectionView: UICollectionView = {
-    let view = UICollectionView(frame: .zero, collectionViewLayout: ShowPhotoFlowLayout())
+    var layout: UICollectionViewLayout
+    if #available(iOS 13, *) {
+      layout = albumFormatLayout
+    } else {
+      layout = ShowPhotoFlowLayout()
+    }
+    let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     view.dataSource = self
     view.backgroundColor = .clear
     view.showsVerticalScrollIndicator = false
