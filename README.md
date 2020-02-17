@@ -40,6 +40,14 @@
 * 使用的第三方: <https://github.com/vinnyoodles/mosaic-layout>
 
 ## 近期更新
+#### 2020更新
+* 重構MVC架構為MVP
+* 更換[SDWebImage] (https://github.com/SDWebImage/SDWebImage)，改採用[Nuke] (https://github.com/kean/Nuke)
+* 更換[SVProgressHUD] (https://github.com/SVProgressHUD/SVProgressHUD)，改使用客製化Indicator
+* 更換[TRMosaicLayout] (https://github.com/vinnyoodles/mosaic-layout)套件，改採用iOS 13的`UICollectionViewCompositionalLayout`
+* 優化UI整體性
+
+#### 2018更新
 * 採MVC為架構下去實作。
 * UI更新: 所有UI改採用純Code去生成。
 * 優化記憶體使用效能以及VC的邏輯處理。
@@ -47,9 +55,9 @@
 
 ## 應用功能有
 * 以Singleton模式來做撰寫。
-* 使用Reachability來做簡單的網路連線判斷。
+* ~~使用Reachability來做簡單的網路連線判斷。~~
 * Google、Facebook登入、使用TouchID來簡化登入流程。
-* 使用SideMenu來顯示使用者相片以及QRCode加入相簿、TouchID開關、登出設置。
+* ~~使用SideMenu來顯示使用者相片以及QRCode加入相簿、TouchID開關、登出設置。~~
 * 使用GoogleMap、GooglePlace來記錄此次行程的拍照地點。
 * 匯入使用者手機相簿來做新增相片動作。
 * 將相簿ID製作成QRcode，讓使用者要分享相簿時只需讓朋友掃瞄QRCode就能加入相簿。
